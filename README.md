@@ -5,7 +5,7 @@ Static site located on: [http://antonfisher.github.io](http://antonfisher.github
 ## ToDo
 - [x] Gulp tasks;
 - [x] HTML generator;
-- [ ] About page;
+- [x] About page;
 - [ ] Exclude gulp-site-generator to own repository;
 - [ ] RSS feed generator;
 - [ ] Tags support;
