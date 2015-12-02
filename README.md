@@ -10,6 +10,7 @@ Static site located on: [http://antonfisher.github.io](http://antonfisher.github
 - [x] Config file
 - [ ] First post(!)
 - [ ] Theme
+- [ ] Move old files
 - [ ] Exclude gulp-site-generator to own repository
 - [ ] Tags support
 - [ ] 404 page
