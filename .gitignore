@@ -1,4 +1,4 @@
-.idea
-old
-_generator
-_posts
+/.idea
+/old
+/static-blog-generator
+/_posts

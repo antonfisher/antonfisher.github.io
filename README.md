@@ -1,6 +1,6 @@
 # Notes site
 
-Static site located on: [http://antonfisher.github.io](http://antonfisher.github.io).
+Static site located on: [http://antonfisher.github.io](http://antonfisher.github.io)
 
 ## ToDo
 - [x] About page
@@ -8,7 +8,7 @@ Static site located on: [http://antonfisher.github.io](http://antonfisher.github
 - [x] Config file
 - [x] Theme
 - [ ] First post(!)
+- [ ] GA
 - [ ] Move old files
 - [ ] Comments
-- [ ] GA
 - [ ] Icons
