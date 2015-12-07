@@ -8,7 +8,7 @@ Static site located on: [http://antonfisher.github.io](http://antonfisher.github
 - [x] Config file
 - [x] Theme
 - [x] First post(!)
-- [ ] GA
-- [ ] Move old files
+- [x] GA
+- [x] Move old files
 - [ ] Comments
 - [ ] Icons
