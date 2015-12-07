@@ -10,7 +10,7 @@ I got my first Raspberry Pi.
 But I do not have a display and a keyboard which make OS installation process simple.
 After some search, I found
 [solution](http://raspberrypi.stackexchange.com/questions/15192/installing-raspbian-from-noobs-without-display)
-which uses preconfigured SD card using a laptop. Used _NOOBS v1.5.0_ with changed _recovery.cmdline_ file:
+which uses preconfigured SD card using a laptop. Used _NOOBS v1.5.0_ with changed _recovery.cmdline_ file<cut>:
 
 Before:
 
