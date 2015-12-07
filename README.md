@@ -10,5 +10,5 @@ Static site located on: [http://antonfisher.github.io](http://antonfisher.github
 - [x] First post(!)
 - [x] GA
 - [x] Move old files
+- [x] Icons
 - [ ] Comments
-- [ ] Icons
