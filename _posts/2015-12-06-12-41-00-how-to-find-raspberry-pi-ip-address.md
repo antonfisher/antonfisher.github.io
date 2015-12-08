@@ -1,16 +1,20 @@
 {
     "title": "How to find Raspberry Pi IP address (DHCP)",
-    "date": "2015-12-04" 
+    "image": "https://drive.google.com/uc?export=view&amp;id=0ByNyABxh-2eYa05GeHhxMk0tMnc",
+    "date": "2015-12-04"
 }
 
-![Raspberry Pi](https://drive.google.com/uc?export=view&id=0ByNyABxh-2eYa05GeHhxMk0tMnc)
+<!-- preview -->
 
 I got my first Raspberry Pi.
 
 But I do not have a display and a keyboard which make OS installation process simple.
 After some search, I found
 [solution](http://raspberrypi.stackexchange.com/questions/15192/installing-raspbian-from-noobs-without-display)
-which uses preconfigured SD card using a laptop. Used _NOOBS v1.5.0_ with changed _recovery.cmdline_ file<cut>:
+which uses preconfigured SD card using a laptop. Used _NOOBS v1.5.0_ with changed _recovery.cmdline_ file.
+
+<!-- /preview -->
+
 
 Before:
 
