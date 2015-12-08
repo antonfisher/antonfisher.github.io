@@ -14,6 +14,6 @@ Static site located on: [http://antonfisher.github.io](http://antonfisher.github
 - [x] Add description on about page
 - [x] Update profile image
 - [x] Move photos to Dropbox
-- [ ] Sitemap
 - [ ] Second post
+- [ ] Sitemap
 - [ ] Comments
