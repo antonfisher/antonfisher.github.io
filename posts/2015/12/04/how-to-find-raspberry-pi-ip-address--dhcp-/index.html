@@ -22,9 +22,9 @@ Anton Fisher <a.fschr@gmail.com>
 </head>
 <body>
 <div class="container">
-    <header>
-        <a href="/" title="Home">
-            <div class="title">Anton Fisher<span>&#8217;s notes</span></div>
+    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/" class="title" title="Home">
+            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
         </a>
 
         <div class="link">
@@ -33,7 +33,8 @@ Anton Fisher <a.fschr@gmail.com>
         <div class="link">
             <a href="/feed.xml" title="RSS feed link">rss</a>
         </div>
-        <a href="/about">
+
+        <a href="/about" itemprop="image">
             <img src="https://avatars.githubusercontent.com/u/599352?s=50" title="Contact information" alt="About">
         </a>
 
@@ -42,10 +43,10 @@ Anton Fisher <a.fschr@gmail.com>
 
     <div class="content">
         
-    <article>
-        <h1>How to find Raspberry Pi IP address (DHCP)</h1>
-        <time datetime="2015-12-04">2015-12-04</time>
-        <p><p><img src="https://drive.google.com/uc?export=view&amp;id=0ByNyABxh-2eYa05GeHhxMk0tMnc" alt="Raspberry Pi" /></p>
+    <article itemscope itemtype="http://schema.org/Article">
+        <h1 itemprop="name">How to find Raspberry Pi IP address (DHCP)</h1>
+        <time itemprop="datePublished" content="2015-12-04" datetime="2015-12-04">2015-12-04</time>
+        <span itemprop="articleBody"><p><img itemprop="image" src="https://drive.google.com/uc?export=view&amp;id=0ByNyABxh-2eYa05GeHhxMk0tMnc" alt="Raspberry Pi" /></p>
 <p>I got my first Raspberry Pi.</p>
 <p>But I do not have a display and a keyboard which make OS installation process simple.
 After some search, I found
@@ -110,7 +111,7 @@ pi@raspberrypi:~ $
 <p>How official blog advises how to do see here:
 <a href="https://www.raspberrypi.org/documentation/troubleshooting/hardware/networking/ip-address.md">www.raspberrypi.org</a>.</p>
 <p><em>Note: I use Ubuntu.</em></p>
-</p>
+</span>
     </article>
 
     </div>
@@ -131,12 +132,12 @@ pi@raspberrypi:~ $
     </footer>
 </div>
 </body>
-<!--<script>-->
-<!--(function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {-->
-<!--(i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),-->
-<!--m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)-->
-<!--})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');-->
-<!--ga('create', 'UA-44250383-1', 'antonfisher.com');-->
-<!--ga('send', 'pageview');-->
-<!--</script>-->
+<script>
+    (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {
+    (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', '', 'antonfisher.com');
+    ga('send', 'pageview');
+</script>
 </html>

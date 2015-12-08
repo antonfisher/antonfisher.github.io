@@ -22,9 +22,9 @@ Anton Fisher <a.fschr@gmail.com>
 </head>
 <body>
 <div class="container">
-    <header>
-        <a href="/" title="Home">
-            <div class="title">Anton Fisher<span>&#8217;s notes</span></div>
+    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/" class="title" title="Home">
+            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
         </a>
 
         <div class="link">
@@ -33,7 +33,8 @@ Anton Fisher <a.fschr@gmail.com>
         <div class="link">
             <a href="/feed.xml" title="RSS feed link">rss</a>
         </div>
-        <a href="/about">
+
+        <a href="/about" itemprop="image">
             <img src="https://avatars.githubusercontent.com/u/599352?s=50" title="Contact information" alt="About">
         </a>
 
@@ -43,6 +44,9 @@ Anton Fisher <a.fschr@gmail.com>
     <div class="content">
         
     <div class="about-items">
+        full stack web developer (javascript, extjs, nodejs, bash)
+        <br>
+        <br>
         <a href="//github.com/antonfisher" target="_blank"><span class="icon icon-github"></span> Github</a>
         <a href="//linkedin.com/in/afschr/en" target="_blank"><span class="icon icon-linkedin"></span> Linkedin</a>
         <a href="//habrahabr.ru/users/afschr/" target="_blank"><span class="icon icon-earth"></span> Habrahabr</a>
@@ -72,12 +76,12 @@ Anton Fisher <a.fschr@gmail.com>
     </footer>
 </div>
 </body>
-<!--<script>-->
-<!--(function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {-->
-<!--(i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),-->
-<!--m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)-->
-<!--})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');-->
-<!--ga('create', 'UA-44250383-1', 'antonfisher.com');-->
-<!--ga('send', 'pageview');-->
-<!--</script>-->
+<script>
+    (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {
+    (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', '', 'antonfisher.com');
+    ga('send', 'pageview');
+</script>
 </html>
