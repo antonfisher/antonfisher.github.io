@@ -1,6 +1,6 @@
 {
     "title": "How to find Raspberry Pi IP address (DHCP)",
-    "image": "https://drive.google.com/uc?export=view&amp;id=0ByNyABxh-2eYa05GeHhxMk0tMnc",
+    "image": "https://dl.dropboxusercontent.com/s/xjuflro0gilf6gm/2015-12-06-12-41-00-how-to-find-raspberry-pi-ip-address.jpeg",
     "date": "2015-12-04"
 }
 
