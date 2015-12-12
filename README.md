@@ -1,6 +1,6 @@
 # Notes site
 
-Static site located on: [http://antonfisher.github.io](http://antonfisher.github.io)
+Static site located on: [http://antonfisher.com](http://antonfisher.com)
 
 ## ToDo
 - [x] About page
@@ -15,5 +15,3 @@ Static site located on: [http://antonfisher.github.io](http://antonfisher.github
 - [x] Update profile image
 - [x] Move photos to Dropbox
 - [ ] Second post
-- [ ] Sitemap
-- [ ] Comments

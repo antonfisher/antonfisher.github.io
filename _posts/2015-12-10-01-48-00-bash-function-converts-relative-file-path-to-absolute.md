@@ -1,9 +1,14 @@
 !{
-    "title": "Bash: Function converts relative file path to absolute",
-    "date": "2015-12-04" 
+    "title": "Bash: function converts relative file path to absolute",
+    "image": "https://dl.dropboxusercontent.com/s/xjuflro0gilf6gm/2015-12-06-12-41-00-how-to-find-raspberry-pi-ip-address.jpeg",
+    "date": "2015-12-10"
 }
 
-For get full files or directris path in scripts I uses this simple function:
+<!-- preview -->
+
+For get full files or directris path in scripts I uses this simple function.
+
+<!-- /preview -->
 
 ``` bash
 ##
