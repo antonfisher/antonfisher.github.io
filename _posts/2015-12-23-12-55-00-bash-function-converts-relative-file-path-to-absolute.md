@@ -1,7 +1,7 @@
 {
     "title": "Bash: function converts relative file path to absolute",
-    "image": "https://dl.dropboxusercontent.com/s/f1yu77p1mcqv49f/bash-terminal.png",
-    "imagePreview": "https://dl.dropboxusercontent.com/s/v1qc2hkacszlbk3/bash-terminal-300.png",
+    "image": "https://dl.dropboxusercontent.com/s/qs5ao8tbaxrwe6t/bash-terminal.png",
+    "imagePreview": "https://dl.dropboxusercontent.com/s/7siaado58ejettd/bash-terminal-300.png",
     "metaDescription": "bash, path, ubuntu",
     "date": "2015-12-23"
 }
