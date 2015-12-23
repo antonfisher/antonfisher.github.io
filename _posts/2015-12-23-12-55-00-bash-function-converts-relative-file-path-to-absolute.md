@@ -1,12 +1,15 @@
-!{
+{
     "title": "Bash: function converts relative file path to absolute",
-    "image": "https://dl.dropboxusercontent.com/s/xjuflro0gilf6gm/2015-12-06-12-41-00-how-to-find-raspberry-pi-ip-address.jpeg",
-    "date": "2015-12-10"
+    "image": "https://dl.dropboxusercontent.com/s/f1yu77p1mcqv49f/bash-terminal.png",
+    "imagePreview": "https://dl.dropboxusercontent.com/s/v1qc2hkacszlbk3/bash-terminal-300.png",
+    "metaDescription": "bash, path, ubuntu",
+    "date": "2015-12-23"
 }
 
 <!-- preview -->
 
-For get full files or directris path in scripts I uses this simple function.
+For converting relative path to absolute full path in scripts I use this simple function.
+Also it fits for path which contain '~'.
 
 <!-- /preview -->
 
@@ -33,6 +36,14 @@ function get_full_path {
     result=$( readlink -e "${rel_path}" );
     echo "${result}";
 }
+```
+
+Usage example:
+
+``` bash
+text="Enter path to applications folder:";
+read -r -e -p "${text}" apps_path_user;
+full_path=$(get_full_path "${apps_path_user}");
 ```
 
 Download from [Github](https://gist.githubusercontent.com/antonfisher/fb8a9bdb4b9fc2d44134/raw/cc01888a29c874c181992085db42d812ce3acd9b/get_full_path.sh).
