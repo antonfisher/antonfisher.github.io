@@ -1,7 +1,7 @@
 {
     "title": "How to find Raspberry Pi IP address (DHCP)",
-    "image": "https://dl.dropboxusercontent.com/s/xjuflro0gilf6gm/2015-12-06-12-41-00-how-to-find-raspberry-pi-ip-address.jpeg",
-    "imagePreview": "https://dl.dropboxusercontent.com/s/pda5ooao85jsh6k/2015-12-06-12-41-00-how-to-find-raspberry-pi-ip-address-300.jpeg",
+    "image": "https://dl.dropboxusercontent.com/s/ndls77zjr2bwezu/raspberry-pi.jpeg",
+    "imagePreview": "https://dl.dropboxusercontent.com/s/arkfrj2918zzrvz/raspberry-pi-300.jpeg",
     "metaDescription": "raspberry pi, ip address, bash, nmap",
     "date": "2015-12-04"
 }
