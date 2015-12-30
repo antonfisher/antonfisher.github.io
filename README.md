@@ -14,4 +14,3 @@ Static site located on: [http://antonfisher.com](http://antonfisher.com)
 - [x] Add description on about page
 - [x] Update profile image
 - [x] Move photos to Dropbox
-- [ ] Second post
