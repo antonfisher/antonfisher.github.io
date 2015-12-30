@@ -50,11 +50,13 @@ Anton Fisher <a.fschr@gmail.com>
 <article itemscope itemtype="http://schema.org/Article">
     <h1 itemprop="name">Bash: function converts relative file path to absolute</h1>
     <time itemprop="datePublished" content="2015-12-23" datetime="2015-12-23">2015-12-23</time>
+    <div class="clear"></div>
     <img itemprop="image" src="https://dl.dropboxusercontent.com/s/qs5ao8tbaxrwe6t/bash-terminal.png">
-    <span itemprop="headline">
+    <div class="clear"></div>
+    <span itemprop="headline"><p>
 <p>For converting relative path to absolute full path in scripts I use this simple function.
 Also it fits for path which contain '~’.</p>
-</span> <span itemprop="articleBody">
+</p></span> <span itemprop="articleBody">
 <pre><code class="language-bash"><span class="hljs-comment">##</span>
 <span class="hljs-comment"># Get full file/directory path</span>
 <span class="hljs-comment">#</span>
@@ -111,7 +113,7 @@ full_path=$(get_full_path <span class="hljs-string">"<span class="hljs-variable"
     (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),
     m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)
     })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-    if (window.location.hostname !== 'location') {
+    if (window.location.hostname !== 'localhost') {
         ga('create', 'UA-44250383-1', 'antonfisher.com');
         ga('send', 'pageview');
     }

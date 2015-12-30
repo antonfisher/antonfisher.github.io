@@ -50,14 +50,16 @@ Anton Fisher <a.fschr@gmail.com>
 <article itemscope itemtype="http://schema.org/Article">
     <h1 itemprop="name">How to find Raspberry Pi IP address (DHCP)</h1>
     <time itemprop="datePublished" content="2015-12-04" datetime="2015-12-04">2015-12-04</time>
+    <div class="clear"></div>
     <img itemprop="image" src="https://dl.dropboxusercontent.com/s/ndls77zjr2bwezu/raspberry-pi.jpeg">
-    <span itemprop="headline">
+    <div class="clear"></div>
+    <span itemprop="headline"><p>
 <p>I got my first Raspberry Pi.</p>
 <p>But I do not have a display and a keyboard which make OS installation process simple.
 After some search, I found
 <a href="http://raspberrypi.stackexchange.com/questions/15192/installing-raspbian-from-noobs-without-display">solution</a>
 which uses preconfigured SD card using a laptop. Used <em>NOOBS v1.5.0</em> with changed <em>recovery.cmdline</em> file.</p>
-</span> <span itemprop="articleBody">
+</p></span> <span itemprop="articleBody">
 <p>Before:</p>
 <pre><code class="language-bash">runinstaller quiet ramdisk_size=32768 root=/dev/ram0 init=/init vt.cur_default=1 elevator=deadline
 </code></pre>
@@ -149,7 +151,7 @@ pi@raspberrypi:~ $
     (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),
     m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)
     })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-    if (window.location.hostname !== 'location') {
+    if (window.location.hostname !== 'localhost') {
         ga('create', 'UA-44250383-1', 'antonfisher.com');
         ga('send', 'pageview');
     }
