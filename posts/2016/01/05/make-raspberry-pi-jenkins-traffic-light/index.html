@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--
+ _____     _           _____ _     _
+|  _  |___| |_ ___ ___|   __|_|___| |_ ___ ___   ___ ___ _____
+|     |   |  _| . |   |   __| |_ -|   | -_|  _|_|  _| . |     |
+|__|__|_|_|_| |___|_|_|__|  |_|___|_|_|___|_| |_|___|___|_|_|_|
+
+Anton Fisher <a.fschr@gmail.com>
+
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Anton Fisher's notes</title>
+    <meta name="description" content="raspberry pi, traffic light, leds, nodejs">
+    <meta name="author" content="Anton Fisher">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="icon" href="/favicon.ico">
+    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+</head>
+<body>
+<div class="container">
+    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/" class="title" title="Home">
+            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
+        </a>
+
+        <nav>
+            <div class="link">
+                <a href="/about" title="About">about</a>
+            </div>
+            <div class="link">
+                <a href="/feed.xml" title="RSS feed link">rss</a>
+            </div>
+        </nav>
+
+        <a href="/about">
+            <img src="/images/anton-fisher-v1.jpg"
+                 title="Contact information"
+                 itemprop="image"
+                 alt="About">
+        </a>
+
+        <div class="clear"></div>
+    </header>
+
+    <div class="content">
+        
+<article itemscope itemtype="http://schema.org/Article">
+    <h1 itemprop="name">Make Raspberry Pi Jenkins traffic light</h1>
+    <time itemprop="datePublished" content="2016-01-05" datetime="2016-01-05">2016-01-05</time>
+    <div class="clear"></div>
+
+    <img itemprop="image" src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/traffic-light-demo.gif">
+    <div class="clear"></div>
+
+    <span itemprop="headline"><p>
+<p>It is the simple instruction for javascript developers how to make physical Jenkins traffic light.
+This device can be good first experience with the Raspberry Pi and it is useful for controlling your build’s health!</p>
+</p></span> <span itemprop="articleBody">
+<h2>Hardware</h2>
+<p><img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/parts-unpackage.jpg" alt="Hardware" /></p>
+<p>Necessary hardware:</p>
+<ul>
+<li>Raspberry Pi with AC and flash-card (x1)</li>
+<li>USB WiFi for Raspberry Pi (for wireless usage)</li>
+<li>Traffic light toy (x1)</li>
+<li>White or color LEDs (x27)</li>
+<li>Resistors (x3 or x27)</li>
+<li>Circuit boards</li>
+<li>Wires.</li>
+</ul>
+<p>Raspberry Pi has digital outputs uses for turn on lights, motors, or something else.
+Outputs realised as GPIO (General Purpose Input/Output) connection pins header.
+I used only GPIO pins power, so they were limited only in 3v3.
+But this solution does not require additional transistors or power source.
+Raspberry Pi 2 has 40-pins header, arranged by 20 pins in 2 lines.</p>
+<p><center>
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/rpi-pins-schema.png" alt="Rasbperry Pi 2 pins schema" />
+</center></p>
+<p>The GPIO has 17 pins in total.
+For more information see <a href="http://elinux.org/RPi_Low-level_peripherals">here</a>.</p>
+<p>I used these pins: <strong>15</strong> – red color, <strong>11</strong> – yellow color, <strong>7</strong> – green, <strong>39</strong> – ground.</p>
+<p>Connection schema:
+<center>
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/schema-simple.png" alt="Simple connection schema" />
+</center></p>
+<p>But it not good idea to use pins voltage for turning on leds.
+Better solution should turn on leds with <em>0</em> level on pin, so connection should be like:</p>
+<pre><code><span class="hljs-comment">GPIO</span> <span class="hljs-comment">pin</span> <span class="hljs-comment">(3v3</span> <span class="hljs-comment">or</span> <span class="hljs-comment">0v)</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">resistor</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">led</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">3v3</span> <span class="hljs-comment">pin</span>
+</code></pre>
+<p>If you feel more power use this schema (thanks Nikolay!):
+<center>
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/schema-advanced.png" alt="Advanced connection schema" />
+</center></p>
+<p>List of available pins is <a href="http://elinux.org/RPi_BCM2835_GPIOs">here</a>.</p>
+<p>After some time I got the first prototype:
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/check-prototype-1.jpg" alt="first prototype" /></p>
+<p>It worked properly, but was not bright enough.
+After consultation with my brother I ordered new 3v3 brighter leds with clear white plastic lens:
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/new-leds-pack.jpg" alt="new brighter leds" /></p>
+<p>They does not look excellent but much better than colored.
+And more important they have identical bright level unlike colored, because my color leds use different voltage.</p>
+<p>I tried mount leds on the part of layout board, but it looks weird and was not symmetric:
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/layout-board.jpg" alt="Layout board" /></p>
+<p>So, I bought an electronic circuit board and cut it for appropriate size for my traffic light:
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/cut-circuit-boards.jpg" alt="Cut curcuit boards" /></p>
+<p>After 2 evenings and fun experiments with a soldering iron I got this:
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/boards-with-wires.jpg" alt="Curcuit boards with wires" /></p>
+<p>And the final version under hood:
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/mounted-board.jpg" alt="Mounted board" /></p>
+<p>After testing I improved color depth by using colored films:
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/add-films.jpg" alt="" /></p>
+<p>Ok, it is fit:
+<img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/light-before-close.jpg" alt="" /></p>
+<h2>Software</h2>
+<p>I used <em>Node.js v5</em> and self-written module:
+<a href="https://github.com/antonfisher/rpi-jenkins-light">https://github.com/antonfisher/rpi-jenkins-light</a>.
+But first of all <a href="http://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp/">install Raspberrian</a>.</p>
+<h3>NodeJs v5 installation</h3>
+<ul>
+<li>SSH to <em>Raspberry Pi</em></li>
+<li><code>$ sudo su</code> (need for install <em>Node.js</em>)</li>
+<li>Install <em>Node.js</em>: <code>$ curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -</code></li>
+</ul>
+<h3>Installation Jenkins Light Module</h3>
+<ul>
+<li>SSH to <em>Raspberry Pi</em></li>
+<li><code>$ sudo su</code> (need for install GPIO module)</li>
+<li>From <em>GitHub</em> sources:
+<ul>
+<li>Clone repository: <code>$ git clone https://github.com/antonfisher/rpi-jenkins-light.git</code></li>
+<li><code>$ cd rpi-jenkins-light</code></li>
+<li>Install dependencies: <code>$ npm install</code></li>
+</ul></li>
+<li>From <em>NPM</em>:
+<ul>
+<li><code>$ npm install rpi-jenkins-light</code></li>
+</ul></li>
+</ul>
+<h3>Configure</h3>
+<p>Edit <code>$ vim configs/config.js</code> file:</p>
+<pre><code class="language-javascript"><span class="hljs-built_in">module</span>.exports = {
+    rpi: {                          <span class="hljs-comment">// Raspberry Pi sub-config</span>
+        gpio: {                     <span class="hljs-comment">// GPIO [General Purpose Input Output] config</span>
+            color: {
+                red: <span class="hljs-number">15</span>,            <span class="hljs-comment">// pin # for red color</span>
+                yellow: <span class="hljs-number">11</span>,         <span class="hljs-comment">// pin # for yellow color</span>
+                green: <span class="hljs-number">7</span>            <span class="hljs-comment">// pin # for green color</span>
+            },
+            outputLevel: {
+                on: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// 3v3   // led turn on output level</span>
+                off: <span class="hljs-literal">false</span> <span class="hljs-comment">// 0v    // led turn off output level</span>
+            }
+        }
+    },
+    jenkins: {                      <span class="hljs-comment">// Jenkins sub-config</span>
+        interval: <span class="hljs-number">5</span> * <span class="hljs-number">1000</span>,         <span class="hljs-comment">// requests interval</span>
+        host: <span class="hljs-string">'10.0.0.1'</span>,
+        port: <span class="hljs-string">'8080'</span>,
+        view: <span class="hljs-string">'JenkinsLight'</span>,       <span class="hljs-comment">// http://localhost:8080/view/%VIEW_NAME%/</span>
+        demoMode: <span class="hljs-literal">true</span>              <span class="hljs-comment">// demo turn on red-yellow-green lights</span>
+    }
+};
+</code></pre>
+<h3>Configure Jenkins</h3>
+<ul>
+<li>Open <em>Jenkins</em> main page</li>
+<li>Create new list view called <code>JenkinsLight</code></li>
+<li>Add monitored tasks to this view.</li>
+</ul>
+<p><img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/create-jenkins-view.png" alt="Jenkins View" /></p>
+<h3>Run</h3>
+<ul>
+<li><code>$ sudo su</code> (need for GPIO module)</li>
+<li>From <em>GitHub</em> sources:
+<ul>
+<li><code>$ node run.js</code></li>
+</ul></li>
+<li>From <em>NPM</em>:
+<ul>
+<li><code>$ node ./node_modules/rpi-jenkins-light/run.js</code></li>
+</ul></li>
+</ul>
+<h3>Autorun application after reboot</h3>
+<ul>
+<li><code>$ sudo su</code> (need for global modules)</li>
+<li><code>$ npm install pm2 -g</code></li>
+<li><code>$ pm2 startup</code></li>
+<li><code>$ pm2 start run.js</code></li>
+<li><code>$ pm2 save</code></li>
+</ul>
+<p>Thanks for reading!</p>
+</span>
+</article>
+
+<div class="comments">
+    <b class="label">Comments:</b>
+    <div id="disqus_thread"></div>
+    <script>
+        if (window.location.hostname !== 'localhost') {
+            var disqus_config = function () {
+                this.page.url = 'http://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light';
+                this.page.identifier = '2016-01-05';
+            };
+            (function () {
+                var d = document, s = d.createElement('script');
+                s.src = '//antonfishercom.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        }
+    </script>
+</div>
+
+    </div>
+
+    <footer>
+        <nav>
+            <a href="/">home</a>
+            <span class="devider">&nbsp;</span>
+            <a href="/about">about</a>
+            <span class="devider">&nbsp;</span>
+            <a href="/feed.xml">rss</a>
+        </nav>
+        <div>
+            &copy;
+            <time datetime="2015">2015</time>
+            Anton Fisher
+        </div>
+    </footer>
+</div>
+</body>
+<script>
+    if (window.location.hostname !== 'localhost') {
+        (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-44250383-1', 'antonfisher.com');
+        ga('send', 'pageview');
+    }
+</script>
+</html>
