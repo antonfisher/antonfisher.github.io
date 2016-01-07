@@ -145,6 +145,11 @@ module.exports = {
 
 ![Jenkins View](/images/posts/3-make-raspberry-pi-jenkins-traffic-light/create-jenkins-view.png)
 
+The colors indicate (by priority):
+* Blinks yellow -- at least one build is running
+* Red -- at least one build is failed
+* Green -- all builds are OK.
+
 ### Run
 * `$ sudo su` (need for GPIO module)
 * From _GitHub_ sources:

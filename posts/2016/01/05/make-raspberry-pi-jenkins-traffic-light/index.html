@@ -171,6 +171,12 @@ But first of all <a href="http://antonfisher.com/posts/2015/12/04/how-to-find-ra
 <li>Add monitored tasks to this view.</li>
 </ul>
 <p><img src="/images/posts/3-make-raspberry-pi-jenkins-traffic-light/create-jenkins-view.png" alt="Jenkins View" /></p>
+<p>The colors indicate (by priority):</p>
+<ul>
+<li>Blinks yellow – at least one build is running</li>
+<li>Red – at least one build is failed</li>
+<li>Green – all builds are OK.</li>
+</ul>
 <h3>Run</h3>
 <ul>
 <li><code>$ sudo su</code> (need for GPIO module)</li>
