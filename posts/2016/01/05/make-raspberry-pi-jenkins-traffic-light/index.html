@@ -123,6 +123,7 @@ But first of all <a href="http://antonfisher.com/posts/2015/12/04/how-to-find-ra
 <li>SSH to <em>Raspberry Pi</em></li>
 <li><code>$ sudo su</code> (need for install <em>Node.js</em>)</li>
 <li>Install <em>Node.js</em>: <code>$ curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -</code></li>
+<li>Run <code>$ apt-get install nodejs</code>.</li>
 </ul>
 <h3>Installation Jenkins Light Module</h3>
 <ul>
@@ -136,7 +137,7 @@ But first of all <a href="http://antonfisher.com/posts/2015/12/04/how-to-find-ra
 </ul></li>
 <li>From <em>NPM</em>:
 <ul>
-<li><code>$ npm install rpi-jenkins-light</code></li>
+<li><code>$ npm install rpi-jenkins-light</code>.</li>
 </ul></li>
 </ul>
 <h3>Configure</h3>
@@ -186,7 +187,7 @@ But first of all <a href="http://antonfisher.com/posts/2015/12/04/how-to-find-ra
 </ul></li>
 <li>From <em>NPM</em>:
 <ul>
-<li><code>$ node ./node_modules/rpi-jenkins-light/run.js</code></li>
+<li><code>$ node ./node_modules/rpi-jenkins-light/run.js</code>.</li>
 </ul></li>
 </ul>
 <h3>Autorun application after reboot</h3>
@@ -195,7 +196,7 @@ But first of all <a href="http://antonfisher.com/posts/2015/12/04/how-to-find-ra
 <li><code>$ npm install pm2 -g</code></li>
 <li><code>$ pm2 startup</code></li>
 <li><code>$ pm2 start run.js</code></li>
-<li><code>$ pm2 save</code></li>
+<li><code>$ pm2 save</code>.</li>
 </ul>
 <p>Thanks for reading!</p>
 </span>

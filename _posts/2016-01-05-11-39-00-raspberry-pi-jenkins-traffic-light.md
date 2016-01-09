@@ -99,6 +99,7 @@ But first of all [install Raspberrian](http://antonfisher.com/posts/2015/12/04/h
 * SSH to _Raspberry Pi_
 * `$ sudo su` (need for install _Node.js_)
 * Install _Node.js_: `$ curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -`
+* Run `$ apt-get install nodejs`.
 
 ### Installation Jenkins Light Module
 * SSH to _Raspberry Pi_
@@ -108,7 +109,7 @@ But first of all [install Raspberrian](http://antonfisher.com/posts/2015/12/04/h
     * `$ cd rpi-jenkins-light`
     * Install dependencies: `$ npm install`
 * From _NPM_:
-    * `$ npm install rpi-jenkins-light`
+    * `$ npm install rpi-jenkins-light`.
 
 ### Configure
 Edit `$ vim configs/config.js` file:
@@ -155,13 +156,13 @@ The colors indicate (by priority):
 * From _GitHub_ sources:
     * `$ node run.js`
 * From _NPM_:
-    * `$ node ./node_modules/rpi-jenkins-light/run.js`
+    * `$ node ./node_modules/rpi-jenkins-light/run.js`.
 
 ### Autorun application after reboot
 * `$ sudo su` (need for global modules)
 * `$ npm install pm2 -g`
 * `$ pm2 startup`
 * `$ pm2 start run.js`
-* `$ pm2 save`
+* `$ pm2 save`.
 
 Thanks for reading!
