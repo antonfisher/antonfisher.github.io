@@ -3,6 +3,7 @@
 Static site located on: [http://antonfisher.com](http://antonfisher.com)
 
 ## ToDo
+
 - [x] About page
 - [x] RSS feed
 - [x] Config file

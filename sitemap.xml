@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+    <url>
+        <loc>http://antonfisher.com</loc>
+        <lastmod>2016-02-02T08:16:36Z</lastmod>
+    </url>
+
+    <url>
+        <loc>http://antonfisher.com/about/</loc>
+        <lastmod>2016-02-02T08:16:36Z</lastmod>
+    </url>
+
+    
+    <url>
+        <loc>http://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light</loc>
+        <lastmod>2016-01-05T00:00:00Z</lastmod>
+    </url>
+    
+    <url>
+        <loc>http://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute</loc>
+        <lastmod>2015-12-23T00:00:00Z</lastmod>
+    </url>
+    
+    <url>
+        <loc>http://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp</loc>
+        <lastmod>2015-12-04T00:00:00Z</lastmod>
+    </url>
+    
+
+</urlset>
