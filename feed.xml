@@ -13,8 +13,8 @@
     
     <entry>
         <title>Make Raspberry Pi Jenkins traffic light</title>
-        <link href="http://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light"/>
+        <link href="http://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light/"/>
+        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light/"/>
         <id>urn:uuid:-posts-2016-01-05-make-raspberry-pi-jenkins-traffic-light</id>
         <updated>2016-01-05T00:00:00Z</updated>
         <summary>
@@ -38,8 +38,8 @@ This device can be good first experience with the Raspberry Pi and it is useful 
     
     <entry>
         <title>Bash: function converts relative file path to absolute</title>
-        <link href="http://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute"/>
+        <link href="http://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute/"/>
+        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute/"/>
         <id>urn:uuid:-posts-2015-12-23-bash-function-converts-relative-file-path-to-absolute</id>
         <updated>2015-12-23T00:00:00Z</updated>
         <summary>
@@ -63,8 +63,8 @@ Also it fits for path which contain '~’.</p>
     
     <entry>
         <title>How to find Raspberry Pi IP address (DHCP)</title>
-        <link href="http://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp"/>
+        <link href="http://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp/"/>
+        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp/"/>
         <id>urn:uuid:-posts-2015-12-04-how-to-find-raspberry-pi-ip-address-dhcp</id>
         <updated>2015-12-04T00:00:00Z</updated>
         <summary>
