@@ -7,9 +7,34 @@
     <link href="http://antonfisher.com/feed.xml" rel="self"/>
     <link href="http://antonfisher.com/"/>
     <id>urn:uuid:c346da00-980f-11e5-a33f-0002a5d5c51b</id>
-    <updated>2016-01-06T07:39:40Z</updated>
+    <updated>2016-02-05T09:56:37Z</updated>
 
 
+    
+    <entry>
+        <title>ExtJs 5: disable app.json caching</title>
+        <link href="http://antonfisher.com/posts/2016/02/05/extjs-5-disable-app-json-caching/"/>
+        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2016/02/05/extjs-5-disable-app-json-caching/"/>
+        <id>urn:uuid:-posts-2016-02-05-extjs-5-disable-app-json-caching</id>
+        <updated>2016-02-05T00:00:00Z</updated>
+        <summary>
+<p>By default <em>ExtJs 5</em> does not disable cache for <code>app.json</code> (or I am wrong?).
+In some cases you get old version from browser cache, even after new build.</p>
+</summary>
+        <content type="xhtml">
+            <div xmlns="http://www.w3.org/1999/xhtml">
+                <img src="http://antonfisher.com/images/posts/4-extjs-5-disable-app-json-caching/extjs-logo.png" />
+                
+<p>By default <em>ExtJs 5</em> does not disable cache for <code>app.json</code> (or I am wrong?).
+In some cases you get old version from browser cache, even after new build.</p>
+...
+            </div>
+        </content>
+        <author>
+            <name>Anton Fisher</name>
+            <email>a.fschr@gmail.com</email>
+        </author>
+    </entry>
     
     <entry>
         <title>Make Raspberry Pi Jenkins traffic light</title>
