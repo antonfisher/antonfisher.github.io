@@ -1,0 +1,163 @@
+!{
+    "title": "Testing ExtJs with Mocha.js",
+    "image": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-demo.gif",
+    "imagePreview": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-logo-300.png",
+    "metaDescription": "extjs, mocha.js, testing",
+    "date": "2016-02-18"
+}
+
+<!-- preview -->
+
+I know two enterprise solutions for testing ExtJs application which have rich interface and functionality:
+[Bryntum Siesta](http://www.bryntum.com/products/siesta/) and new [Sencha Test](https://www.sencha.com/products/test/)
+(I have not tried, it did not have Linux version in beta).
+With contrast to them, here I introduce small library which make testing ExtJs application simpler using great
+open-source Mocha.js framework and Jenkins for nightly running.
+
+<!-- /preview -->
+
+
+And it is called..
+
+## mocha-extjs
+
+[Online demo](http://antonfisher.com/demo/mocha-extjs/)
+
+I develop this small framework for testing ExtJs applications which simulates user actions.
+Common test cases may be:
+- Click on buttons
+- Select and edit cells in grid
+- Fill fields in forms, check disable/enable, visible/hidden states
+- Run action by clicking on button, wait for loading mask, check components' states.
+
+Library uses this syntax:
+```javascript
+it('Click on button "Save"', function (done) {
+    eTT().button('Save').click(done)
+});
+
+it('Select first item in "Country" combobox', function (done) {
+    eTT().combobox('Country').select(1, done)
+});
+```
+
+Search will use component's properties: _title_, _fieldLabel_, _reference_, _boxLabel_, _xtype_, _text_.
+
+## Map of supported components and methods:
+
+First of all initialize library in _index.html_: `var eTT = new MochaExtJs();`.
+
+```
+eTT() -->--->|------->--->|- button ---> (|- '%title%'     )----.
+        |    |       |    |- window       |- '%fieldLabel%'     |
+        |    |- no --'    |- numberfield  |- '%reference%'      |
+        |    |            |- textfield    |- '%boxLabel%'       |
+        |    |            |- checkbox     |- '%xtype%'          |
+        |    |            |- combobox     `- '%text%'           |
+        |    |            |- radio                              |
+        |    |            |- grid        .----------------------x----------------------.
+        |    |            `- tab         |                                             |
+        |    |                           |-->|- click -------> (...) ------------------v
+        |    |                           |   |- isEnabled                              |
+        |    |- waitLoadMask() ------.   |   |- isDisabled                             |
+        |    |                       |   |   |- isHidden                               |
+        |    `- waitText('%text%')---v   |   |- isVisible                              |
+        |                            |   |   |- select                                 |
+        |                            |   |   |- checkRowsCount                         |
+        |                            |   |   |- edit                                   |
+        |                            |   |   `- fill                                   |
+        |                            |   |                                             |
+        |                            |   `--> cellEditor() --->|- select ---> (...) ---v
+        |                            |                         |- click                |
+        |                            |                         `- fill                 |
+        |                            |                                                 |
+        x----------------------------<-------------------------------------------------'
+        |
+        |
+        `--> done.
+```
+
+## Getting Started:
+
+Update _index.html_:
+
+```html
+<body>
+    ...
+
+    <!-- mocha ui -->
+    <div id="mocha"></div>
+
+
+    <!-- mocha library -->
+    <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+    <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+
+    <!-- mocha-extjs library -->
+    <link href="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/dist/mocha-extjs.css"
+          rel="stylesheet" />
+    <script src="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/dist/mocha-extjs.js"></script>
+
+
+    <!-- first test suite -->
+    <script src="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/test/suites/010-environment.js"></script>
+
+
+    <!-- run script -->
+    <script>
+            mocha.checkLeaks();
+            mocha.globals(['Ext', 'Sandbox']); // update name here!
+
+            var eTT = new MochaExtJs(); // init testing framework
+
+            window.onload = function () {
+                setTimeout(function () {
+                    mocha.run();
+                }, 1000);
+            };
+        </script>
+</body>
+```
+Done. Then run your application.
+
+## Test case example
+
+Example uses Mocha asynchronous method: 
+
+```javascript
+// tests/suites/020-buttons.js
+describe('Buttons', function () {
+    this.bail(true);         // exit when first test fails
+    this.timeout(20 * 1000); // necessary timeout for ui operations
+
+    it('Switch to "Buttons" tab', function (done) { // done - async tests callback
+        eTT().tab('Buttons').click(done);
+    });
+
+    it('Click "Simple button" button', function (done) {
+        eTT().button('Simple button').isEnabled().click(done);
+    });
+});
+```
+
+## Installation
+
+Using NPM:
+
+- `$ npm install mocha-extjs`
+- use files from `./dist` folder
+
+or GitHub:
+
+- `git clone git@github.com:antonfisher/mocha-extjs.git`.
+
+## Run with Jenkins
+
+_Cooming soon, waiting for pull request in new release version of one dependency..._
+
+## Links
+
+[GitHub repository](https://github.com/antonfisher/mocha-extjs), 
+[NPM Package](https://www.npmjs.com/package/mocha-extjs)
