@@ -3,6 +3,7 @@
     "image": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-demo.gif",
     "imagePreview": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-logo-300.png",
     "metaDescription": "extjs, mocha.js, testing",
+    "tags": "extjs,mocha,testing,js",
     "date": "2016-02-18"
 }
 
@@ -23,14 +24,14 @@ And it is called..
 
 [Online demo](http://antonfisher.com/demo/mocha-extjs/)
 
-I develop this small framework for testing ExtJs applications which simulates user actions.
+This small library was developed for testing ExtJs applications which simulates user actions.
 Common test cases may be:
-- Click on buttons
+- Click on buttons, fill fields in forms 
 - Select and edit cells in grid
-- Fill fields in forms, check disable/enable, visible/hidden states
+- Check disable/enable, visible/hidden states
 - Run action by clicking on button, wait for loading mask, check components' states.
 
-Library uses this syntax:
+The library uses this syntax:
 ```javascript
 it('Click on button "Save"', function (done) {
     eTT().button('Save').click(done)
@@ -43,7 +44,7 @@ it('Select first item in "Country" combobox', function (done) {
 
 Search will use component's properties: _title_, _fieldLabel_, _reference_, _boxLabel_, _xtype_, _text_.
 
-## Map of supported components and methods:
+## The map of supported components and methods:
 
 First of all initialize library in _index.html_: `var eTT = new MochaExtJs();`.
 
@@ -141,6 +142,7 @@ describe('Buttons', function () {
     });
 });
 ```
+It is possible to combine multipty actions related to one component.
 
 ## Installation
 
@@ -151,7 +153,14 @@ Using NPM:
 
 or GitHub:
 
-- `git clone git@github.com:antonfisher/mocha-extjs.git`.
+- `git clone git@github.com:antonfisher/mocha-extjs.git`
+
+or direct include to `index.html`:
+
+```html
+<link href="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/dist/mocha-extjs.css"rel="stylesheet" />
+<script src="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/dist/mocha-extjs.js"></script>
+```
 
 ## Run with Jenkins
 
