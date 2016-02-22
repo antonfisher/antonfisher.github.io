@@ -3,6 +3,7 @@
     "image": "/images/posts/3-make-raspberry-pi-jenkins-traffic-light/traffic-light-demo.gif",
     "imagePreview": "/images/posts/3-make-raspberry-pi-jenkins-traffic-light/light-before-close-300.jpg",
     "metaDescription": "raspberry pi, traffic light, leds, nodejs",
+    "tags": "raspberry pi,traffic light,leds,nodejs,js",
     "date": "2016-01-05"
 }
 

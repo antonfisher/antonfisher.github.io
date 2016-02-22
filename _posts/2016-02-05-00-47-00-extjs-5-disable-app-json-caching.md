@@ -3,6 +3,7 @@
     "image": "/images/posts/4-extjs-5-disable-app-json-caching/extjs-logo.png",
     "imagePreview": "/images/posts/4-extjs-5-disable-app-json-caching/extjs-logo-300.png",
     "metaDescription": "extjs, cache, app.json",
+    "tags": "extjs,cache,js",
     "date": "2016-02-05"
 }
 

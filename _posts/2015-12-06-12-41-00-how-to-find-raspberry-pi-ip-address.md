@@ -3,6 +3,7 @@
     "image": "/images/posts/1-how-to-find-raspberry-pi-ip-address/raspberry-pi.jpg",
     "imagePreview": "/images/posts/1-how-to-find-raspberry-pi-ip-address/raspberry-pi-300.jpg",
     "metaDescription": "raspberry pi, ip address, bash, nmap",
+    "tags": "raspberry pi,ip address,bash,nmap",
     "date": "2015-12-04"
 }
 
