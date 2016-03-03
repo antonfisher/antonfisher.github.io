@@ -4,15 +4,15 @@
     "imagePreview": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-logo-300.png",
     "metaDescription": "extjs, mocha.js, testing",
     "tags": "extjs,mocha,testing,js",
-    "date": "2016-02-18"
+    "date": "2016-03-02"
 }
 
 <!-- preview -->
 
-I know two enterprise solutions for testing ExtJs application which have rich interface and functionality:
+I know at least two enterprise solutions for testing ExtJs application which have rich interface and functionality:
 [Bryntum Siesta](http://www.bryntum.com/products/siesta/) and new [Sencha Test](https://www.sencha.com/products/test/)
-(I have not tried, it did not have Linux version in beta).
-With contrast to them, here I introduce small library which make testing ExtJs application simpler using great
+(which I have not tried, it did not have Linux version in beta).
+In contrast to them, here I introduce small library which make simpler testing of ExtJs application, uses great
 open-source Mocha.js framework and Jenkins for nightly running.
 
 <!-- /preview -->
@@ -24,7 +24,7 @@ And it is called..
 
 [Online demo](http://antonfisher.com/demo/mocha-extjs/)
 
-This small library was developed for testing ExtJs applications which simulates user actions.
+This small library `mocha-extjs` simulates user actions.
 Common test cases may be:
 - Click on buttons, fill fields in forms 
 - Select and edit cells in grid
@@ -42,7 +42,7 @@ it('Select first item in "Country" combobox', function (done) {
 });
 ```
 
-Search will use component's properties: _title_, _fieldLabel_, _reference_, _boxLabel_, _xtype_, _text_.
+Search will look for component's properties: _title_, _fieldLabel_, _reference_, _boxLabel_, _xtype_, _text_.
 
 ## The map of supported components and methods:
 
@@ -103,7 +103,8 @@ Update _index.html_:
 
 
     <!-- first test suite -->
-    <script src="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/test/suites/010-environment.js"></script>
+    <script src="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/test/suites/010-environment.js">
+    </script>
 
 
     <!-- run script -->
