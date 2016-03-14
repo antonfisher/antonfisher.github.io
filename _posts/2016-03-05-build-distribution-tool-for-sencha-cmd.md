@@ -1,27 +1,52 @@
 !{
     "title": "Build distribution tool for SenchaCMD",
-    "image": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-demo.gif",
-    "imagePreview": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-logo-300.png",
+    "image": "/images/posts/6-sencha-cdm-distrubured-build/dscmd-logo.png",
+    "imagePreview": "/images/posts/6-sencha-cdm-distrubured-build/dscmd-logo.png",
     "metaDescription": "sencha cmd, extjs, bash",
     "tags": "sencha cmd,extjs,bash",
-    "date": "2016-03-05"
+    "date": "2016-03-13"
 }
 
 <!-- preview -->
 
-If your ExtJs application consist of several parts and requires multiply building.
-Or your have to build several copyes of one application.
+Building of ExtJs application with SenchaCMD takes about 1 minute on my 4-cores laptop.
+In current project we have about 20 ExtJs applications which are built to one main application
+(an architectural requirement).
+When I am building whole app, I should take 20-minutes coffee break.
+Sounds not so bad? Not after 3 cups :)
 
 <!-- /preview -->
 
-# Build distribution tool for SenchaCMD
+It happens when your ExtJs application consist of several parts each of them needs to be builded.
+Or you have to build several copies of one application for different environments.
+In my case we have several applications in one _workspace_.
+First of all I disabled all unimportant build features for me, such like theme's sample.
+I wrote small _Bash_ script which helps distribute builds to different VMs:
 
-![Principle pic](https://raw.githubusercontent.com/antonfisher/dscmd/docs/images/dscmd-principle.png)
+<center>
+![Principle pic](/images/posts/6-sencha-cdm-distrubured-build/dscmd-principle.png)
+</center>
 
-## Result on Jenkins builds chart
-![Result](https://raw.githubusercontent.com/antonfisher/dscmd/docs/images/dscmd-jenkins-builds-chart.png)
+This is Jenkins result for 3 distributed VMs used instead one:
 
-__Note:__ 3 distributed VMs used instead one master.
+<center>
+![Result](/images/posts/6-sencha-cdm-distrubured-build/dscmd-jenkins-builds-chart.png)
+</center>
+
+Looks cool?
+
+Repository on [GitHub](https://github.com/antonfisher/dscmd).
+
+## Features
+
+* manage build-agents from one master
+* add/remove build-agent, install requirements (Java, SenchaCMD, ...)
+* getting all applications in folder automatically
+* possible to run by Jenkins
+* shows build time.
+
+## System requrements
+* Linux base system.
 
 ## Installation
 * Copy `dscmd.sh` script to your Sencha applications workspace;
@@ -30,7 +55,7 @@ __Note:__ 3 distributed VMs used instead one master.
 * Run `$./dscmd.sh config`.
 
 ## Usage
-
+&nbsp;
 ```
 $ ./dscmd.sh
 Build distribution tool for SenchaCMD v0.1.2 [beta]
@@ -51,6 +76,19 @@ Usage:
 ### Run distributed build
 * Run `$ ./dscmd.sh build --all` to build all application in applications folder;
 * Or run `$ ./dscmd.sh build applicationName1,applicationName2`.
+
+
+## Agents
+
+In my case I depoyed this list of VMs:
+<center>
+![VM list](/images/posts/6-sencha-cdm-distrubured-build/vms-list.png)
+</center>
+
+Each of them has the same configuration:
+<center>
+![VM configuration](/images/posts/6-sencha-cdm-distrubured-build/vm-config.png)
+</center>
 
 ## Under hood
 ```
