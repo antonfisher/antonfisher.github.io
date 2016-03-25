@@ -1,5 +1,5 @@
 {
-    "title": "ExtJs 5: disable app.json caching",
+    "title": "ExtJS 5: disable app.json caching",
     "image": "/images/posts/4-extjs-5-disable-app-json-caching/extjs-logo.png",
     "imagePreview": "/images/posts/4-extjs-5-disable-app-json-caching/extjs-logo-300.png",
     "metaDescription": "extjs, cache, app.json",
@@ -9,7 +9,7 @@
 
 <!-- preview -->
 
-By default _ExtJs 5_ does not disable cache for `app.json` (or I am wrong?).
+By default _ExtJS 5_ does not disable cache for `app.json` (or I am wrong?).
 In some cases you get old version from browser cache, even after new build.
 
 <!-- /preview -->

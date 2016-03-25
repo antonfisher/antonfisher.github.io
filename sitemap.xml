@@ -7,14 +7,19 @@
 
     <url>
         <loc>http://antonfisher.com</loc>
-        <lastmod>2016-02-05T09:56:37Z</lastmod>
+        <lastmod>2016-03-25T07:43:06Z</lastmod>
     </url>
 
     <url>
         <loc>http://antonfisher.com/about/</loc>
-        <lastmod>2016-02-05T09:56:37Z</lastmod>
+        <lastmod>2016-03-25T07:43:06Z</lastmod>
     </url>
 
+    
+    <url>
+        <loc>http://antonfisher.com/posts/2016/03/25/build-distribution-tool-for-senchacmd/</loc>
+        <lastmod>2016-03-25T00:00:00Z</lastmod>
+    </url>
     
     <url>
         <loc>http://antonfisher.com/posts/2016/02/05/extjs-5-disable-app-json-caching/</loc>
