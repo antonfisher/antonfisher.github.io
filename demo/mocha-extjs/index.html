@@ -44,22 +44,26 @@ Ext.getResourcePath=function(l,m,r){"string"!==typeof l&&(m=l.pool,r=l.packageNa
 Ext.Microloader=Ext.Microloader||function(){var l=Ext.Boot,m=[],r=!1,k={detectPlatformTags:function(){Ext.beforeLoad&&Ext.beforeLoad(Ext.platformTags)},initPlatformTags:function(){k.detectPlatformTags()},init:function(){k.initPlatformTags();var f=Ext._beforereadyhandler;Ext._beforereadyhandler=function(){Ext.Boot!==l&&(Ext.apply(Ext.Boot,l),Ext.Boot=l);f&&f()}},run:function(){k.init();var f=Ext.manifest;if("string"===typeof f){var m=f.indexOf(".json")===f.length-5?f:f+".json";l.fetch(m,function(l){f=
 Ext.manifest=JSON.parse(l.content);k.load(f)})}else k.load(f)},load:function(f){var m=f.loadOrder,y=m?l.createLoadOrderMap(m):null,w=[],t=f.js||[],u=f.css||[],j,s=function(){r=!0;k.notify()};m&&(f.loadOrderMap=y);for(var x=u.concat(t),u=x.length,t=0;t<u;t++)f=x[t],j=!0,f.platform&&!l.filterPlatform(f.platform)&&(j=!1),j&&w.push(f.path);l.load({url:w,loadOrder:m,loadOrderMap:y,sequential:!0,success:s,failure:s})},onMicroloaderReady:function(f){r?f():m.push(f)},notify:function(){for(var f;f=m.shift();)f()}};
 return k}();Ext.manifest=Ext.manifest||"bootstrap";Ext.Microloader.run();</script>
+
+    <link href="http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.css" rel="stylesheet"/>
+    <link href="/dist/mocha-extjs.css" rel="stylesheet"/>
+    <script src="http://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+    <script src="http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.js"></script>
+    <script src="/dist/mocha-extjs.js"></script>
 </head>
 <body>
 
 <!-- mocha.js --->
 <div id="mocha"></div>
 
-<link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet"/>
-<link href="dist/mocha-extjs.css" rel="stylesheet"/>
-
-<script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
-<script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
-<script src="dist/mocha-extjs.js"></script>
-
-<script>mocha.setup('bdd')</script>
-<script src="test/suites/010-environment.js"></script>
-<script src="test/suites/020-buttons.js"></script>
+<script>
+    if (typeof window.initMochaPhantomJS === 'function') {
+        window.initMochaPhantomJS()
+    }
+    mocha.setup('bdd')
+</script>
+<script src="/test/suites/010-environment.js"></script>
+<script src="/test/suites/020-buttons.js"></script>
 <script src="test/suites/030-windows.js"></script>
 <script src="test/suites/040-fields.js"></script>
 <script src="test/suites/050-grids.js"></script>
@@ -68,10 +72,6 @@ return k}();Ext.manifest=Ext.manifest||"bootstrap";Ext.Microloader.run();</scrip
 <script>
     mocha.checkLeaks();
     mocha.globals(['Ext', 'Sandbox']);
-
-    if (window.initMochaPhantomJS) {
-        window.initMochaPhantomJS();
-    }
 
     var eTT = new MochaExtJs();
 
