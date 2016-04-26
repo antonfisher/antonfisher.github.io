@@ -93,6 +93,7 @@ Update _index.html_:
     <script src="http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.js"></script>
     <script src="http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"></script>
 </head>
+
 <body>
     ...
 
@@ -166,8 +167,8 @@ or GitHub:
 or direct include to `index.html`:
 
 ```html
-<link href="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/dist/mocha-extjs.css"rel="stylesheet" />
-<script src="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/dist/mocha-extjs.js"></script>
+<link href="http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.css" rel="stylesheet"/>
+<script src="http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"></script>
 ```
 
 ## Run with Jenkins
