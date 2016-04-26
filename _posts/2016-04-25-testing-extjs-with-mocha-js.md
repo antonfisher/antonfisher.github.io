@@ -4,15 +4,15 @@
     "imagePreview": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-logo-300.png",
     "metaDescription": "extjs, mocha.js, testing",
     "tags": "extjs,mocha,testing,js",
-    "date": "2016-03-02"
+    "date": "2016-04-25"
 }
 
 <!-- preview -->
 
 I know at least two enterprise solutions for testing ExtJs application which have rich interface and functionality:
 [Bryntum Siesta](http://www.bryntum.com/products/siesta/) and new [Sencha Test](https://www.sencha.com/products/test/)
-(which I have not tried, it did not have Linux version in beta).
-In contrast to them, here I introduce small library which make simpler testing of ExtJs application, uses great
+(which I have not tried, it did not have Linux version in beta as I know).
+In contrast to them, here I present small library which make simpler testing of ExtJs application, uses great
 open-source Mocha.js framework and Jenkins for nightly running.
 
 <!-- /preview -->
@@ -83,43 +83,50 @@ eTT() -->--->|------->--->|- button ---> (|- '%title%'     )----.
 Update _index.html_:
 
 ```html
+<head>
+    ...
+    
+    <link href="http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.css" rel="stylesheet"/>
+    <link href="http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.css" rel="stylesheet"/>
+    
+    <script src="http://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+    <script src="http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.js"></script>
+    <script src="http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"></script>
+</head>
 <body>
     ...
 
     <!-- mocha ui -->
     <div id="mocha"></div>
 
-
-    <!-- mocha library -->
-    <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
-    <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
-    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
-
-
-    <!-- mocha-extjs library -->
-    <link href="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/dist/mocha-extjs.css"
-          rel="stylesheet" />
-    <script src="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/dist/mocha-extjs.js"></script>
-
-
+    <script>
+        if (typeof window.initMochaPhantomJS === 'function') {
+            window.initMochaPhantomJS()
+        }
+        mocha.setup('bdd')
+    </script>
+    
     <!-- first test suite -->
-    <script src="https://raw.githubusercontent.com/antonfisher/mocha-extjs/master/test/suites/010-environment.js">
+    <script src="http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/test/suites/010-environment.js">
     </script>
 
 
     <!-- run script -->
     <script>
-            mocha.checkLeaks();
-            mocha.globals(['Ext', 'Sandbox']); // update name here!
-
-            var eTT = new MochaExtJs(); // init testing framework
-
-            window.onload = function () {
-                setTimeout(function () {
+        mocha.checkLeaks();
+        mocha.globals(['Ext', 'Sandbox']);
+    
+        var eTT = new MochaExtJs();
+    
+        window.onload = function () {
+            var interval = setInterval(function () {
+                if (typeof Ext !== 'undefined' && typeof Sandbox !== 'undefined') {
+                    clearInterval(interval);
                     mocha.run();
-                }, 1000);
-            };
-        </script>
+                }
+            }, 200);
+        };
+    </script>
 </body>
 ```
 Done. Then run your application.
