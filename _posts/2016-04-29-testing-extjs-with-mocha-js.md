@@ -2,51 +2,59 @@
     "title": "Testing ExtJs with Mocha.js",
     "image": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-demo.gif",
     "imagePreview": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-logo-300.png",
-    "metaDescription": "extjs, mocha.js, testing",
-    "tags": "extjs,mocha,testing,js",
-    "date": "2016-04-25"
+    "metaDescription": "extjs, mochajs, testing",
+    "tags": "extjs,mochajs,testing,js",
+    "date": "2016-04-29"
 }
 
 <!-- preview -->
 
-I know at least two enterprise solutions for testing ExtJs application which have rich interface and functionality:
-[Bryntum Siesta](http://www.bryntum.com/products/siesta/) and new [Sencha Test](https://www.sencha.com/products/test/)
-(which I have not tried, it did not have Linux version in beta as I know).
-In contrast to them, here I present small library which make simpler testing of ExtJs application, uses great
-open-source Mocha.js framework and Jenkins for nightly running.
+At least two enterprise solutions exists for testing _ExtJs_ applications.
+They have rich user interface and functionality:
+_[Siesta](http://www.bryntum.com/products/siesta/)_ (_Bryntum_)
+and new _[Sencha Test](https://www.sencha.com/products/test/)_.
+In contrast to them, here I present small library which allows testing _ExtJs_ application.
+It uses great open-source _Mocha.js_ framework and _PhantomJs_ for nightly running.
 
 <!-- /preview -->
 
-
-And it is called..
 
 ## mocha-extjs
 
 [Online demo](http://antonfisher.com/demo/mocha-extjs/)
 
-This small library `mocha-extjs` simulates user actions.
-Common test cases may be:
-- Click on buttons, fill fields in forms 
-- Select and edit cells in grid
-- Check disable/enable, visible/hidden states
-- Run action by clicking on button, wait for loading mask, check components' states.
+The aim was to build library which suits for
+[End-to-End](https://www.techopedia.com/definition/7035/end-to-end-test) testing for singe-page Web-applications
+([RIA](https://en.wikipedia.org/wiki/Rich_Internet_application)).
 
-The library uses this syntax:
+Advantages:
+- run tests exactly into real application with actions visualisation
+- run CI tests using _[PhantomJs](http://phantomjs.org/)_.
+
+This small library _mocha-extjs_ simulates user actions.
+Common test cases can be:
+- click on buttons, fill fields in forms 
+- select and edit cells in grid
+- check disable/enable, visible/hidden states
+- run action by clicking on button, wait for loading mask, check components' states.
+
+Library uses chain-base syntax, where `eTT()` is a function which creates new chain:
 ```javascript
 it('Click on button "Save"', function (done) {
-    eTT().button('Save').click(done)
+    eTT().button('Save').click(done);
 });
 
 it('Select first item in "Country" combobox', function (done) {
-    eTT().combobox('Country').select(1, done)
+    eTT().combobox('Country').select(1, done);
 });
 ```
 
-Search will look for component's properties: _title_, _fieldLabel_, _reference_, _boxLabel_, _xtype_, _text_.
+Search of components on a page will look for component's properties:
+_title_, _fieldLabel_, _reference_, _boxLabel_, _xtype_, _text_.
 
 ## The map of supported components and methods:
 
-First of all initialize library in _index.html_: `var eTT = new MochaExtJs();`.
+First of all initialize library in the _index.html_ file: `var eTT = new MochaExtJs();`.
 
 ```
 eTT() -->--->|------->--->|- button ---> (|- '%title%'     )----.
@@ -80,15 +88,15 @@ eTT() -->--->|------->--->|- button ---> (|- '%title%'     )----.
 
 ## Getting Started:
 
-Update _index.html_:
+For trying library update the _index.html_ file like here:
 
 ```html
 <head>
     ...
-    
+
     <link href="http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.css" rel="stylesheet"/>
     <link href="http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.css" rel="stylesheet"/>
-    
+
     <script src="http://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
     <script src="http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.js"></script>
     <script src="http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"></script>
@@ -101,9 +109,12 @@ Update _index.html_:
     <div id="mocha"></div>
 
     <script>
+        // necessary of mocha-phantomjs
         if (typeof window.initMochaPhantomJS === 'function') {
             window.initMochaPhantomJS()
         }
+        
+        // setup mocha before first test-suite!
         mocha.setup('bdd')
     </script>
     
@@ -111,8 +122,7 @@ Update _index.html_:
     <script src="http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/test/suites/010-environment.js">
     </script>
 
-
-    <!-- run script -->
+    <!-- configure and run Mocha.js -->
     <script>
         mocha.checkLeaks();
         mocha.globals(['Ext', 'Sandbox']);
@@ -130,14 +140,19 @@ Update _index.html_:
     </script>
 </body>
 ```
-Done. Then run your application.
+Tests will run after opening application in browser.
+For more information about _Mocha.js_ configuration see [docs](http://mochajs.org).
+Let's create first test case now.
 
 ## Test case example
 
-Example uses Mocha asynchronous method: 
+Test files can be stored anywere, just include it in _index.html_.
+You should pass _Mocha.js_ `done` callback to the last method in `eTT()` chain:
 
 ```javascript
 // tests/suites/020-buttons.js
+// Variable eTT was defined globaly in index.html (var eTT = new MochaExtJs())
+
 describe('Buttons', function () {
     this.bail(true);         // exit when first test fails
     this.timeout(20 * 1000); // necessary timeout for ui operations
@@ -151,7 +166,6 @@ describe('Buttons', function () {
     });
 });
 ```
-It is possible to combine multipty actions related to one component.
 
 ## Installation
 
@@ -171,11 +185,37 @@ or direct include to `index.html`:
 <script src="http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"></script>
 ```
 
-## Run with Jenkins
+## Run with PhantomJs
 
-_Cooming soon, waiting for pull request in new release version of one dependency..._
+It works now, but some hack is needed.
+Just upgrade one of `mocha-phantomjs` dependencies to latest version:
+
+```bash
+$ npm install
+$ cd ./node_modules/mocha-phantomjs
+$ npm install mocha-phantomjs-core@2.0.1
+```
+
+Self library check:
+
+```bash
+$ npm test
+```
+
+Run tests on console:
+
+```bash
+# http://localhost:3000 - application address
+$ ./node_modules/mocha-phantomjs/bin/mocha-phantomjs --timeout 15000 --path ./node_modules/phantomjs/bin/phantomjs --view 1024x768 http://localhost:3000
+```
+Console output example:
+![PhantomJs run example](/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-phantomjs.png)
 
 ## Links
 
-[GitHub repository](https://github.com/antonfisher/mocha-extjs), 
-[NPM Package](https://www.npmjs.com/package/mocha-extjs)
+Library on [GitHub](https://github.com/antonfisher/mocha-extjs),
+[NPM Package](https://www.npmjs.com/package/mocha-extjs) page.
+
+## -
+
+Thanks for reading. I will glad to get any feedback!
