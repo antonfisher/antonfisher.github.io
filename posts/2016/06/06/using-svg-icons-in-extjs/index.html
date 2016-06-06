@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<!--
+ _____     _           _____ _     _
+|  _  |___| |_ ___ ___|   __|_|___| |_ ___ ___   ___ ___ _____
+|     |   |  _| . |   |   __| |_ -|   | -_|  _|_|  _| . |     |
+|__|__|_|_|_| |___|_|_|__|  |_|___|_|_|___|_| |_|___|___|_|_|_|
+
+Anton Fisher <a.fschr@gmail.com>
+
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title lang="en">Anton Fisher's notes / Using SVG icons in ExtJs</title>
+    <meta name="description" content="extjs, svg, svg sprite, icons">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Anton Fisher">
+    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="icon" href="/favicon.ico">
+</head>
+<body>
+<div class="container">
+    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/" class="title" title="Home">
+            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
+        </a>
+
+        <nav>
+            <div class="link">
+                <a href="/about" title="About">about</a>
+            </div>
+            <div class="link">
+                <a href="/feed.xml" title="RSS feed link">rss</a>
+            </div>
+        </nav>
+
+        <a href="/about">
+            <img src="/images/anton-fisher-v1.jpg"
+                 title="Contact information"
+                 itemprop="image"
+                 alt="About">
+        </a>
+
+        <div class="clear"></div>
+    </header>
+
+    <div class="content">
+        
+<article itemscope itemtype="http://schema.org/Article">
+    <h1 itemprop="name">Using SVG icons in ExtJs</h1>
+    <time itemprop="datePublished" content="2016-06-06" datetime="2016-06-06">2016-06-06</time>
+
+    
+    <span class="tags">
+        tags:
+        <a href="/tags/extjs/">extjs</a>
+        <a href="/tags/svg/">svg</a>
+        <a href="/tags/icons/">icons</a>
+        
+    </span>
+    
+
+    <div class="clear"></div>
+
+    <img itemprop="image" src="/images/posts/7-using-svg-icons-in-extjs/using-svg-icons-in-extjs-logo.png">
+    <div class="clear"></div>
+
+    <span itemprop="headline"><p>
+<p>In this issue we will figure out how to use any <em>SVG</em> icons in <em>ExtJs</em> buttons.
+All icons will be combined to a single sprite which injected to <code>index.html</code>.
+Example uses <em>Google Icons</em> set.</p>
+</p></span> <span itemprop="articleBody">
+<p><em>ExtJs</em> has several ways to add an icon on a button.
+Here are these properties:</p>
+<ul>
+<li><code>iconCls</code> + css class which defines background image</li>
+<li><code>icon</code> + path to icon which will be used in background property</li>
+<li><code>glyph</code> + font-based symbol, see <a href="http://docs.sencha.com/extjs/6.0/6.0.1-classic/#!/api/Ext.button.Button">docs…</a></li>
+</ul>
+<p>Let’s add some <em>SVG</em> here.</p>
+<h2>Prepare <em>SVG</em> sprite</h2>
+<p>Let’s create <em>SVG</em> sprite which contains all needed icons in project.
+For this tutorial, I will use icons from <a href="https://design.google.com/icons/">https://design.google.com/icons/</a>.
+But it can be any other <em>SVG</em> icons created in a vector-graphic software.
+I selected <em>Save</em> and <em>Delete</em> icons from the set:
+<center>
+<img src="/images/posts/7-using-svg-icons-in-extjs/google-icons.png" alt="Google Icons" />
+</center></p>
+<p>Download <em>SVG</em> files of selected icons, e.g. <em>Save</em> icon will look like:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"#FFFFFF"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"24"</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"24"</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.w3.org/2000/svg"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
+</code></pre>
+<p>Then combine icons into a single <em>SVG</em> sprite,
+all <code>paths</code> of each icon should be into a separate <code>symbol</code> tag and has unique <em>id:</em></p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.w3.org/2000/svg"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"position:absolute;height:0;width:0;"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">defs</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"svg-icon-save"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">symbol</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"svg-icon-delete"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0V0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">symbol</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">defs</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
+</code></pre>
+<h2>Include the sprite into <em>index.html</em></h2>
+<p>For include our sprite into page just paste it before <code>&lt;/body&gt;</code> tag:</p>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- other stuff here--&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.w3.org/2000/svg"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"position:absolute;height:0;width:0;"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">defs</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"svg-icon-save"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">symbol</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"svg-icon-delete"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0V0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"</span>/&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">symbol</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">defs</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<p><em>SVG</em> sprite should be hidden on a page, so <code>position:absolute;height:0;width:0;</code> style was applied here.</p>
+<h2>Override <em>Button</em> class</h2>
+<p>The next step is overriding <em>Button</em> class to support new button’s parameter <code>iconSvg</code>.
+Create a file <code>%APP_FOLDER%/overrides/button/Button.js</code> and copy this code into it:</p>
+<pre><code class="language-javascript"><span class="hljs-comment">// overrides/button/Button.js</span>
+Ext.define(<span class="hljs-string">'Override.button.Button'</span>, {
+    override: <span class="hljs-string">'Ext.button.Button'</span>,
+
+    <span class="hljs-comment">// inject svg to icon template</span>
+    iconTpl: [
+        <span class="hljs-string">'&lt;span id="{id}-btnIconEl" data-ref="btnIconEl" role="presentation" unselectable="on" '</span>,
+            <span class="hljs-string">'class="{baseIconCls} {baseIconCls}-{ui} {iconCls} {glyphCls}{childElCls}" '</span>,
+            <span class="hljs-string">'style="'</span>,
+                <span class="hljs-string">'&lt;tpl if="iconUrl"&gt;background-image:url({iconUrl});&lt;/tpl&gt;'</span>,
+                <span class="hljs-string">'&lt;tpl if="glyph &amp;&amp; glyphFontFamily"&gt;font-family:{glyphFontFamily};&lt;/tpl&gt;'</span>,
+                <span class="hljs-string">'&lt;tpl if="iconSvg"&gt;display: inline-block;&lt;/tpl&gt;'</span>,
+            <span class="hljs-string">'"&gt;'</span>,
+            <span class="hljs-string">'&lt;tpl if="glyph"&gt;&amp;#{glyph};&lt;/tpl&gt;'</span>,
+            <span class="hljs-string">'&lt;tpl if="iconCls || iconUrl"&gt;&amp;#160;&lt;/tpl&gt;'</span>,
+            <span class="hljs-string">'&lt;tpl if="iconSvg"&gt;'</span>, <span class="hljs-comment">// new property</span>
+                <span class="hljs-string">'&lt;svg class="svg-icon svg-icon-{iconSvg}"&gt;&lt;use xlink:href="#svg-icon-{iconSvg}"&gt;&lt;/use&gt;&lt;/svg&gt;'</span>,
+            <span class="hljs-string">'&lt;/tpl&gt;'</span>,
+        <span class="hljs-string">'&lt;/span&gt;'</span>
+    ].join(<span class="hljs-string">''</span>),
+
+    <span class="hljs-comment">// extend template values</span>
+    getTemplateArgs: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">var</span> args = <span class="hljs-keyword">this</span>.callParent();
+        args.iconSvg = <span class="hljs-keyword">this</span>.iconSvg;
+        <span class="hljs-keyword">return</span> args;
+    }
+});
+</code></pre>
+<p>Looks like a lot of changes, but actually here are two small things:</p>
+<ul>
+<li>new property in template</li>
+</ul>
+<pre><code class="language-javascript"><span class="hljs-string">'&lt;tpl if="iconSvg"&gt;'</span>, <span class="hljs-comment">// new property</span>
+    <span class="hljs-string">'&lt;svg class="svg-icon svg-icon-{iconSvg}"&gt;&lt;use xlink:href="#svg-icon-{iconSvg}"&gt;&lt;/use&gt;&lt;/svg&gt;'</span>,
+<span class="hljs-string">'&lt;/tpl&gt;'</span>,
+</code></pre>
+<ul>
+<li>overrided <code>getTemplateArgs</code> function to add <code>iconSvg</code> parameter into template’s values object.</li>
+</ul>
+<h2>Add styles for new icons</h2>
+<p>Add <em>CSS</em> styles for the icons to an appropriate place, e.i. <code>%APP_FOLDER%/sass/etc/svg-icons.scss</code>:</p>
+<pre><code class="language-css"><span class="hljs-selector-class">.svg-icon</span> {
+  <span class="hljs-attribute">fill</span>: <span class="hljs-number">#ffffff</span>;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">24px</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">24px</span>;
+}
+
+<span class="hljs-selector-class">.svg-icon-save</span> {
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> <span class="hljs-number">1px</span> <span class="hljs-number">0</span> <span class="hljs-number">3px</span>;
+}
+
+<span class="hljs-selector-class">.svg-icon-delete</span> {
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">3px</span>;
+}
+</code></pre>
+<p>Import the new style file <code>svg-icons.scss</code> in <code>%APP_FOLDER%/sass/etc/all.scss</code>:</p>
+<pre><code class="language-scss">@<span class="hljs-keyword">import</span> <span class="hljs-string">"svg-icons"</span>;
+</code></pre>
+<p>If you use a theme package, it will be the best place for the new <code>svg-icons.scss</code> file.</p>
+<p>After all changes, do not forget to re-build the application.</p>
+<h2>Using the new icons with buttons</h2>
+<p>Now we are ready to use our new icons.
+Just add the <code>iconSvg</code> property into button configuration:</p>
+<pre><code class="language-javascript">items: [{
+    xtype: <span class="hljs-string">'button'</span>,
+    text: <span class="hljs-string">'Save'</span>,
+    iconSvg: <span class="hljs-string">'save'</span>, <span class="hljs-comment">// &lt;--- here</span>
+    scale: <span class="hljs-string">'medium'</span>
+}, {
+    xtype: <span class="hljs-string">'button'</span>,
+    text: <span class="hljs-string">'Delete'</span>,
+    iconSvg: <span class="hljs-string">'delete'</span>, <span class="hljs-comment">// &lt;--- and here</span>
+    scale: <span class="hljs-string">'medium'</span>
+}]
+</code></pre>
+<p>Update a page and get the icons on buttons:</p>
+<p><center>
+<img src="/images/posts/7-using-svg-icons-in-extjs/buttons-with-google-icons.png" alt="Buttons with Google Icons" />
+</center></p>
+<p>There was a simplistic solution, which can be improved.
+You could add <em>getter/setter</em> functions for the new property to make it bindable.
+Instead of overriding you could use extended button class.
+For using in other components just add a similar solution to it,
+or place <em>SVG</em> icon template directly to component configuration.
+Injection sprite into <code>index.html</code> can be automated.
+All depends on a project.</p>
+<h2>Links</h2>
+<ul>
+<li>Google Icons:
+<a href="https://design.google.com/icons/">https://design.google.com/icons/</a></li>
+<li>Good article about using <em>SVG</em> icons:
+<a href="https://css-tricks.com/svg-sprites-use-better-icon-fonts/">https://css-tricks.com/svg-sprites-use-better-icon-fonts/</a>.</li>
+</ul>
+<p>Thanks for reading. I will glad to get any feedback!</p>
+</span>
+</article>
+
+<div class="top-border-block share-buttons">
+    <b class="label">Share:</b>
+
+    <!-- twitter -->
+    <a href="https://twitter.com/share" class="twitter-share-button"
+       data-text="Using SVG icons in ExtJs"
+       data-via="afschr">
+        Tweet
+    </a>
+    <script>
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+        if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+        fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+    </script>
+    <!-- /twitter -->
+</div>
+
+<div class="top-border-block comments">
+    <b class="label">Comments:</b>
+    <div id="disqus_thread"></div>
+    <script>
+        if (window.location.hostname !== 'localhost') {
+            var disqus_config = function () {
+                this.page.url = 'http://antonfisher.com/posts/2016/06/06/using-svg-icons-in-extjs/';
+                this.page.identifier = '2016-06-06';
+            };
+            (function () {
+                var d = document, s = d.createElement('script');
+                s.src = '//antonfishercom.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        }
+    </script>
+</div>
+
+    </div>
+
+    <footer>
+        <nav>
+            <a href="/">home</a>
+            <span class="devider">&nbsp;</span>
+            <a href="/about">about</a>
+            <span class="devider">&nbsp;</span>
+            <a href="/feed.xml">rss</a>
+        </nav>
+        <div>
+            &copy;
+            <time><script>document.write(new Date().getFullYear())</script></time>
+            Anton Fisher
+        </div>
+    </footer>
+</div>
+</body>
+<script>
+    if (window.location.hostname !== 'localhost') {
+        (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-44250383-1', 'antonfisher.com');
+        ga('send', 'pageview');
+    }
+</script>
+</html>

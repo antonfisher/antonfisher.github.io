@@ -7,14 +7,19 @@
 
     <url>
         <loc>http://antonfisher.com</loc>
-        <lastmod>2016-05-03T05:42:00Z</lastmod>
+        <lastmod>2016-06-06T07:25:25Z</lastmod>
     </url>
 
     <url>
         <loc>http://antonfisher.com/about/</loc>
-        <lastmod>2016-05-03T05:42:00Z</lastmod>
+        <lastmod>2016-06-06T07:25:25Z</lastmod>
     </url>
 
+    
+    <url>
+        <loc>http://antonfisher.com/posts/2016/06/06/using-svg-icons-in-extjs/</loc>
+        <lastmod>2016-06-06T00:00:00Z</lastmod>
+    </url>
     
     <url>
         <loc>http://antonfisher.com/posts/2016/05/02/testing-extjs-with-mocha-js/</loc>

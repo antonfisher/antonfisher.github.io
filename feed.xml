@@ -7,9 +7,36 @@
     <link href="http://antonfisher.com/feed.xml" rel="self"/>
     <link href="http://antonfisher.com/"/>
     <id>urn:uuid:c346da00-980f-11e5-a33f-0002a5d5c51b</id>
-    <updated>2016-05-03T05:42:00Z</updated>
+    <updated>2016-06-06T07:25:25Z</updated>
 
 
+    
+    <entry>
+        <title>Using SVG icons in ExtJs</title>
+        <link href="http://antonfisher.com/posts/2016/06/06/using-svg-icons-in-extjs/"/>
+        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2016/06/06/using-svg-icons-in-extjs/"/>
+        <id>urn:uuid:-posts-2016-06-06-using-svg-icons-in-extjs</id>
+        <updated>2016-06-06T00:00:00Z</updated>
+        <summary>
+<p>In this issue we will figure out how to use any <em>SVG</em> icons in <em>ExtJs</em> buttons.
+All icons will be combined to a single sprite which injected to <code>index.html</code>.
+Example uses <em>Google Icons</em> set.</p>
+</summary>
+        <content type="xhtml">
+            <div xmlns="http://www.w3.org/1999/xhtml">
+                <img src="http://antonfisher.com/images/posts/7-using-svg-icons-in-extjs/using-svg-icons-in-extjs-logo.png" />
+                
+<p>In this issue we will figure out how to use any <em>SVG</em> icons in <em>ExtJs</em> buttons.
+All icons will be combined to a single sprite which injected to <code>index.html</code>.
+Example uses <em>Google Icons</em> set.</p>
+...
+            </div>
+        </content>
+        <author>
+            <name>Anton Fisher</name>
+            <email>a.fschr@gmail.com</email>
+        </author>
+    </entry>
     
     <entry>
         <title>Testing ExtJs with Mocha.js</title>
