@@ -135,7 +135,7 @@ all <code>paths</code> of each icon should be into a separate <code>symbol</code
 Create a file <code>%APP_FOLDER%/overrides/button/Button.js</code> and copy this code into it:</p>
 <pre><code class="language-javascript"><span class="hljs-comment">// overrides/button/Button.js</span>
 Ext.define(<span class="hljs-string">'Override.button.Button'</span>, {
-    override: <span class="hljs-string">'Ext.button.Button'</span>,
+    <span class="hljs-attr">override</span>: <span class="hljs-string">'Ext.button.Button'</span>,
 
     <span class="hljs-comment">// inject svg to icon template</span>
     iconTpl: [
@@ -198,14 +198,14 @@ Ext.define(<span class="hljs-string">'Override.button.Button'</span>, {
 <p>Now we are ready to use our new icons.
 Just add the <code>iconSvg</code> property into button configuration:</p>
 <pre><code class="language-javascript">items: [{
-    xtype: <span class="hljs-string">'button'</span>,
-    text: <span class="hljs-string">'Save'</span>,
-    iconSvg: <span class="hljs-string">'save'</span>, <span class="hljs-comment">// &lt;--- here</span>
+    <span class="hljs-attr">xtype</span>: <span class="hljs-string">'button'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'Save'</span>,
+    <span class="hljs-attr">iconSvg</span>: <span class="hljs-string">'save'</span>, <span class="hljs-comment">// &lt;--- here</span>
     scale: <span class="hljs-string">'medium'</span>
 }, {
-    xtype: <span class="hljs-string">'button'</span>,
-    text: <span class="hljs-string">'Delete'</span>,
-    iconSvg: <span class="hljs-string">'delete'</span>, <span class="hljs-comment">// &lt;--- and here</span>
+    <span class="hljs-attr">xtype</span>: <span class="hljs-string">'button'</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'Delete'</span>,
+    <span class="hljs-attr">iconSvg</span>: <span class="hljs-string">'delete'</span>, <span class="hljs-comment">// &lt;--- and here</span>
     scale: <span class="hljs-string">'medium'</span>
 }]
 </code></pre>

@@ -156,24 +156,24 @@ But first of all <a href="http://antonfisher.com/posts/2015/12/04/how-to-find-ra
 <h3>Configure</h3>
 <p>Edit <code>$ vim configs/config.js</code> file:</p>
 <pre><code class="language-javascript"><span class="hljs-built_in">module</span>.exports = {
-    rpi: {                          <span class="hljs-comment">// Raspberry Pi sub-config</span>
+    <span class="hljs-attr">rpi</span>: {                          <span class="hljs-comment">// Raspberry Pi sub-config</span>
         gpio: {                     <span class="hljs-comment">// GPIO [General Purpose Input Output] config</span>
             color: {
-                red: <span class="hljs-number">15</span>,            <span class="hljs-comment">// pin # for red color</span>
+                <span class="hljs-attr">red</span>: <span class="hljs-number">15</span>,            <span class="hljs-comment">// pin # for red color</span>
                 yellow: <span class="hljs-number">11</span>,         <span class="hljs-comment">// pin # for yellow color</span>
                 green: <span class="hljs-number">7</span>            <span class="hljs-comment">// pin # for green color</span>
             },
-            outputLevel: {
-                on: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// 3v3   // led turn on output level</span>
+            <span class="hljs-attr">outputLevel</span>: {
+                <span class="hljs-attr">on</span>: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// 3v3   // led turn on output level</span>
                 off: <span class="hljs-literal">false</span> <span class="hljs-comment">// 0v    // led turn off output level</span>
             }
         }
     },
-    jenkins: {                      <span class="hljs-comment">// Jenkins sub-config</span>
+    <span class="hljs-attr">jenkins</span>: {                      <span class="hljs-comment">// Jenkins sub-config</span>
         interval: <span class="hljs-number">5</span> * <span class="hljs-number">1000</span>,         <span class="hljs-comment">// requests interval</span>
         host: <span class="hljs-string">'10.0.0.1'</span>,
-        port: <span class="hljs-string">'8080'</span>,
-        view: <span class="hljs-string">'JenkinsLight'</span>,       <span class="hljs-comment">// http://localhost:8080/view/%VIEW_NAME%/</span>
+        <span class="hljs-attr">port</span>: <span class="hljs-string">'8080'</span>,
+        <span class="hljs-attr">view</span>: <span class="hljs-string">'JenkinsLight'</span>,       <span class="hljs-comment">// http://localhost:8080/view/%VIEW_NAME%/</span>
         demoMode: <span class="hljs-literal">true</span>              <span class="hljs-comment">// demo turn on red-yellow-green lights</span>
     }
 };
