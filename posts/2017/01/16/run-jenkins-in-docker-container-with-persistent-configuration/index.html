@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<!--
+ _____     _           _____ _     _
+|  _  |___| |_ ___ ___|   __|_|___| |_ ___ ___   ___ ___ _____
+|     |   |  _| . |   |   __| |_ -|   | -_|  _|_|  _| . |     |
+|__|__|_|_|_| |___|_|_|__|  |_|___|_|_|___|_| |_|___|___|_|_|_|
+
+Anton Fisher <a.fschr@gmail.com>
+
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title lang="en">Anton Fisher's notes / Run Jenkins in Docker container with persistent configuration</title>
+    <meta name="description" content="jenkins, docker, jenkins in docker container">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Anton Fisher">
+    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" />
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="icon" href="/favicon.ico">
+</head>
+<body>
+<div class="container">
+    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/" class="title" title="Home">
+            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
+        </a>
+
+        <nav>
+            <div class="link">
+                <a href="/about" title="About">about</a>
+            </div>
+            <div class="link">
+                <a href="/feed.xml" title="RSS feed link">rss</a>
+            </div>
+        </nav>
+
+        <a href="/about">
+            <img src="/images/anton-fisher-v1.jpg"
+                 title="Contact information"
+                 itemprop="image"
+                 alt="About">
+        </a>
+
+        <div class="clear"></div>
+    </header>
+
+    <div class="content">
+        
+<article itemscope itemtype="http://schema.org/Article">
+    <h1 itemprop="name">Run Jenkins in Docker container with persistent configuration</h1>
+    <time itemprop="datePublished" content="2017-01-16" datetime="2017-01-16">2017-01-16</time>
+
+    
+    <span class="tags">
+        tags:
+        <a href="/tags/jenkins/">jenkins</a>
+        <a href="/tags/docker/">docker</a>
+        <a href="/tags/github/">github</a>
+        
+    </span>
+    
+
+    <div class="clear"></div>
+
+    <img itemprop="image" src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/run-jenkins-in-docker-container-with-persistent-configuration-logo.png">
+    <div class="clear"></div>
+
+    <span itemprop="headline"><p>
+<p>One day you realised that you lost both disks in the <em>RAID</em> mirror and your <em>Jenkins</em> has gone forever.
+And it is a good chance to build new robust <em>Jenkins</em> architecture!</p>
+<p>This post is about <em>Jenkins</em>, <em>Docker</em> and storing <em>Jenkins</em> configuration on the <em>GitHub</em>.</p>
+</p></span> <span itemprop="articleBody">
+<h2>Overview</h2>
+<p><em>Jenkins</em> can be easily running in the <em>Docker</em> container.
+There are two types of persistent data that you do not want to lose here:</p>
+<ul>
+<li><em>Jenkins</em> configuration (includes tasks)</li>
+<li>task artifacts or build results.</li>
+</ul>
+<p>Usually developers/devops take care about build results,
+but in other hand they often forget about <em>CI</em> system configuration.
+<em>Jenkins</em> team has introduced a <em>pipeline</em> mechanism which allows developer to store a task
+configuration directly in the application code (using <code>Jenkinsfile</code>).
+This helps to reduce amount of things which are stored on <em>Jenkins</em> side.
+Also makes it easy to change build configs directly in the code, and you get configuration versioning.</p>
+<p>What to do with the remaining <em>Jenkins</em> configuration?
+One of the way is to store it in the <em>SCM</em> repository.
+In this case we just need to start a pre-configured <em>Jenkins</em> container on a new setup,
+Jenkins will pull configuration from repository, and then becomes ready to run its tasks.</p>
+<p>Here below is the instruction how to get <em>Jenkins</em> in the <em>Docker</em> container with persistent configuration on <em>GitHub</em>.</p>
+<h2>Project structure</h2>
+<p>The simple way to get boilerplates of all files described in the post is to clone
+<a href="https://github.com/antonfisher/jenkins-in-docker">jenkins-in-docker</a> repository.
+The repotisory contains <code>Dockerfiles</code> for master and agent <em>Jenkins</em> images:</p>
+<pre><code class="language-bash">$ git@github.com:antonfisher/jenkins-in-docker.git
+$ <span class="hljs-built_in">cd</span> jenkins-in-docker
+</code></pre>
+<p>Steps to get all working:</p>
+<ul>
+<li>generate <em>RSA</em> keys for <em>GitHub</em></li>
+<li>build <em>Jenkins</em> master image</li>
+<li>build <em>Jenkins</em> agent image</li>
+<li>run <em>Jenkins</em> in a container</li>
+<li>configure tasks.</li>
+</ul>
+<h2>Generate RSA keys</h2>
+<p>One key is needed for <em>Jenkins</em> configuration repository, another one for your application repository.
+Move to keys folder:</p>
+<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> keys
+</code></pre>
+<p>Now let’s generate <em>RSA</em> keys for <em>Jenkins</em> master image.
+The first file is <code>jenkins.config.id_rsa</code>,
+this one will be used for access to <em>Jenkins</em> configuration on <em>GutHub</em>:</p>
+<pre><code class="language-bash">$ ssh-keygen -t rsa -b 4096 -C <span class="hljs-string">"my@gmail.com"</span>
+Generating public/private rsa key pair.
+Enter file <span class="hljs-keyword">in</span> <span class="hljs-built_in">which</span> to save the key (/home/af/.ssh/id_rsa): jenkins.config.id_rsa
+</code></pre>
+<p>Then create git repository for <em>Jenkins</em> configuration on <em>GitHub</em>, in my case it is called <code>my-jenkins-config</code>.
+Add created key to <em>GutHub</em> (<em>repository → Settings → Keys</em>) with write access (!):
+<center>
+<img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/add-key-to-github.png" alt="Add RSA key to Jenkins config GutHub repository" />
+</center></p>
+<p>The second file is <code>jenkins.application.id_rsa</code>,
+this one will be used to pull your application code by <em>Jenkins</em> master container from <em>GutHub</em>:</p>
+<pre><code class="language-bash">$ ssh-keygen -t rsa -b 4096 -C <span class="hljs-string">"my@gmail.com"</span>
+Generating public/private rsa key pair.
+Enter file <span class="hljs-keyword">in</span> <span class="hljs-built_in">which</span> to save the key (/home/af/.ssh/id_rsa): jenkins.application.id_rsa
+</code></pre>
+<p>Add this key to your application repository keys (<em>repository → Settings → Keys</em>).</p>
+<p>Now we should have these files in the <code>keys</code> folder:</p>
+<pre><code class="language-bash">$ ls <span class="hljs-_">-l</span>
+total 16
+-rw------- 1 af af 3243 Jan 15 18:39 jenkins.application.id_rsa
+-rw-r--r-- 1 af af  743 Jan 15 18:39 jenkins.application.id_rsa.pub
+-rw------- 1 af af 3243 Jan 15 18:33 jenkins.config.id_rsa
+-rw-r--r-- 1 af af  743 Jan 15 18:33 jenkins.config.id_rsa.pub
+</code></pre>
+<h2>Prepare Jenkins master Dockerfile</h2>
+<p>I used this configuration:</p>
+<pre><code class="language-dockerfile"><span class="hljs-keyword">FROM</span> jenkins:<span class="hljs-number">2.32</span>.<span class="hljs-number">1</span>
+<span class="hljs-keyword">MAINTAINER</span> Anton Fisher &lt;a.fschr@gmail.com&gt;
+
+<span class="hljs-comment"># root user for Jenkins, need to get access to /var/run/docker.sock (fix this in the future!)</span>
+<span class="hljs-keyword">USER</span> root
+
+<span class="hljs-comment"># Environment</span>
+<span class="hljs-keyword">ENV</span> HOME /root
+<span class="hljs-keyword">ENV</span> JENKINS_HOME /root/jenkins
+<span class="hljs-keyword">ENV</span> JENKINS_VERSION <span class="hljs-number">2.32</span>.<span class="hljs-number">1</span>
+
+<span class="hljs-comment"># GitHub repository to store _Jenkins_ configuration</span>
+<span class="hljs-keyword">ENV</span> GITHUB_USERNAME antonfisher
+<span class="hljs-keyword">ENV</span> GITHUB_CONFIG_REPOSITORY my-jenkins-config
+
+<span class="hljs-comment"># Make _Jenkins_ home directory</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p <span class="hljs-variable">$JENKINS_HOME</span>
+</span>
+<span class="hljs-comment"># Install _Jenkins_ plugins</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> /usr/<span class="hljs-built_in">local</span>/bin/install-plugins.sh \
+    scm-sync-configuration:0.0.10 \
+    workflow-aggregator:2.4 \
+    docker-workflow:1.8
+</span>
+<span class="hljs-comment"># Set timezone</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"America/Los_Angeles"</span> &gt; /etc/timezone &amp;&amp;\
+    dpkg-reconfigure --frontend noninteractive tzdata &amp;&amp;\
+    date
+</span>
+<span class="hljs-comment"># Copy RSA keys for _Jenkins_ config repository (default keys).</span>
+<span class="hljs-comment"># This public key should be added to:</span>
+<span class="hljs-comment"># https://github.com/%YOUR_JENKINS_CONFIG_REPOSITORY%/settings/keys</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.config.id_rsa     <span class="hljs-variable">$HOME</span>/.ssh/id_rsa
+</span><span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.config.id_rsa.pub <span class="hljs-variable">$HOME</span>/.ssh/id_rsa.pub
+</span><span class="hljs-keyword">RUN</span><span class="bash"> chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/id_rsa &amp;&amp;\
+    chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/id_rsa.pub
+</span><span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentityFile <span class="hljs-variable">$HOME</span>/.ssh/id_rsa"</span> &gt;&gt; /etc/ssh/ssh_config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    StrictHostKeyChecking no      "</span> &gt;&gt; /etc/ssh/ssh_config
+</span><span class="hljs-keyword">RUN</span><span class="bash"> /bin/bash -c <span class="hljs-string">"eval '<span class="hljs-variable">$(ssh-agent -s)</span>'; ssh-add <span class="hljs-variable">$HOME</span>/.ssh/id_rsa;"</span>
+</span>
+<span class="hljs-comment"># Copy RSA keys for your application repository and add</span>
+<span class="hljs-comment"># host 'github.com-application-jenkins' for application code pulls.</span>
+<span class="hljs-comment"># This public key should be added to</span>
+<span class="hljs-comment"># https://github.com/%YOUR_APPLICATION_REPOSITORY%/settings/keys</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.application.id_rsa     <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa
+</span><span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.application.id_rsa.pub <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa.pub
+</span><span class="hljs-keyword">RUN</span><span class="bash"> chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa &amp;&amp;\
+    chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa.pub
+</span><span class="hljs-keyword">RUN</span><span class="bash"> touch <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Host github.com-application-jenkins                     "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    HostName       github.com                           "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    User           git                                  "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentityFile   <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa"</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentitiesOnly yes                                  "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config
+</span>
+<span class="hljs-comment"># Configure git</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> git config --global user.email <span class="hljs-string">"jenkins@container"</span> &amp;&amp;\
+    git config --global user.name  <span class="hljs-string">"jenkins"</span>
+</span>
+<span class="hljs-comment"># Clone _Jenkins_ config</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">cd</span> /tmp &amp;&amp;\
+    git <span class="hljs-built_in">clone</span> git@github.com:<span class="hljs-variable">$GITHUB_USERNAME</span>/<span class="hljs-variable">$GITHUB_CONFIG_REPOSITORY</span>.git &amp;&amp;\
+    cp -r <span class="hljs-variable">$GITHUB_CONFIG_REPOSITORY</span>/. <span class="hljs-variable">$JENKINS_HOME</span> &amp;&amp;\
+    rm -r /tmp/<span class="hljs-variable">$GITHUB_CONFIG_REPOSITORY</span>
+</span>
+<span class="hljs-comment"># _Jenkins_ workspace for sharing between containers</span>
+<span class="hljs-keyword">VOLUME</span><span class="bash"> <span class="hljs-variable">$JENKINS_HOME</span>/workspace
+</span>
+<span class="hljs-comment"># Run init.sh script after container start</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> src/init.sh /usr/<span class="hljs-built_in">local</span>/bin/init.sh
+</span><span class="hljs-keyword">ENTRYPOINT</span><span class="bash"> [<span class="hljs-string">"/bin/tini"</span>, <span class="hljs-string">"--"</span>, <span class="hljs-string">"/usr/local/bin/init.sh"</span>]
+</span></code></pre>
+<p>Jenkins plugins are listed in the <code>Dockerfile</code>:</p>
+<ul>
+<li><code>scm-sync-configuration:0.0.10</code> – to store <em>Jenkins</em> configuration in any <em>SCM</em>
+(<a href="https://wiki.jenkins-ci.org/display/JENKINS/SCM+Sync+configuration+plugin">link</a>)</li>
+<li><code>workflow-aggregator:2.4</code> – to enable <em>Jenkins</em> pipelines, task configuration
+(<a href="https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin">link</a>)</li>
+<li><code>docker-workflow:1.9</code> – to run <em>Jenkins</em> agents in <em>Docker</em> containers
+(<a href="https://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Docker+Pipeline+Plugin">link</a>).</li>
+</ul>
+<p>If you need other plugins, here is a right place to add them.</p>
+<p>Now we are ready to build <em>Jenkins</em> master container, there is a script to do this.
+The script just copies <em>RSA</em> keys to <code>images/master/keys</code>
+folder to use them during the build (this is Docker restrictions).</p>
+<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> images/master
+$ bin/image-build.sh
+</code></pre>
+<p>New <em>Docker</em> image should appear here:</p>
+<pre><code class="language-bash">$ docker images
+REPOSITORY             TAG            IMAGE ID             CREATED               SIZE
+jenkins-master         latest         a8f0c50f9ff6         2 minutes ago         719.3 MB
+</code></pre>
+<h3>Run Jenkins</h3>
+<p>There is a script to run Jenkins:</p>
+<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> images/master
+$ bin/container-run.sh
+</code></pre>
+<p>During the first startup <em>Jenkins</em> requires initial setup, it provides temporary password in a console output:</p>
+<pre><code class="language-bash">...
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+
+805<span class="hljs-built_in">cd</span>12be95149e4b275fd71f6f0fcf1
+...
+</code></pre>
+<p>Just copy the password and open <a href="http://localhost:8080">http://localhost:8080</a> in the browser.</p>
+<p><center>
+<img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-after-start.png" alt="Jenkins right after start" />
+</center></p>
+<p>Go through installation but do NOT install any plugins in <em>Jenkins</em> installation wizard! Just skip this step.
+After that open <em>Jenkins</em> settings to configure synchronization with <em>GitHub</em>:
+<a href="http://localhost:8080/configure">http://localhost:8080/configure</a> → &quot;<em>Configure System</em>&quot;.
+There is my &quot;<em>SCM Sync configuration</em>&quot; section:</p>
+<p><center>
+<img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/github-sync-configuration.png" alt="SCM Sync configuration" />
+</center></p>
+<p>After some experiments, I added these files to &quot;<em>Manual synchronization includes</em>&quot; to also be synced with <em>GitHub</em>:</p>
+<ul>
+<li><code>org.jenkinsci.plugins.workflow.flow.FlowExecutionList.xml</code></li>
+<li><code>com.nirima.jenkins.plugins.docker.DockerPluginConfiguration.xml</code></li>
+<li><code>nodes/*/config.xml</code></li>
+<li><code>jobs/**/nextBuildNumber</code></li>
+<li><code>secrets/jenkins.slaves.JnlpSlaveAgentProtocol.secret</code></li>
+<li><code>secrets/master.key</code> (be sure you do not use public repository like me :)</li>
+</ul>
+<p>After pressing the &quot;<em>Save</em>&quot; button, new commits should appear in the configuration repository on <em>GitHub</em>:</p>
+<p><center>
+<img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/github-commits.png" alt="GitHub sync commits" />
+</center></p>
+<h3>First task</h3>
+<p>And let’s create first task to check synchronization and how it works after <em>Jenkins</em> restart.
+<center>
+<img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-create-new-task.png" alt="Jenkins create new task" />
+</center></p>
+<h3>Disaster happens</h3>
+<p>Now is time to simulate disaster, let’s imagine we lost the host with <em>Docker</em> containers.
+To simulate this just stop master container and remove its image:</p>
+<pre><code class="language-bash">$ docker stop jenkins-master
+$ docker rm <span class="hljs-_">-f</span> jenkins-master
+$ docker rmi <span class="hljs-_">-f</span> jenkins-master
+</code></pre>
+<p>To be sure do update <a href="http://localhost:8080/">http://localhost:8080/</a> – nothing is running.</p>
+<p>Now build image from scratch and run it again:</p>
+<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> images/master
+$ ./bin/image-build.sh
+$ ./bin/container-run.sh
+</code></pre>
+<p>…open <a href="http://localhost:8080/">http://localhost:8080/</a>, and here is our pre-configured Jenkins, no installation needed:
+<center>
+<img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-works-after-restart.png" alt="Jenkins works after restart" />
+</center></p>
+<p>The same workflow can be used for update <em>Jenkins</em> or its plugins.</p>
+<h2>Prepare Jenkins Agent Dockerfile</h2>
+<p>In my case it is plain agent which is based on <em>Ubuntu 16.04</em>, just do some image cleanup:</p>
+<pre><code class="language-dockerfile"><span class="hljs-keyword">FROM</span> ubuntu:<span class="hljs-number">16.04</span>
+<span class="hljs-keyword">MAINTAINER</span> Anton Fisher &lt;a.fschr@gmail.com&gt;
+
+<span class="hljs-keyword">USER</span> root
+
+<span class="hljs-comment"># Set timezone</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"America/Los_Angeles"</span> &gt; /etc/timezone &amp;&amp;\
+    dpkg-reconfigure --frontend noninteractive tzdata &amp;&amp;\
+    date
+</span>
+<span class="hljs-comment"># Set locale</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> locale-gen en_US.UTF-8
+</span><span class="hljs-keyword">ENV</span> LANG en_US.UTF-<span class="hljs-number">8</span>
+<span class="hljs-keyword">ENV</span> LANGUAGE en_US:en
+<span class="hljs-keyword">ENV</span> LC_ALL en_US.UTF-<span class="hljs-number">8</span>
+
+<span class="hljs-comment"># Configure and update apt-get</span>
+<span class="hljs-keyword">ENV</span> DEBIAN_FRONTEND <span class="hljs-string">"noninteractive"</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> apt-get -q update &amp;&amp;\
+    apt-get -q install -y -o Dpkg::Options::=<span class="hljs-string">"--force-confnew"</span> apt-utils &amp;&amp;\
+    apt-get -q upgrade -y -o Dpkg::Options::=<span class="hljs-string">"--force-confnew"</span> --no-install-recommends
+</span>
+<span class="hljs-comment"># Install dependencies</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> apt-get -q install -y -o Dpkg::Options::=<span class="hljs-string">"--force-confnew"</span> \
+    libltdl-dev \
+    libltdl7 \
+    sshpass \
+    vim
+</span>
+<span class="hljs-comment"># Clean-up apt-get</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> apt-get -q autoremove &amp;&amp;\
+    apt-get -q clean -y &amp;&amp;\
+    rm -rf /var/lib/apt/lists/* &amp;&amp;\
+    rm <span class="hljs-_">-f</span> /var/cache/apt/*.bin
+</span>
+<span class="hljs-comment"># Disable StrictHostKeyChecking for ssh</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"    StrictHostKeyChecking no"</span> &gt;&gt; /etc/ssh/ssh_config
+</span>
+<span class="hljs-comment"># staying online before force stop container</span>
+<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"tail"</span>, <span class="hljs-string">"-f"</span>, <span class="hljs-string">"/dev/null"</span>]
+</span></code></pre>
+<h2>Configure Jenkins tasks to use container-based agents</h2>
+<p>As I sad above, I use <em>pipelines</em> to keep task configuration in the application code.
+You need to create a <code>Jenkinsfile</code> in your applications repository and then setup <em>Jenkins</em> to use it:</p>
+<p><center>
+<img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-config-jenkinsfile.png" alt="Set Jenkinsfile in configuration" />
+</center></p>
+<p>Let’s see an example:</p>
+<pre><code class="language-groovy">node(<span class="hljs-string">'master'</span>) {
+    docker.withServer(<span class="hljs-string">'unix:///var/run/docker.sock'</span>) {
+        stage(<span class="hljs-string">'Git clone'</span>) {
+            git <span class="hljs-string">'git@github.com-application-jenkins:antonfisher/node-mocha-extjs.git'</span>
+        }
+        stage(<span class="hljs-string">'Build'</span>) {
+            docker
+                .image(<span class="hljs-string">'jenkins-agent-ubuntu'</span>)
+                .inside(<span class="hljs-string">'--volumes-from jenkins-master'</span>) {
+                    sh <span class="hljs-string">"bash ./build.sh;"</span>
+                }
+        }
+        stage(<span class="hljs-string">'Copy build results'</span>) {
+            docker
+                .image(<span class="hljs-string">'jenkins-agent-ubuntu'</span>)
+                .inside(<span class="hljs-string">'--volumes-from jenkins-master'</span>) {
+                    sh <span class="hljs-string">"""
+                        sshpass -plol scp \
+                            "${WORKSPACE}/build/*.tar.gz" \
+                            "backup@1.1.1.1:/buils";
+                    """</span>
+                }
+        }
+        stage(<span class="hljs-string">'UI unit tests'</span>) {
+            docker
+                .image(<span class="hljs-string">'jenkins-agent-ubuntu'</span>)
+                .inside(<span class="hljs-string">'--volumes-from jenkins-master'</span>) {
+                    sh <span class="hljs-string">"""
+                        cd ./tests;
+                        bash ./run.sh;
+                    """</span>
+                }
+        }
+    }
+}
+</code></pre>
+<p>Steps:</p>
+<ul>
+<li><code>node('master') {...}</code> – use <em>Jenkins</em> master to run task</li>
+<li><code>docker.withServer('unix:///var/run/docker.sock') {...}</code> – run agent containers on master’s host</li>
+<li><code>docker.image('jenkins-agent-ubuntu')</code> – run &quot;<em>jenkins-agent-ubuntu</em>&quot; container</li>
+<li><code>.inside('--volumes-from jenkins-master') {...}</code> – use master’s volume (to share source code)</li>
+</ul>
+<p>See <a href="https://go.cloudbees.com/docs/cloudbees-documentation/cje-user-guide/index.html#docker-workflow">docker in pipelines docs</a> for more information.</p>
+<p>Here is how pipelines may look in Jenkins:</p>
+<p><center>
+<img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-pipelines-demo.png" alt="Jenkins pipelines demo" />
+</center></p>
+<h2>Conclusion</h2>
+<p>Here was my story of moving to containers, it is awesome technology, flexible and simple to start using.</p>
+<p>Store all configs in SCM. Keep synced. Feel safe.</p>
+<h2>Links</h2>
+<ul>
+<li><a href="https://github.com/antonfisher/jenkins-in-docker">Repository with Jemkins master and agent Dockerfiles</a></li>
+<li><a href="https://hub.docker.com/_/jenkins/">Jenkins containers</a></li>
+</ul>
+<p>Thanks for reading. I would be glad to get any feedback!</p>
+</span>
+</article>
+
+<div class="top-border-block share-buttons">
+    <b class="label">Share:</b>
+
+    <!-- twitter -->
+    <a href="https://twitter.com/share" class="twitter-share-button"
+       data-text="Run Jenkins in Docker container with persistent configuration"
+       data-via="afschr">
+        Tweet
+    </a>
+    <script>
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+        if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+        fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+    </script>
+    <!-- /twitter -->
+</div>
+
+<div class="top-border-block comments">
+    <b class="label">Comments:</b>
+    <div id="disqus_thread"></div>
+    <script>
+        if (window.location.hostname !== 'localhost') {
+            var disqus_config = function () {
+                this.page.url = 'http://antonfisher.com/posts/2017/01/16/run-jenkins-in-docker-container-with-persistent-configuration/';
+                this.page.identifier = '2017-01-16';
+            };
+            (function () {
+                var d = document, s = d.createElement('script');
+                s.src = '//antonfishercom.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        }
+    </script>
+</div>
+
+    </div>
+
+    <footer>
+        <nav>
+            <a href="/">home</a>
+            <span class="devider">&nbsp;</span>
+            <a href="/about">about</a>
+            <span class="devider">&nbsp;</span>
+            <a href="/feed.xml">rss</a>
+        </nav>
+        <div>
+            &copy;
+            <time><script>document.write(new Date().getFullYear())</script></time>
+            Anton Fisher
+        </div>
+    </footer>
+</div>
+</body>
+<script>
+    if (window.location.hostname !== 'localhost') {
+        (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-44250383-1', 'antonfisher.com');
+        ga('send', 'pageview');
+    }
+</script>
+</html>

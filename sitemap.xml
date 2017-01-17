@@ -7,14 +7,19 @@
 
     <url>
         <loc>http://antonfisher.com</loc>
-        <lastmod>2016-06-06T07:25:25Z</lastmod>
+        <lastmod>2017-01-17T08:08:04Z</lastmod>
     </url>
 
     <url>
         <loc>http://antonfisher.com/about/</loc>
-        <lastmod>2016-06-06T07:25:25Z</lastmod>
+        <lastmod>2017-01-17T08:08:04Z</lastmod>
     </url>
 
+    
+    <url>
+        <loc>http://antonfisher.com/posts/2017/01/16/run-jenkins-in-docker-container-with-persistent-configuration/</loc>
+        <lastmod>2017-01-16T00:00:00Z</lastmod>
+    </url>
     
     <url>
         <loc>http://antonfisher.com/posts/2016/06/06/using-svg-icons-in-extjs/</loc>
