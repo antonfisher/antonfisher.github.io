@@ -68,19 +68,19 @@ Anton Fisher <a.fschr@gmail.com>
 
     <span itemprop="headline"><p>
 <p>In this issue we will figure out how to use any <em>SVG</em> icons in <em>ExtJs</em> buttons.
-All icons will be combined to a single sprite which injected to <code>index.html</code>.
+All icons will be combined to a single sprite that injected to <code>index.html</code>.
 Example uses <em>Google Icons</em> set.</p>
 </p></span> <span itemprop="articleBody">
 <p><em>ExtJs</em> has several ways to add an icon on a button.
 Here are these properties:</p>
 <ul>
-<li><code>iconCls</code> + css class which defines background image</li>
-<li><code>icon</code> + path to icon which will be used in background property</li>
+<li><code>iconCls</code> + css class that defines background image</li>
+<li><code>icon</code> + path to icon that will be used in background property</li>
 <li><code>glyph</code> + font-based symbol, see <a href="http://docs.sencha.com/extjs/6.0/6.0.1-classic/#!/api/Ext.button.Button">docs…</a></li>
 </ul>
 <p>Let’s add some <em>SVG</em> here.</p>
 <h2>Prepare <em>SVG</em> sprite</h2>
-<p>Let’s create <em>SVG</em> sprite which contains all needed icons in project.
+<p>Let’s create <em>SVG</em> sprite that contains all needed icons in project.
 For this tutorial, I will use icons from <a href="https://design.google.com/icons/">https://design.google.com/icons/</a>.
 But it can be any other <em>SVG</em> icons created in a vector-graphic software.
 I selected <em>Save</em> and <em>Delete</em> icons from the set:
@@ -213,7 +213,7 @@ Just add the <code>iconSvg</code> property into button configuration:</p>
 <p><center>
 <img src="/images/posts/7-using-svg-icons-in-extjs/buttons-with-google-icons.png" alt="Buttons with Google Icons" />
 </center></p>
-<p>There was a simplistic solution, which can be improved.
+<p>There was a simplistic solution, that can be improved.
 You could add <em>getter/setter</em> functions for the new property to make it bindable.
 Instead of overriding you could use extended button class.
 For using in other components just add a similar solution to it,

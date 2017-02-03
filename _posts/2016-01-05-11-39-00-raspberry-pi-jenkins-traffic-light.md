@@ -27,8 +27,8 @@ Necessary hardware:
 - Circuit boards
 - Wires.
 
-Raspberry Pi has digital outputs uses for turn on lights, motors, or something else.
-Outputs realised as GPIO (General Purpose Input/Output) connection pins header.
+Raspberry Pi has digital outputs used for turn on lights, motors, or something else.
+Outputs are realised as GPIO (General Purpose Input/Output) connection pins header.
 I used only GPIO pins power, so they were limited only in 3v3.
 But this solution does not require additional transistors or power source.
 Raspberry Pi 2 has 40-pins header, arranged by 20 pins in 2 lines.
@@ -92,7 +92,7 @@ Ok, it is fit:
 
 ## Software
 
-I used _Node.js v5_ and self-written module:
+I used _Node.js v5_ and my own module:
 [https://github.com/antonfisher/rpi-jenkins-light](https://github.com/antonfisher/rpi-jenkins-light).
 But first of all [install Raspberrian](/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp/).
 

@@ -69,7 +69,7 @@ Anton Fisher <a.fschr@gmail.com>
 
     <span itemprop="headline"><p>
 <p>I got my first Raspberry Pi.</p>
-<p>But I do not have a display and a keyboard which make OS installation process simple.
+<p>I do not have a display and a keyboard that make OS installation process simple.
 After some search, I found
 <a href="http://raspberrypi.stackexchange.com/questions/15192/installing-raspbian-from-noobs-without-display">solution</a>
 which uses preconfigured SD card using a laptop. Used <em>NOOBS v1.5.0</em> with changed <em>recovery.cmdline</em> file.</p>
@@ -80,15 +80,15 @@ which uses preconfigured SD card using a laptop. Used <em>NOOBS v1.5.0</em> with
 <p>After:</p>
 <pre><code class="language-bash">runinstaller quiet ramdisk_size=32768 root=/dev/ram0 init=/init vt.cur_default=1 elevator=deadline silentinstall
 </code></pre>
-<p>I put card to Raspberry and power it.
-It takes about 10-15 minutes to complete installation.
-But I still could not connect to it, because I did not know its IP address.</p>
+<p>I put card to Raspberry and powered it on.
+It took about 10-15 minutes to complete installation,
+but I still could not connect to it, because I did not know its IP address.</p>
 <p>First of all you need to know range of your router’s DHCP addresses.
 In common case they will be <em>192.168.1.[0-255]</em> or <em>10.0.0.[0-255]</em>.
 Using <em>ifconfig</em> give me laptop IP address: <em>10.0.0.172</em> on wlan0 interface.
 It means my router uses <em>10.0.0.[0-255]</em> range (<em>10.0.0.0/24</em>).</p>
-<p>My first solution was simple <em>ping</em> all addresses in this subnetwork (oneliner in bash):</p>
-<pre><code class="language-bash">$ <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {1..255}; <span class="hljs-keyword">do</span> ping -w 1 10.0.0.<span class="hljs-string">"<span class="hljs-variable">${i}</span>"</span>&gt;/dev/null; <span class="hljs-keyword">if</span> [[ <span class="hljs-string">"<span class="hljs-variable">${?}</span>"</span> == 0 ]] ; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> <span class="hljs-string">"10.0.0.<span class="hljs-variable">${i}</span>"</span>; <span class="hljs-keyword">fi</span>; <span class="hljs-keyword">done</span>; <span class="hljs-built_in">echo</span> <span class="hljs-string">"end"</span>;
+<p>My first solution was simple <em>ping</em> all addresses in this subnetwork (one-liner in bash):</p>
+<pre><code class="language-bash">$ <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {1..254}; <span class="hljs-keyword">do</span> ping -w 1 10.0.0.<span class="hljs-string">"<span class="hljs-variable">${i}</span>"</span>&gt;/dev/null; <span class="hljs-keyword">if</span> [[ <span class="hljs-string">"<span class="hljs-variable">${?}</span>"</span> == 0 ]] ; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> <span class="hljs-string">"10.0.0.<span class="hljs-variable">${i}</span>"</span>; <span class="hljs-keyword">fi</span>; <span class="hljs-keyword">done</span>; <span class="hljs-built_in">echo</span> <span class="hljs-string">"end"</span>;
 </code></pre>
 <p>It works, but you need to try <em>ssh</em> connect to all results to identify Raspberry Pi
 (by the way, default user/password will be: <em>pi / raspberry</em>).
@@ -98,10 +98,9 @@ I run it during installation and did not care about performance.</p>
 10.0.0.151 &lt;--- PI!
 10.0.0.172 &lt;--- me
 10.0.0.228
-Do you want to ping broadcast? Then -b
 end
 </code></pre>
-<p>When new address appears here I used it.
+<p>When new address appeared here I used it.
 It was Raspberry, but it was very slow…</p>
 <p>The <strong>right solution</strong> is using <em>nmap</em> and 22 port only:</p>
 <pre><code class="language-bash">$ nmap <span class="hljs-_">-s</span>V -p 22 10.0.0.0/24
@@ -136,7 +135,7 @@ permitted by applicable law.
 Last login: Sat Dec  5 11:17:11 2015
 pi@raspberrypi:~ $
 </span></code></pre>
-<p>How official blog advises how to do see here:
+<p>Now official blog explains, how to do this:
 <a href="https://www.raspberrypi.org/documentation/troubleshooting/hardware/networking/ip-address.md">www.raspberrypi.org</a>.</p>
 <p><em>Note: I use Ubuntu.</em></p>
 </span>

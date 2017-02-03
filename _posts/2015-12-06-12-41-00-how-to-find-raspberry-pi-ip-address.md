@@ -11,7 +11,7 @@
 
 I got my first Raspberry Pi.
 
-But I do not have a display and a keyboard which make OS installation process simple.
+I do not have a display and a keyboard that make OS installation process simple.
 After some search, I found
 [solution](http://raspberrypi.stackexchange.com/questions/15192/installing-raspbian-from-noobs-without-display)
 which uses preconfigured SD card using a laptop. Used _NOOBS v1.5.0_ with changed _recovery.cmdline_ file.
@@ -31,19 +31,19 @@ After:
 runinstaller quiet ramdisk_size=32768 root=/dev/ram0 init=/init vt.cur_default=1 elevator=deadline silentinstall
 ```
 
-I put card to Raspberry and power it.
-It takes about 10-15 minutes to complete installation.
-But I still could not connect to it, because I did not know its IP address.
+I put card to Raspberry and powered it on.
+It took about 10-15 minutes to complete installation,
+but I still could not connect to it, because I did not know its IP address.
 
 First of all you need to know range of your router's DHCP addresses.
 In common case they will be _192.168.1.[0-255]_ or _10.0.0.[0-255]_.
 Using _ifconfig_ give me laptop IP address: _10.0.0.172_ on wlan0 interface.
 It means my router uses _10.0.0.[0-255]_ range (_10.0.0.0/24_).
 
-My first solution was simple _ping_ all addresses in this subnetwork (oneliner in bash):
+My first solution was simple _ping_ all addresses in this subnetwork (one-liner in bash):
  
 ``` bash
-$ for i in {1..255}; do ping -w 1 10.0.0."${i}">/dev/null; if [[ "${?}" == 0 ]] ; then echo "10.0.0.${i}"; fi; done; echo "end";
+$ for i in {1..254}; do ping -w 1 10.0.0."${i}">/dev/null; if [[ "${?}" == 0 ]] ; then echo "10.0.0.${i}"; fi; done; echo "end";
 ```
 
 It works, but you need to try _ssh_ connect to all results to identify Raspberry Pi
@@ -56,11 +56,10 @@ Result:
 10.0.0.151 <--- PI!
 10.0.0.172 <--- me
 10.0.0.228
-Do you want to ping broadcast? Then -b
 end
 ```
 
-When new address appears here I used it.
+When new address appeared here I used it.
 It was Raspberry, but it was very slow...
 
 The __right solution__ is using _nmap_ and 22 port only:
@@ -102,7 +101,7 @@ Last login: Sat Dec  5 11:17:11 2015
 pi@raspberrypi:~ $
 ```
 
-How official blog advises how to do see here:
+Now official blog explains, how to do this:
 [www.raspberrypi.org](https://www.raspberrypi.org/documentation/troubleshooting/hardware/networking/ip-address.md).
 
 _Note: I use Ubuntu._

@@ -10,7 +10,7 @@
 <!-- preview -->
 
 For converting relative path to absolute full path in scripts I use this simple function.
-Also it fits for path which contain '~'.
+Also it works with path which contain '~'.
 
 <!-- /preview -->
 
@@ -49,4 +49,4 @@ full_path=$(get_full_path "${apps_path_user}");
 
 Download from [Github](https://gist.githubusercontent.com/antonfisher/fb8a9bdb4b9fc2d44134/raw/cc01888a29c874c181992085db42d812ce3acd9b/get_full_path.sh).
 
-_Note: I use Ubuntu._
+_Note: Tested on Ubuntu._

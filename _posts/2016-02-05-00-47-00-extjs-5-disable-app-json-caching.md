@@ -9,7 +9,7 @@
 
 <!-- preview -->
 
-By default _ExtJS 5_ does not disable cache for `app.json` (or I am wrong?).
+By default _ExtJS 5_ enabled cache for `app.json` (or I am wrong?).
 In some cases you get old version from browser cache, even after new build.
 
 <!-- /preview -->
@@ -25,8 +25,8 @@ In my case the build sets `_dc` cache key after each run:
 }
 ```
   
-But any way browser could cache `app.json` file.
-To prevent this let's generate cache key for `app.json` request.
+But anyways browser could cache `app.json` file.
+To prevent this, let's generate cache key for `app.json` request.
 
 Sample code implements this:
 
@@ -44,7 +44,7 @@ Just put this code to your `index.html` file before this line:
 <script id="microloader" type="text/javascript" src="bootstrap.js"></script>
 ```
 
-If you use a workspace it is easier to create a macros in `../workspace/.sencha/workspace/sencha.cfg`:
+If you use a workspace, it is easier to create a macros in `../workspace/.sencha/workspace/sencha.cfg`:
 
 ```
 workspace.disableAppJsonCacheScript=\
@@ -85,4 +85,4 @@ Macros must replace `#disableAppJsonCacheScript` placeholder after build, update
 </target>
 ```
 
-Cache was defeated!
+Cache is defeated!

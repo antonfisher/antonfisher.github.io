@@ -67,7 +67,7 @@ Anton Fisher <a.fschr@gmail.com>
     <div class="clear"></div>
 
     <span itemprop="headline"><p>
-<p>By default <em>ExtJS 5</em> does not disable cache for <code>app.json</code> (or I am wrong?).
+<p>By default <em>ExtJS 5</em> enabled cache for <code>app.json</code> (or I am wrong?).
 In some cases you get old version from browser cache, even after new build.</p>
 </p></span> <span itemprop="articleBody">
 <p>In my case the build sets <code>_dc</code> cache key after each run:</p>
@@ -78,8 +78,8 @@ In some cases you get old version from browser cache, even after new build.</p>
     <span class="hljs-string">"cacheParam"</span>: <span class="hljs-string">"_dc"</span>
 }
 </code></pre>
-<p>But any way browser could cache <code>app.json</code> file.
-To prevent this let’s generate cache key for <code>app.json</code> request.</p>
+<p>But anyways browser could cache <code>app.json</code> file.
+To prevent this, let’s generate cache key for <code>app.json</code> request.</p>
 <p>Sample code implements this:</p>
 <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span>&gt;</span><span class="javascript">
     <span class="hljs-keyword">var</span> Ext= (Ext || {});
@@ -90,7 +90,7 @@ To prevent this let’s generate cache key for <code>app.json</code> request.</p
 <pre><code class="language-html"><span class="hljs-comment">&lt;!-- The line below must be kept intact for Sencha Cmd to build your application --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"microloader"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"bootstrap.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
-<p>If you use a workspace it is easier to create a macros in <code>../workspace/.sencha/workspace/sencha.cfg</code>:</p>
+<p>If you use a workspace, it is easier to create a macros in <code>../workspace/.sencha/workspace/sencha.cfg</code>:</p>
 <pre><code><span class="xml">workspace.disableAppJsonCacheScript=\
     <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span>&gt;</span><span class="actionscript">\
         <span class="hljs-keyword">var</span> Ext= (Ext || </span></span><span class="hljs-template-variable">{}</span><span class="xml"><span class="javascript">);\
@@ -122,7 +122,7 @@ To prevent this let’s generate cache key for <code>app.json</code> request.</p
              <span class="hljs-attr">value</span>=<span class="hljs-string">"${workspace.disableAppJsonCacheScript}"</span>/&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">target</span>&gt;</span>
 </code></pre>
-<p>Cache was defeated!</p>
+<p>Cache is defeated!</p>
 </span>
 </article>
 

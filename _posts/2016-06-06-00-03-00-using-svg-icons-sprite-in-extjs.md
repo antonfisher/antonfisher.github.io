@@ -10,22 +10,22 @@
 <!-- preview -->
 
 In this issue we will figure out how to use any _SVG_ icons in _ExtJs_ buttons.
-All icons will be combined to a single sprite which injected to `index.html`.
+All icons will be combined to a single sprite that injected to `index.html`.
 Example uses _Google Icons_ set.
 
 <!-- /preview -->
 
 _ExtJs_ has several ways to add an icon on a button.
 Here are these properties:
-- `iconCls` + css class which defines background image
-- `icon` + path to icon which will be used in background property
+- `iconCls` + css class that defines background image
+- `icon` + path to icon that will be used in background property
 - `glyph` + font-based symbol, see [docs...](http://docs.sencha.com/extjs/6.0/6.0.1-classic/#!/api/Ext.button.Button)
 
 Let's add some _SVG_ here.
 
 ## Prepare _SVG_ sprite
 
-Let's create _SVG_ sprite which contains all needed icons in project.
+Let's create _SVG_ sprite that contains all needed icons in project.
 For this tutorial, I will use icons from [https://design.google.com/icons/](https://design.google.com/icons/).
 But it can be any other _SVG_ icons created in a vector-graphic software.
 I selected _Save_ and _Delete_ icons from the set:
@@ -187,7 +187,7 @@ Update a page and get the icons on buttons:
 ![Buttons with Google Icons](/images/posts/7-using-svg-icons-in-extjs/buttons-with-google-icons.png)
 </center>
 
-There was a simplistic solution, which can be improved.
+There was a simplistic solution, that can be improved.
 You could add _getter/setter_ functions for the new property to make it bindable.
 Instead of overriding you could use extended button class.
 For using in other components just add a similar solution to it,

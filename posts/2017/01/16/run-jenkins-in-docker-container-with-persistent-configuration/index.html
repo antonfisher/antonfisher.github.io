@@ -72,23 +72,23 @@ And it is a good chance to build new robust <em>Jenkins</em> architecture!</p>
 <p>This post is about <em>Jenkins</em>, <em>Docker</em> and storing <em>Jenkins</em> configuration on the <em>GitHub</em>.</p>
 </p></span> <span itemprop="articleBody">
 <h2>Overview</h2>
-<p><em>Jenkins</em> can be easily running in the <em>Docker</em> container.
+<p><em>Jenkins</em> can be easily run inside the <em>Docker</em> container.
 There are two types of persistent data that you do not want to lose here:</p>
 <ul>
 <li><em>Jenkins</em> configuration (includes tasks)</li>
 <li>task artifacts or build results.</li>
 </ul>
 <p>Usually developers/devops take care about build results,
-but in other hand they often forget about <em>CI</em> system configuration.
-<em>Jenkins</em> team has introduced a <em>pipeline</em> mechanism which allows developer to store a task
+from other hand they often forget about <em>CI</em> system configuration.
+<em>Jenkins</em> team has introduced a <em>pipeline</em> mechanism that allows developer to store a task
 configuration directly in the application code (using <code>Jenkinsfile</code>).
-This helps to reduce amount of things which are stored on <em>Jenkins</em> side.
-Also makes it easy to change build configs directly in the code, and you get configuration versioning.</p>
+This helps to reduce amount of things that are stored on <em>Jenkins</em> side.
+Allows change build configs directly in the code, as plus you get configuration versioning.</p>
 <p>What to do with the remaining <em>Jenkins</em> configuration?
-One of the way is to store it in the <em>SCM</em> repository.
+One of ways is to store it in the <em>SCM</em> repository.
 In this case we just need to start a pre-configured <em>Jenkins</em> container on a new setup,
-Jenkins will pull configuration from repository, and then becomes ready to run its tasks.</p>
-<p>Here below is the instruction how to get <em>Jenkins</em> in the <em>Docker</em> container with persistent configuration on <em>GitHub</em>.</p>
+Jenkins pulls configuration from repository, and then becomes ready to run its tasks.</p>
+<p>Below there is the instructon how to get <em>Jenkins</em> in the <em>Docker</em> container with persistent configuration on <em>GitHub</em>.</p>
 <h2>Project structure</h2>
 <p>The simple way to get boilerplates of all files described in the post is to clone
 <a href="https://github.com/antonfisher/jenkins-in-docker">jenkins-in-docker</a> repository.
@@ -105,30 +105,30 @@ $ <span class="hljs-built_in">cd</span> jenkins-in-docker
 <li>configure tasks.</li>
 </ul>
 <h2>Generate RSA keys</h2>
-<p>One key is needed for <em>Jenkins</em> configuration repository, another one for your application repository.
-Move to keys folder:</p>
+<p>One key is for <em>Jenkins</em> configuration repository, another one for your application repository.
+Go to <code>keys</code> folder:</p>
 <pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> keys
 </code></pre>
 <p>Now let’s generate <em>RSA</em> keys for <em>Jenkins</em> master image.
 The first file is <code>jenkins.config.id_rsa</code>,
-this one will be used for access to <em>Jenkins</em> configuration on <em>GutHub</em>:</p>
+this one will be used to access to <em>Jenkins</em> configuration on <em>GitHub</em>:</p>
 <pre><code class="language-bash">$ ssh-keygen -t rsa -b 4096 -C <span class="hljs-string">"my@gmail.com"</span>
 Generating public/private rsa key pair.
 Enter file <span class="hljs-keyword">in</span> <span class="hljs-built_in">which</span> to save the key (/home/af/.ssh/id_rsa): jenkins.config.id_rsa
 </code></pre>
 <p>Then create git repository for <em>Jenkins</em> configuration on <em>GitHub</em>, in my case it is called <code>my-jenkins-config</code>.
-Add created key to <em>GutHub</em> (<em>repository → Settings → Keys</em>) with write access (!):
+Add created key to <em>GitHub</em> (<em>repository → Settings → Keys</em>) with write access (!):
 <center>
-<img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/add-key-to-github.png" alt="Add RSA key to Jenkins config GutHub repository" />
+<img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/add-key-to-github.png" alt="Add RSA key to Jenkins config GitHub repository" />
 </center></p>
 <p>The second file is <code>jenkins.application.id_rsa</code>,
-this one will be used to pull your application code by <em>Jenkins</em> master container from <em>GutHub</em>:</p>
+this one will be used to pull your application code by <em>Jenkins</em> master container from <em>GitHub</em>:</p>
 <pre><code class="language-bash">$ ssh-keygen -t rsa -b 4096 -C <span class="hljs-string">"my@gmail.com"</span>
 Generating public/private rsa key pair.
 Enter file <span class="hljs-keyword">in</span> <span class="hljs-built_in">which</span> to save the key (/home/af/.ssh/id_rsa): jenkins.application.id_rsa
 </code></pre>
-<p>Add this key to your application repository keys (<em>repository → Settings → Keys</em>).</p>
-<p>Now we should have these files in the <code>keys</code> folder:</p>
+<p>Add this key to your application repository (<em>repository → Settings → Keys</em>).</p>
+<p>We should have these files in the <code>keys</code> folder:</p>
 <pre><code class="language-bash">$ ls <span class="hljs-_">-l</span>
 total 16
 -rw------- 1 af af 3243 Jan 15 18:39 jenkins.application.id_rsa
@@ -219,14 +219,14 @@ total 16
 <li><code>docker-workflow:1.9</code> – to run <em>Jenkins</em> agents in <em>Docker</em> containers
 (<a href="https://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Docker+Pipeline+Plugin">link</a>).</li>
 </ul>
-<p>If you need other plugins, here is a right place to add them.</p>
-<p>Now we are ready to build <em>Jenkins</em> master container, there is a script to do this.
+<p>If you need some other plugins, here is the right place to add them.</p>
+<p>We are ready to build <em>Jenkins</em> master container, there is a script to do this.
 The script just copies <em>RSA</em> keys to <code>images/master/keys</code>
 folder to use them during the build (this is Docker restrictions).</p>
 <pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> images/master
 $ bin/image-build.sh
 </code></pre>
-<p>New <em>Docker</em> image should appear here:</p>
+<p>New <em>Docker</em> image will appear here:</p>
 <pre><code class="language-bash">$ docker images
 REPOSITORY             TAG            IMAGE ID             CREATED               SIZE
 jenkins-master         latest         a8f0c50f9ff6         2 minutes ago         719.3 MB
@@ -264,12 +264,12 @@ There is my &quot;<em>SCM Sync configuration</em>&quot; section:</p>
 <li><code>secrets/jenkins.slaves.JnlpSlaveAgentProtocol.secret</code></li>
 <li><code>secrets/master.key</code> (be sure you do not use public repository like me :)</li>
 </ul>
-<p>After pressing the &quot;<em>Save</em>&quot; button, new commits should appear in the configuration repository on <em>GitHub</em>:</p>
+<p>After pressing the &quot;<em>Save</em>&quot; button, new commits appears in the configuration repository on <em>GitHub</em>:</p>
 <p><center>
 <img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/github-commits.png" alt="GitHub sync commits" />
 </center></p>
 <h3>First task</h3>
-<p>And let’s create first task to check synchronization and how it works after <em>Jenkins</em> restart.
+<p>Let’s create the first task to check synchronization and if it works after <em>Jenkins</em> restart.
 <center>
 <img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-create-new-task.png" alt="Jenkins create new task" />
 </center></p>
@@ -280,19 +280,20 @@ To simulate this just stop master container and remove its image:</p>
 $ docker rm <span class="hljs-_">-f</span> jenkins-master
 $ docker rmi <span class="hljs-_">-f</span> jenkins-master
 </code></pre>
-<p>To be sure do update <a href="http://localhost:8080/">http://localhost:8080/</a> – nothing is running.</p>
-<p>Now build image from scratch and run it again:</p>
+<p>To be sure do refresh <a href="http://localhost:8080/">http://localhost:8080/</a> – nothing is running.</p>
+<p>Build image from scratch and run it again:</p>
 <pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> images/master
 $ ./bin/image-build.sh
 $ ./bin/container-run.sh
 </code></pre>
-<p>…open <a href="http://localhost:8080/">http://localhost:8080/</a>, and here is our pre-configured Jenkins, no installation needed:
+<p>…open <a href="http://localhost:8080/">http://localhost:8080/</a>, and here is our pre-configured Jenkins,
+no installation required:
 <center>
 <img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-works-after-restart.png" alt="Jenkins works after restart" />
 </center></p>
 <p>The same workflow can be used for update <em>Jenkins</em> or its plugins.</p>
 <h2>Prepare Jenkins Agent Dockerfile</h2>
-<p>In my case it is plain agent which is based on <em>Ubuntu 16.04</em>, just do some image cleanup:</p>
+<p>In my case it is plain agent that is based on <em>Ubuntu 16.04</em>, just do some image cleanup:</p>
 <pre><code class="language-dockerfile"><span class="hljs-keyword">FROM</span> ubuntu:<span class="hljs-number">16.04</span>
 <span class="hljs-keyword">MAINTAINER</span> Anton Fisher &lt;a.fschr@gmail.com&gt;
 
@@ -335,7 +336,7 @@ $ ./bin/container-run.sh
 <span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"tail"</span>, <span class="hljs-string">"-f"</span>, <span class="hljs-string">"/dev/null"</span>]
 </span></code></pre>
 <h2>Configure Jenkins tasks to use container-based agents</h2>
-<p>As I sad above, I use <em>pipelines</em> to keep task configuration in the application code.
+<p>As I said above, I use <em>pipelines</em> to keep task configuration in the application code.
 You need to create a <code>Jenkinsfile</code> in your applications repository and then setup <em>Jenkins</em> to use it:</p>
 <p><center>
 <img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-config-jenkinsfile.png" alt="Set Jenkinsfile in configuration" />

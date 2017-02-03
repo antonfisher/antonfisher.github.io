@@ -10,7 +10,7 @@
 <!-- preview -->
 
 Building _ExtJS_ application with _SenchaCMD_ takes about one minute on my 4-cores laptop.
-In current project we have about 20 _ExtJS_ applications which are included into one main application
+In current project we have about 20 _ExtJS_ applications that are included into one main application
 (an architectural requirement).
 So, when I am building whole app, I should take 20-minutes coffee break.
 Sounds not so bad? Not after third cup :)
@@ -21,7 +21,7 @@ It happens when your _ExtJS_ application consist of several parts and each of th
 Or you have to build several copies of one application for different environments.
 In my case we have several applications in one _SenchaCMD workspace_.
 First of all I disabled unimportant build features, such like theme's sampling.
-I wrote small _bash_ script which helps distribute builds to different VMs:
+I wrote small _bash_ script that helps distribute builds to different VMs:
 
 <center>
 ![Principle pic](/images/posts/6-sencha-cdm-distrubured-build/dscmd-principle.png)

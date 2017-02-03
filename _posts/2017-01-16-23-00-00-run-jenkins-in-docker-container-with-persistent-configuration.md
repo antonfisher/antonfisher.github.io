@@ -18,24 +18,24 @@ This post is about _Jenkins_, _Docker_ and storing _Jenkins_ configuration on th
 
 ## Overview
 
-_Jenkins_ can be easily running in the _Docker_ container.
+_Jenkins_ can be easily run inside the _Docker_ container.
 There are two types of persistent data that you do not want to lose here:
 - _Jenkins_ configuration (includes tasks)
 - task artifacts or build results.
 
 Usually developers/devops take care about build results,
-but in other hand they often forget about _CI_ system configuration.
-_Jenkins_ team has introduced a _pipeline_ mechanism which allows developer to store a task
+from other hand they often forget about _CI_ system configuration.
+_Jenkins_ team has introduced a _pipeline_ mechanism that allows developer to store a task
 configuration directly in the application code (using `Jenkinsfile`).
-This helps to reduce amount of things which are stored on _Jenkins_ side.
-Also makes it easy to change build configs directly in the code, and you get configuration versioning.
+This helps to reduce amount of things that are stored on _Jenkins_ side.
+Allows change build configs directly in the code, as plus you get configuration versioning.
 
 What to do with the remaining _Jenkins_ configuration?
-One of the way is to store it in the _SCM_ repository.
+One of ways is to store it in the _SCM_ repository.
 In this case we just need to start a pre-configured _Jenkins_ container on a new setup,
-Jenkins will pull configuration from repository, and then becomes ready to run its tasks.
+Jenkins pulls configuration from repository, and then becomes ready to run its tasks.
 
-Here below is the instruction how to get _Jenkins_ in the _Docker_ container with persistent configuration on _GitHub_.
+Below there is the instructon how to get _Jenkins_ in the _Docker_ container with persistent configuration on _GitHub_.
 
 ## Project structure
 
@@ -56,8 +56,8 @@ Steps to get all working:
 
 ## Generate RSA keys
 
-One key is needed for _Jenkins_ configuration repository, another one for your application repository.
-Move to keys folder:
+One key is for _Jenkins_ configuration repository, another one for your application repository.
+Go to `keys` folder:
 
 ```bash
 $ cd keys
@@ -65,7 +65,7 @@ $ cd keys
 
 Now let's generate _RSA_ keys for _Jenkins_ master image.
 The first file is `jenkins.config.id_rsa`,
-this one will be used for access to _Jenkins_ configuration on _GutHub_:
+this one will be used to access to _Jenkins_ configuration on _GitHub_:
 
 ```bash
 $ ssh-keygen -t rsa -b 4096 -C "my@gmail.com"
@@ -74,13 +74,13 @@ Enter file in which to save the key (/home/af/.ssh/id_rsa): jenkins.config.id_rs
 ```
 
 Then create git repository for _Jenkins_ configuration on _GitHub_, in my case it is called `my-jenkins-config`.
-Add created key to _GutHub_ (_repository → Settings → Keys_) with write access (!):
+Add created key to _GitHub_ (_repository → Settings → Keys_) with write access (!):
 <center>
-![Add RSA key to Jenkins config GutHub repository](/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/add-key-to-github.png)
+![Add RSA key to Jenkins config GitHub repository](/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/add-key-to-github.png)
 </center>
 
 The second file is `jenkins.application.id_rsa`,
-this one will be used to pull your application code by _Jenkins_ master container from _GutHub_:
+this one will be used to pull your application code by _Jenkins_ master container from _GitHub_:
 
 ```bash
 $ ssh-keygen -t rsa -b 4096 -C "my@gmail.com"
@@ -88,9 +88,9 @@ Generating public/private rsa key pair.
 Enter file in which to save the key (/home/af/.ssh/id_rsa): jenkins.application.id_rsa
 ```
 
-Add this key to your application repository keys (_repository → Settings → Keys_).
+Add this key to your application repository (_repository → Settings → Keys_).
 
-Now we should have these files in the `keys` folder:
+We should have these files in the `keys` folder:
 
 ```bash
 $ ls -l
@@ -187,9 +187,9 @@ Jenkins plugins are listed in the `Dockerfile`:
 - `docker-workflow:1.9` -- to run _Jenkins_ agents in _Docker_ containers
     ([link](https://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Docker+Pipeline+Plugin)).
 
-If you need other plugins, here is a right place to add them.
+If you need some other plugins, here is the right place to add them.
 
-Now we are ready to build _Jenkins_ master container, there is a script to do this.
+We are ready to build _Jenkins_ master container, there is a script to do this.
 The script just copies _RSA_ keys to `images/master/keys`
 folder to use them during the build (this is Docker restrictions).
 
@@ -198,7 +198,7 @@ $ cd images/master
 $ bin/image-build.sh
 ```
 
-New _Docker_ image should appear here:
+New _Docker_ image will appear here:
 
  ```bash
 $ docker images
@@ -249,7 +249,7 @@ After some experiments, I added these files to "_Manual synchronization includes
 - `secrets/jenkins.slaves.JnlpSlaveAgentProtocol.secret`
 - `secrets/master.key` (be sure you do not use public repository like me :)
 
-After pressing the "_Save_" button, new commits should appear in the configuration repository on _GitHub_:
+After pressing the "_Save_" button, new commits appears in the configuration repository on _GitHub_:
 
 <center>
 ![GitHub sync commits](/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/github-commits.png)
@@ -257,7 +257,7 @@ After pressing the "_Save_" button, new commits should appear in the configurati
 
 ### First task
 
-And let's create first task to check synchronization and how it works after _Jenkins_ restart.
+Let's create the first task to check synchronization and if it works after _Jenkins_ restart.
 <center>
 ![Jenkins create new task](/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-create-new-task.png)
 </center>
@@ -273,9 +273,9 @@ $ docker rm -f jenkins-master
 $ docker rmi -f jenkins-master
 ```
 
-To be sure do update [http://localhost:8080/](http://localhost:8080/) -- nothing is running.
+To be sure do refresh [http://localhost:8080/](http://localhost:8080/) -- nothing is running.
 
-Now build image from scratch and run it again:
+Build image from scratch and run it again:
 
 ```bash
 $ cd images/master
@@ -283,7 +283,8 @@ $ ./bin/image-build.sh
 $ ./bin/container-run.sh
 ```
 
-...open [http://localhost:8080/](http://localhost:8080/), and here is our pre-configured Jenkins, no installation needed:
+...open [http://localhost:8080/](http://localhost:8080/), and here is our pre-configured Jenkins,
+no installation required:
 <center>
 ![Jenkins works after restart](/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-works-after-restart.png)
 </center>
@@ -292,7 +293,7 @@ The same workflow can be used for update _Jenkins_ or its plugins.
 
 ## Prepare Jenkins Agent Dockerfile
 
-In my case it is plain agent which is based on _Ubuntu 16.04_, just do some image cleanup:
+In my case it is plain agent that is based on _Ubuntu 16.04_, just do some image cleanup:
 
 ```dockerfile
 FROM ubuntu:16.04
@@ -339,7 +340,7 @@ CMD ["tail", "-f", "/dev/null"]
 
 ## Configure Jenkins tasks to use container-based agents
 
-As I sad above, I use _pipelines_ to keep task configuration in the application code.
+As I said above, I use _pipelines_ to keep task configuration in the application code.
 You need to create a `Jenkinsfile` in your applications repository and then setup _Jenkins_ to use it:
 
 <center>

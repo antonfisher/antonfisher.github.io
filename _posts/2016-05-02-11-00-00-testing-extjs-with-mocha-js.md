@@ -13,8 +13,8 @@ At least two enterprise solutions exists for testing _ExtJs_ applications.
 They have rich user interface and functionality:
 _[Siesta](http://www.bryntum.com/products/siesta/)_ (_Bryntum_)
 and new _[Sencha Test](https://www.sencha.com/products/test/)_.
-In contrast to them, here I present small library which allows testing _ExtJs_ application.
-It uses great open-source _Mocha.js_ framework and _PhantomJs_ for nightly running.
+In contrast to them, here I present small library that allows testing _ExtJs_ application.
+It uses great open-source _Mocha.js_ framework and _PhantomJs_ for nightly builds.
 
 <!-- /preview -->
 
@@ -23,7 +23,7 @@ It uses great open-source _Mocha.js_ framework and _PhantomJs_ for nightly runni
 
 [Online demo](/demo/mocha-extjs/)
 
-The aim was to build library which suits for
+The aim was to build library that suits for
 [End-to-End](https://www.techopedia.com/definition/7035/end-to-end-test) testing for single-page Web-applications
 (<abbr title="Rich Internet Application">RIA</abbr>).
 
@@ -38,7 +38,7 @@ Common test cases can be:
 - check disable/enable, visible/hidden states
 - run action by clicking on button, wait for loading mask, check components' states.
 
-Library uses chain-based syntax, where `eTT()` is a function which creates new chain:
+Library uses chain-based syntax, where `eTT()` is a function that creates new chain:
 ```javascript
 it('Click on button "Save"', function (done) {
     eTT().button('Save').click(done);
@@ -144,7 +144,7 @@ Let's create first test case now.
 ## Test case example
 
 Test files can be stored anywhere, just include it in the _index.html_.
-You should pass a _Mocha.js_ `done` callback to the last method in `eTT()` chain:
+Pass a _Mocha.js_ `done` callback to the last method in `eTT()` chain:
 
 ```javascript
 // tests/suites/020-buttons.js

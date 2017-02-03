@@ -72,12 +72,12 @@ Anton Fisher <a.fschr@gmail.com>
 They have rich user interface and functionality:
 <em><a href="http://www.bryntum.com/products/siesta/">Siesta</a></em> (<em>Bryntum</em>)
 and new <em><a href="https://www.sencha.com/products/test/">Sencha Test</a></em>.
-In contrast to them, here I present small library which allows testing <em>ExtJs</em> application.
-It uses great open-source <em>Mocha.js</em> framework and <em>PhantomJs</em> for nightly running.</p>
+In contrast to them, here I present small library that allows testing <em>ExtJs</em> application.
+It uses great open-source <em>Mocha.js</em> framework and <em>PhantomJs</em> for nightly builds.</p>
 </p></span> <span itemprop="articleBody">
 <h2>mocha-extjs</h2>
 <p><a href="/demo/mocha-extjs/">Online demo</a></p>
-<p>The aim was to build library which suits for
+<p>The aim was to build library that suits for
 <a href="https://www.techopedia.com/definition/7035/end-to-end-test">End-to-End</a> testing for single-page Web-applications
 (<abbr title="Rich Internet Application">RIA</abbr>).</p>
 <p>Advantages:</p>
@@ -93,7 +93,7 @@ Common test cases can be:</p>
 <li>check disable/enable, visible/hidden states</li>
 <li>run action by clicking on button, wait for loading mask, check components’ states.</li>
 </ul>
-<p>Library uses chain-based syntax, where <code>eTT()</code> is a function which creates new chain:</p>
+<p>Library uses chain-based syntax, where <code>eTT()</code> is a function that creates new chain:</p>
 <pre><code class="language-javascript">it(<span class="hljs-string">'Click on button "Save"'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">done</span>) </span>{
     eTT().button(<span class="hljs-string">'Save'</span>).click(done);
 });
@@ -187,7 +187,7 @@ For more information about <em>Mocha.js</em> configuration see <a href="http://m
 Let’s create first test case now.</p>
 <h2>Test case example</h2>
 <p>Test files can be stored anywhere, just include it in the <em>index.html</em>.
-You should pass a <em>Mocha.js</em> <code>done</code> callback to the last method in <code>eTT()</code> chain:</p>
+Pass a <em>Mocha.js</em> <code>done</code> callback to the last method in <code>eTT()</code> chain:</p>
 <pre><code class="language-javascript"><span class="hljs-comment">// tests/suites/020-buttons.js</span>
 <span class="hljs-comment">// Variable eTT was defined globaly in index.html (var eTT = new MochaExtJs())</span>
 
