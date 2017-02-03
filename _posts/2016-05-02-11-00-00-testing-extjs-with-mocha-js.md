@@ -21,7 +21,7 @@ It uses great open-source _Mocha.js_ framework and _PhantomJs_ for nightly runni
 
 ## mocha-extjs
 
-[Online demo](http://antonfisher.com/demo/mocha-extjs/)
+[Online demo](/demo/mocha-extjs/)
 
 The aim was to build library which suits for
 [End-to-End](https://www.techopedia.com/definition/7035/end-to-end-test) testing for single-page Web-applications

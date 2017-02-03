@@ -1,6 +1,6 @@
 # Notes site
 
-Static site located on: [http://antonfisher.com](http://antonfisher.com)
+Static site located on: [https://antonfisher.com](https://antonfisher.com)
 
 ## ToDo
 

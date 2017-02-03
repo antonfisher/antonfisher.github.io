@@ -4,8 +4,8 @@
 
     <title>Anton Fisher's notes</title>
     <subtitle>javascript, extjs, nodejs, bash</subtitle>
-    <link href="http://antonfisher.com/feed.xml" rel="self"/>
-    <link href="http://antonfisher.com/"/>
+    <link href="https://antonfisher.com/feed.xml" rel="self"/>
+    <link href="https://antonfisher.com/"/>
     <id>urn:uuid:c346da00-980f-11e5-a33f-0002a5d5c51b</id>
     <updated>2017-01-17T08:08:04Z</updated>
 
@@ -13,8 +13,8 @@
     
     <entry>
         <title>Run Jenkins in Docker container with persistent configuration</title>
-        <link href="http://antonfisher.com/posts/2017/01/16/run-jenkins-in-docker-container-with-persistent-configuration/"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2017/01/16/run-jenkins-in-docker-container-with-persistent-configuration/"/>
+        <link href="https://antonfisher.com/posts/2017/01/16/run-jenkins-in-docker-container-with-persistent-configuration/"/>
+        <link rel="alternate" type="text/html" href="https://antonfisher.com/posts/2017/01/16/run-jenkins-in-docker-container-with-persistent-configuration/"/>
         <id>urn:uuid:-posts-2017-01-16-run-jenkins-in-docker-container-with-persistent-configuration</id>
         <updated>2017-01-16T00:00:00Z</updated>
         <summary>
@@ -24,7 +24,7 @@ And it is a good chance to build new robust <em>Jenkins</em> architecture!</p>
 </summary>
         <content type="xhtml">
             <div xmlns="http://www.w3.org/1999/xhtml">
-                <img src="http://antonfisher.com/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/run-jenkins-in-docker-container-with-persistent-configuration-logo.png" />
+                <img src="https://antonfisher.com/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/run-jenkins-in-docker-container-with-persistent-configuration-logo.png" />
                 
 <p>One day you realised that you lost both disks in the <em>RAID</em> mirror and your <em>Jenkins</em> has gone forever.
 And it is a good chance to build new robust <em>Jenkins</em> architecture!</p>
@@ -40,8 +40,8 @@ And it is a good chance to build new robust <em>Jenkins</em> architecture!</p>
     
     <entry>
         <title>Using SVG icons in ExtJs</title>
-        <link href="http://antonfisher.com/posts/2016/06/06/using-svg-icons-in-extjs/"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2016/06/06/using-svg-icons-in-extjs/"/>
+        <link href="https://antonfisher.com/posts/2016/06/06/using-svg-icons-in-extjs/"/>
+        <link rel="alternate" type="text/html" href="https://antonfisher.com/posts/2016/06/06/using-svg-icons-in-extjs/"/>
         <id>urn:uuid:-posts-2016-06-06-using-svg-icons-in-extjs</id>
         <updated>2016-06-06T00:00:00Z</updated>
         <summary>
@@ -51,7 +51,7 @@ Example uses <em>Google Icons</em> set.</p>
 </summary>
         <content type="xhtml">
             <div xmlns="http://www.w3.org/1999/xhtml">
-                <img src="http://antonfisher.com/images/posts/7-using-svg-icons-in-extjs/using-svg-icons-in-extjs-logo.png" />
+                <img src="https://antonfisher.com/images/posts/7-using-svg-icons-in-extjs/using-svg-icons-in-extjs-logo.png" />
                 
 <p>In this issue we will figure out how to use any <em>SVG</em> icons in <em>ExtJs</em> buttons.
 All icons will be combined to a single sprite which injected to <code>index.html</code>.
@@ -67,8 +67,8 @@ Example uses <em>Google Icons</em> set.</p>
     
     <entry>
         <title>Testing ExtJs with Mocha.js</title>
-        <link href="http://antonfisher.com/posts/2016/05/02/testing-extjs-with-mocha-js/"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2016/05/02/testing-extjs-with-mocha-js/"/>
+        <link href="https://antonfisher.com/posts/2016/05/02/testing-extjs-with-mocha-js/"/>
+        <link rel="alternate" type="text/html" href="https://antonfisher.com/posts/2016/05/02/testing-extjs-with-mocha-js/"/>
         <id>urn:uuid:-posts-2016-05-02-testing-extjs-with-mocha-js</id>
         <updated>2016-05-02T00:00:00Z</updated>
         <summary>
@@ -81,7 +81,7 @@ It uses great open-source <em>Mocha.js</em> framework and <em>PhantomJs</em> for
 </summary>
         <content type="xhtml">
             <div xmlns="http://www.w3.org/1999/xhtml">
-                <img src="http://antonfisher.com/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-demo.gif" />
+                <img src="https://antonfisher.com/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-demo.gif" />
                 
 <p>At least two enterprise solutions exists for testing <em>ExtJs</em> applications.
 They have rich user interface and functionality:
@@ -100,8 +100,8 @@ It uses great open-source <em>Mocha.js</em> framework and <em>PhantomJs</em> for
     
     <entry>
         <title>Build distribution tool for SenchaCMD</title>
-        <link href="http://antonfisher.com/posts/2016/03/25/build-distribution-tool-for-senchacmd/"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2016/03/25/build-distribution-tool-for-senchacmd/"/>
+        <link href="https://antonfisher.com/posts/2016/03/25/build-distribution-tool-for-senchacmd/"/>
+        <link rel="alternate" type="text/html" href="https://antonfisher.com/posts/2016/03/25/build-distribution-tool-for-senchacmd/"/>
         <id>urn:uuid:-posts-2016-03-25-build-distribution-tool-for-senchacmd</id>
         <updated>2016-03-25T00:00:00Z</updated>
         <summary>
@@ -113,7 +113,7 @@ Sounds not so bad? Not after third cup :)</p>
 </summary>
         <content type="xhtml">
             <div xmlns="http://www.w3.org/1999/xhtml">
-                <img src="http://antonfisher.com/images/posts/6-sencha-cdm-distrubured-build/dscmd-logo.png" />
+                <img src="https://antonfisher.com/images/posts/6-sencha-cdm-distrubured-build/dscmd-logo.png" />
                 
 <p>Building <em>ExtJS</em> application with <em>SenchaCMD</em> takes about one minute on my 4-cores laptop.
 In current project we have about 20 <em>ExtJS</em> applications which are included into one main application
@@ -131,8 +131,8 @@ Sounds not so bad? Not after third cup :)</p>
     
     <entry>
         <title>ExtJS 5: disable app.json caching</title>
-        <link href="http://antonfisher.com/posts/2016/02/05/extjs-5-disable-app-json-caching/"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2016/02/05/extjs-5-disable-app-json-caching/"/>
+        <link href="https://antonfisher.com/posts/2016/02/05/extjs-5-disable-app-json-caching/"/>
+        <link rel="alternate" type="text/html" href="https://antonfisher.com/posts/2016/02/05/extjs-5-disable-app-json-caching/"/>
         <id>urn:uuid:-posts-2016-02-05-extjs-5-disable-app-json-caching</id>
         <updated>2016-02-05T00:00:00Z</updated>
         <summary>
@@ -141,7 +141,7 @@ In some cases you get old version from browser cache, even after new build.</p>
 </summary>
         <content type="xhtml">
             <div xmlns="http://www.w3.org/1999/xhtml">
-                <img src="http://antonfisher.com/images/posts/4-extjs-5-disable-app-json-caching/extjs-logo.png" />
+                <img src="https://antonfisher.com/images/posts/4-extjs-5-disable-app-json-caching/extjs-logo.png" />
                 
 <p>By default <em>ExtJS 5</em> does not disable cache for <code>app.json</code> (or I am wrong?).
 In some cases you get old version from browser cache, even after new build.</p>
@@ -156,8 +156,8 @@ In some cases you get old version from browser cache, even after new build.</p>
     
     <entry>
         <title>Make Raspberry Pi Jenkins traffic light</title>
-        <link href="http://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light/"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light/"/>
+        <link href="https://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light/"/>
+        <link rel="alternate" type="text/html" href="https://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light/"/>
         <id>urn:uuid:-posts-2016-01-05-make-raspberry-pi-jenkins-traffic-light</id>
         <updated>2016-01-05T00:00:00Z</updated>
         <summary>
@@ -166,7 +166,7 @@ This device can be good first experience with the Raspberry Pi and it is useful 
 </summary>
         <content type="xhtml">
             <div xmlns="http://www.w3.org/1999/xhtml">
-                <img src="http://antonfisher.com/images/posts/3-make-raspberry-pi-jenkins-traffic-light/traffic-light-demo.gif" />
+                <img src="https://antonfisher.com/images/posts/3-make-raspberry-pi-jenkins-traffic-light/traffic-light-demo.gif" />
                 
 <p>It is the simple instruction for javascript developers how to make physical Jenkins traffic light.
 This device can be good first experience with the Raspberry Pi and it is useful for controlling your build’s health!</p>
@@ -181,8 +181,8 @@ This device can be good first experience with the Raspberry Pi and it is useful 
     
     <entry>
         <title>Bash: function converts relative file path to absolute</title>
-        <link href="http://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute/"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute/"/>
+        <link href="https://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute/"/>
+        <link rel="alternate" type="text/html" href="https://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute/"/>
         <id>urn:uuid:-posts-2015-12-23-bash-function-converts-relative-file-path-to-absolute</id>
         <updated>2015-12-23T00:00:00Z</updated>
         <summary>
@@ -191,7 +191,7 @@ Also it fits for path which contain '~’.</p>
 </summary>
         <content type="xhtml">
             <div xmlns="http://www.w3.org/1999/xhtml">
-                <img src="http://antonfisher.com/images/posts/2-bash-function-converts-relative-file-path-to-absolute/bash-terminal.png" />
+                <img src="https://antonfisher.com/images/posts/2-bash-function-converts-relative-file-path-to-absolute/bash-terminal.png" />
                 
 <p>For converting relative path to absolute full path in scripts I use this simple function.
 Also it fits for path which contain '~’.</p>
@@ -206,8 +206,8 @@ Also it fits for path which contain '~’.</p>
     
     <entry>
         <title>How to find Raspberry Pi IP address (DHCP)</title>
-        <link href="http://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp/"/>
-        <link rel="alternate" type="text/html" href="http://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp/"/>
+        <link href="https://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp/"/>
+        <link rel="alternate" type="text/html" href="https://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp/"/>
         <id>urn:uuid:-posts-2015-12-04-how-to-find-raspberry-pi-ip-address-dhcp</id>
         <updated>2015-12-04T00:00:00Z</updated>
         <summary>
@@ -219,7 +219,7 @@ which uses preconfigured SD card using a laptop. Used <em>NOOBS v1.5.0</em> with
 </summary>
         <content type="xhtml">
             <div xmlns="http://www.w3.org/1999/xhtml">
-                <img src="http://antonfisher.com/images/posts/1-how-to-find-raspberry-pi-ip-address/raspberry-pi.jpg" />
+                <img src="https://antonfisher.com/images/posts/1-how-to-find-raspberry-pi-ip-address/raspberry-pi.jpg" />
                 
 <p>I got my first Raspberry Pi.</p>
 <p>But I do not have a display and a keyboard which make OS installation process simple.

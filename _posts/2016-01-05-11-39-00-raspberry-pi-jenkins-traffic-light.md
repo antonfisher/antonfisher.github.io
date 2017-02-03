@@ -94,7 +94,7 @@ Ok, it is fit:
 
 I used _Node.js v5_ and self-written module:
 [https://github.com/antonfisher/rpi-jenkins-light](https://github.com/antonfisher/rpi-jenkins-light).
-But first of all [install Raspberrian](http://antonfisher.com/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp/). 
+But first of all [install Raspberrian](/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-dhcp/).
 
 ### NodeJs v5 installation
 * SSH to _Raspberry Pi_
