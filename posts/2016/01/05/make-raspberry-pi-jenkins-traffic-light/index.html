@@ -101,7 +101,7 @@ For more information see <a href="http://elinux.org/RPi_Low-level_peripherals">h
 </center></p>
 <p>But it not good idea to use pins voltage for turning on leds.
 Better solution should turn on leds with <em>0</em> level on pin, so connection should be like:</p>
-<pre><code><span class="hljs-comment">GPIO</span> <span class="hljs-comment">pin</span> <span class="hljs-comment">(3v3</span> <span class="hljs-comment">or</span> <span class="hljs-comment">0v)</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">resistor</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">led</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">3v3</span> <span class="hljs-comment">pin</span>
+<pre><code><span class="hljs-string">GPIO</span> <span class="hljs-string">pin</span> <span class="hljs-string">(3v3</span> <span class="hljs-string">or</span> <span class="hljs-number">0</span><span class="hljs-string">v)</span> <span class="hljs-meta">---</span> <span class="hljs-string">resistor</span> <span class="hljs-meta">---</span> <span class="hljs-string">led</span> <span class="hljs-meta">---</span> <span class="hljs-number">3</span><span class="hljs-string">v3</span> <span class="hljs-string">pin</span>
 </code></pre>
 <p>If you feel more power use this schema (thanks Nikolay!):
 <center>

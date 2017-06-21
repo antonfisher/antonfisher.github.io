@@ -129,7 +129,7 @@ Enter file <span class="hljs-keyword">in</span> <span class="hljs-built_in">whic
 </code></pre>
 <p>Add this key to your application repository (<em>repository → Settings → Keys</em>).</p>
 <p>We should have these files in the <code>keys</code> folder:</p>
-<pre><code class="language-bash">$ ls <span class="hljs-_">-l</span>
+<pre><code class="language-bash">$ ls -l
 total 16
 -rw------- 1 af af 3243 Jan 15 18:39 jenkins.application.id_rsa
 -rw-r--r-- 1 af af  743 Jan 15 18:39 jenkins.application.id_rsa.pub
@@ -241,7 +241,7 @@ $ bin/container-run.sh
 Jenkins initial setup is required. An admin user has been created and a password generated.
 Please use the following password to proceed to installation:
 
-805<span class="hljs-built_in">cd</span>12be95149e4b275fd71f6f0fcf1
+805cd12be95149e4b275fd71f6f0fcf1
 ...
 </code></pre>
 <p>Just copy the password and open <a href="http://localhost:8080">http://localhost:8080</a> in the browser.</p>
@@ -277,8 +277,8 @@ There is my &quot;<em>SCM Sync configuration</em>&quot; section:</p>
 <p>Now is time to simulate disaster, let’s imagine we lost the host with <em>Docker</em> containers.
 To simulate this just stop master container and remove its image:</p>
 <pre><code class="language-bash">$ docker stop jenkins-master
-$ docker rm <span class="hljs-_">-f</span> jenkins-master
-$ docker rmi <span class="hljs-_">-f</span> jenkins-master
+$ docker rm -f jenkins-master
+$ docker rmi -f jenkins-master
 </code></pre>
 <p>To be sure do refresh <a href="http://localhost:8080/">http://localhost:8080/</a> – nothing is running.</p>
 <p>Build image from scratch and run it again:</p>
@@ -327,7 +327,7 @@ no installation required:
 <span class="hljs-keyword">RUN</span><span class="bash"> apt-get -q autoremove &amp;&amp;\
     apt-get -q clean -y &amp;&amp;\
     rm -rf /var/lib/apt/lists/* &amp;&amp;\
-    rm <span class="hljs-_">-f</span> /var/cache/apt/*.bin
+    rm -f /var/cache/apt/*.bin
 </span>
 <span class="hljs-comment"># Disable StrictHostKeyChecking for ssh</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"    StrictHostKeyChecking no"</span> &gt;&gt; /etc/ssh/ssh_config

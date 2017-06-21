@@ -127,16 +127,16 @@ CMD_PATH=~/bin/Sencha/Cmd/sencha
 </code></pre>
 <h2>Usage</h2>
 <p>To get usage help just run <code>./dscmd.sh</code> without parameters:</p>
-<pre><code>$ ./dscmd<span class="hljs-selector-class">.sh</span>
-Build distribution tool <span class="hljs-keyword">for</span> SenchaCMD v0.<span class="hljs-number">1.3</span> [beta]
+<pre><code>$ ./dscmd.sh
+Build distribution<span class="hljs-built_in"> tool </span><span class="hljs-keyword">for</span> SenchaCMD v0.1.3 [beta]
 Usage:
-  ./dscmd<span class="hljs-selector-class">.sh</span> config
-  ./dscmd<span class="hljs-selector-class">.sh</span> applications-list
-  ./dscmd<span class="hljs-selector-class">.sh</span> add-agent
-  ./dscmd<span class="hljs-selector-class">.sh</span> remove-agent [--all]
-  ./dscmd<span class="hljs-selector-class">.sh</span> agents-list
-  ./dscmd<span class="hljs-selector-class">.sh</span> agents-test
-  ./dscmd<span class="hljs-selector-class">.sh</span> build [--all] &lt;application1,application2,...&gt;
+  ./dscmd.sh<span class="hljs-built_in"> config
+</span>  ./dscmd.sh applications-list
+  ./dscmd.sh add-agent
+  ./dscmd.sh remove-agent [--all]
+  ./dscmd.sh agents-list
+  ./dscmd.sh agents-test
+  ./dscmd.sh build [--all] &lt;application1,application2,<span class="hljs-built_in">..</span>.&gt;
 </code></pre>
 <h3>Add agents</h3>
 <p>A build-agent needs to be a Debian-based host (<em>Ubuntu</em>).
@@ -183,10 +183,10 @@ Done.
 <li>Or run <code>$ ./dscmd.sh build applicationName1,applicationName2</code>.</li>
 </ul>
 <p>To show the applications list which will be used in case of <code>--all</code> option, use <code>applications-list</code> commad:</p>
-<pre><code>$ ./dscmd.<span class="hljs-keyword">sh</span> applications-<span class="hljs-keyword">list</span>
-Build distribution tool <span class="hljs-keyword">for</span> SenchaCMD v0.1.3 [beta]
-Applicaitons <span class="hljs-keyword">list</span> will be used <span class="hljs-keyword">for</span> build:
-<span class="hljs-keyword">about</span>,gettingStarted,actionEdit,accessControl,actionDelete,actionDeleteDS,settings,summary
+<pre><code>$ ./dscmd.sh applications-list
+Build distribution<span class="hljs-built_in"> tool </span><span class="hljs-keyword">for</span> SenchaCMD v0.1.3 [beta]
+Applicaitons list will be used <span class="hljs-keyword">for</span> build:
+about,gettingStarted,actionEdit,accessControl,actionDelete,actionDeleteDS,settings,summary
 </code></pre>
 <p>Build output:</p>
 <pre><code class="language-bash">$ ./dscmd.sh build --all
