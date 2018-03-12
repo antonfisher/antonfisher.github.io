@@ -1,7 +1,7 @@
 {
     "title": "Testing ExtJs with Mocha.js",
     "image": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-demo.gif",
-    "imagePreview": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-logo-300.png",
+    "imagePreview": "/images/posts/5-testing-extjs-with-mocha-js/mocha-extjs-logo-500.png",
     "metaDescription": "extjs, mochajs, testing",
     "tags": "extjs,mochajs,testing,js",
     "date": "2016-05-02"

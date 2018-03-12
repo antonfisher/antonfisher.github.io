@@ -1,7 +1,7 @@
 {
     "title": "Build distribution tool for SenchaCMD",
     "image": "/images/posts/6-sencha-cdm-distrubured-build/dscmd-logo.png",
-    "imagePreview": "/images/posts/6-sencha-cdm-distrubured-build/dscmd-logo-300.png",
+    "imagePreview": "/images/posts/6-sencha-cdm-distrubured-build/dscmd-logo-500.png",
     "metaDescription": "sencha cmd, extjs, bash",
     "tags": "sencha cmd,extjs,bash",
     "date": "2016-03-25"

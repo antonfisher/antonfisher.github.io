@@ -1,7 +1,7 @@
 {
     "title": "Using SVG icons in ExtJs",
     "image": "/images/posts/7-using-svg-icons-in-extjs/using-svg-icons-in-extjs-logo.png",
-    "imagePreview": "/images/posts/7-using-svg-icons-in-extjs/using-svg-icons-in-extjs-logo-300.png",
+    "imagePreview": "/images/posts/7-using-svg-icons-in-extjs/using-svg-icons-in-extjs-logo-500.png",
     "metaDescription": "extjs, svg, svg sprite, icons",
     "tags": "extjs,svg,icons",
     "date": "2016-06-06"

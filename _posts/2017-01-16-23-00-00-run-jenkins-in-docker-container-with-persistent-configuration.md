@@ -1,7 +1,7 @@
 {
     "title": "Run Jenkins in Docker container with persistent configuration",
     "image": "/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/run-jenkins-in-docker-container-with-persistent-configuration-logo.png",
-    "imagePreview": "/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/run-jenkins-in-docker-container-with-persistent-configuration-logo-300.png",
+    "imagePreview": "/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/run-jenkins-in-docker-container-with-persistent-configuration-logo-500.png",
     "metaDescription": "jenkins, docker, jenkins in docker container",
     "tags": "jenkins,docker,github",
     "date": "2017-01-16"
