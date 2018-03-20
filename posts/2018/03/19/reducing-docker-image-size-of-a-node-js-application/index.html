@@ -68,7 +68,7 @@ Anton Fisher <a.fschr@gmail.com>
     <span itemprop="headline"><p>
 <p>Working on a project at work I noticed that pulling and deploying our <em>Node.js</em> application sometimes takes
 more time then I want it to.
-I started digging into the problem and here are 2 easy steps I’ve done to compress <em>Docker</em> image size
+I started digging into the problem and here are two steps I’ve done to drop <em>Docker</em> image size
 down from <strong>948MB</strong> to 206MB and then to <strong>79MB</strong>!</p>
 </p></span> <span itemprop="articleBody">
 <h2>This is the results of my attempts:</h2>
@@ -97,11 +97,11 @@ The build process consists of these steps:</p>
 </span></code></pre>
 <p>This <em>Dockerfile</em> does several things:</p>
 <ul>
-<li>using <code>/usr/app</code> as application directory</li>
-<li>copying build files into the designed application directory</li>
-<li>copying required <em>Node.js</em> modules to the application directory.</li>
+<li>uses <code>/usr/app</code> as application directory</li>
+<li>copies build files to the application directory</li>
+<li>copies required <em>Node.js</em> modules to the application directory.</li>
 </ul>
-<h2>Step 1: Using <em>alpine</em> version of <em>Node.js</em> image (948MB to 206MB)</h2>
+<h2>Step 1: <em>alpine</em> version of <em>Node.js</em> image (948MB to 206MB)</h2>
 <p><em>Node.js</em> images <a href="https://hub.docker.com/_/node/">repository</a> provides several image tags for each <em>Node.js</em> version.
 For example, version <em>8.10.0</em> has 6 different image tags:</p>
 <ul>
@@ -114,36 +114,36 @@ For example, version <em>8.10.0</em> has 6 different image tags:</p>
 </ul>
 <p>An interesting thing there is the <em>alpine</em> version.
 This is the smallest of available images because it based on <a href="https://alpinelinux.org/">Alpine Linux project</a>.
-<em>Alpine</em> uses <em>musl libc</em> instead of <em>glibc</em> inside, but <em>Node.js</em> usually uses the second one on a typical developer system.
+<em>Alpine</em> uses <em>musl libc</em> instead of <em>glibc</em> inside, but <em>Node.js</em> usually uses the latter one on a typical developer system.
 Possibly, this may break some libraries you use but there were no issues with my <em>Express.js</em> based application.
-Give it a try if it fits you:</p>
+Switching to <em>alpine</em>:</p>
 <pre><code class="language-docker"><span class="hljs-comment"># change the first line from:</span>
 <span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>
 
 <span class="hljs-comment"># to:</span>
 <span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>-alpine
 </code></pre>
-<p>“Docker build” and in my case, the size of the image drops down to <strong>206MB</strong>, it’s <strong>-78%</strong> of the initial size!</p>
+<p>Run <code>docker build</code> and in my case, the size of the image drops down to <strong>206MB</strong>, it’s <strong>-78%</strong> of the initial size!</p>
 <p>(Read more about pros/cons of <em>alpine</em> image <a href="https://github.com/nodejs/docker-node#nodealpine">here</a>.)</p>
-<h2>Step 2: Using NPM <code>--production</code> flag (206MB to 79MB)</h2>
+<h2>Step 2: NPM <code>--production</code> flag (206MB to 79MB)</h2>
 <p>By default, <code>npm install</code> installs all dependencies including <code>devDependencies</code>.
 There is <code>--production</code> flag that makes it possible to install only the <code>dependencies</code> section from <em>package.json</em>.
-I keep build systems, testing utils, and other dev stuff in the <code>devDependencies</code> section
-and I’m used to keeping my <em>React.js</em> libraries and other dependencies (that I actually use only on UI)
-under the <code>dependencies</code> section in <em>package.json</em>.
-But this doesn’t look like a correct way because I’ve got <em>webpack</em> to do bundle all my UI dependencies
-to the single file.
+I keep build systems, testing utils, and other dev tools in the <code>devDependencies</code> section.
+I’m used to keeping my <em>React.js</em> libraries and other UI dependencies under the <code>dependencies</code>
+section in <em>package.json</em>.
+But it doesn’t look correct, because I use <em>webpack</em> to make a bundle of all my UI dependencies.
 Hence, the right solution here is to move all dependencies, which are not going to be directly used
-by the production server, to the <code>devDependencies</code> section.</p>
+on the production server, to the <code>devDependencies</code> section.</p>
 <p><strong>The rule is: if the dependency is only needed during the build, move it to the <code>devDependencies</code> section.</strong></p>
-<p>I don’t do a bundle for server files, so I left all server dependencies in <code>dependencies</code> section as they were before.
+<p>I don’t make a bundle for server files, so I left all server dependencies in <code>dependencies</code> section as they were before.
 That means that the working process should contain following steps:</p>
-<pre><code class="language-bash">npm install;                    <span class="hljs-comment"># install dev + prod deps</span>
-<span class="hljs-comment"># do crazy coding here</span>
-npm run build;                  <span class="hljs-comment"># copy server files and the UI bundle to the `dist` folder</span>
-npm <span class="hljs-built_in">test</span>;                       <span class="hljs-comment"># test the build</span>
-docker build -t myapp:latest .  <span class="hljs-comment"># build a Docker image</span>
-</code></pre>
+<ul>
+<li>build UI bundle</li>
+<li>copy UI bundle to the Docker image</li>
+<li>copy server files to the Docker image</li>
+<li>copy <em>package.json</em> to the Docker image</li>
+<li>do <code>npm install --production</code> inside the image.</li>
+</ul>
 <p>This is the final version of the <em>Dockerfile</em> I have:</p>
 <pre><code class="language-docker"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>-alpine
 
@@ -159,7 +159,7 @@ docker build -t myapp:latest .  <span class="hljs-comment"># build a Docker imag
 
 <span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]
 </span></code></pre>
-<p>Again “Docker build” and in my case, the size of the image drops down to <strong>79MB</strong>
+<p>Run <code>docker build</code> again and in my case, the size of the image drops down to <strong>79MB</strong>
 and this time it’s <strong>-91%</strong> of the initial size!</p>
 <h2>Conclusion</h2>
 <p>Two simple steps to get image size dropped from <strong>948MB</strong> to <strong>79MB</strong>.

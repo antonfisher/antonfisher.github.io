@@ -11,7 +11,7 @@
 
 Working on a project at work I noticed that pulling and deploying our _Node.js_ application sometimes takes
 more time then I want it to.
-I started digging into the problem and here are 2 easy steps I've done to compress _Docker_ image size
+I started digging into the problem and here are two steps I've done to drop _Docker_ image size
 down from **948MB** to 206MB and then to **79MB**!
 
 <!-- /preview -->
@@ -49,11 +49,11 @@ CMD [ "npm", "run", "start" ]
 ```
 
 This _Dockerfile_ does several things:
-- using `/usr/app` as application directory
-- copying build files into the designed application directory
-- copying required _Node.js_ modules to the application directory.
+- uses `/usr/app` as application directory
+- copies build files to the application directory
+- copies required _Node.js_ modules to the application directory.
 
-## Step 1: Using _alpine_ version of _Node.js_ image (948MB to 206MB)
+## Step 1: _alpine_ version of _Node.js_ image (948MB to 206MB)
 
 _Node.js_ images [repository](https://hub.docker.com/_/node/) provides several image tags for each _Node.js_ version.
 For example, version _8.10.0_ has 6 different image tags:
@@ -66,9 +66,9 @@ For example, version _8.10.0_ has 6 different image tags:
 
 An interesting thing there is the _alpine_ version.
 This is the smallest of available images because it based on [Alpine Linux project](https://alpinelinux.org/).
-_Alpine_ uses _musl libc_ instead of _glibc_ inside, but _Node.js_ usually uses the second one on a typical developer system.
+_Alpine_ uses _musl libc_ instead of _glibc_ inside, but _Node.js_ usually uses the latter one on a typical developer system.
 Possibly, this may break some libraries you use but there were no issues with my _Express.js_ based application.
-Give it a try if it fits you:
+Switching to _alpine_:
 
 ```docker
 # change the first line from:
@@ -78,34 +78,30 @@ FROM node:8.10.0
 FROM node:8.10.0-alpine
 ```
 
-"Docker build" and in my case, the size of the image drops down to **206MB**, it's **-78%** of the initial size!
+Run `docker build` and in my case, the size of the image drops down to **206MB**, it's **-78%** of the initial size!
 
 (Read more about pros/cons of _alpine_ image [here](https://github.com/nodejs/docker-node#nodealpine).)
 
-## Step 2: Using NPM `--production` flag (206MB to 79MB)
+## Step 2: NPM `--production` flag (206MB to 79MB)
 
 By default, `npm install` installs all dependencies including `devDependencies`.
 There is `--production` flag that makes it possible to install only the `dependencies` section from _package.json_.
-I keep build systems, testing utils, and other dev stuff in the `devDependencies` section
-and I'm used to keeping my _React.js_ libraries and other dependencies (that I actually use only on UI)
-under the `dependencies` section in _package.json_.
-But this doesn't look like a correct way because I've got _webpack_ to do bundle all my UI dependencies
-to the single file.
+I keep build systems, testing utils, and other dev tools in the `devDependencies` section.
+I'm used to keeping my _React.js_ libraries and other UI dependencies under the `dependencies`
+section in _package.json_.
+But it doesn't look correct, because I use _webpack_ to make a bundle of all my UI dependencies.
 Hence, the right solution here is to move all dependencies, which are not going to be directly used
-by the production server, to the `devDependencies` section.
+on the production server, to the `devDependencies` section.
 
 **The rule is: if the dependency is only needed during the build, move it to the `devDependencies` section.**
 
-I don't do a bundle for server files, so I left all server dependencies in `dependencies` section as they were before.
+I don't make a bundle for server files, so I left all server dependencies in `dependencies` section as they were before.
 That means that the working process should contain following steps:
-
-```bash
-npm install;                    # install dev + prod deps
-# do crazy coding here
-npm run build;                  # copy server files and the UI bundle to the `dist` folder
-npm test;                       # test the build
-docker build -t myapp:latest .  # build a Docker image
-```
+- build UI bundle
+- copy UI bundle to the Docker image
+- copy server files to the Docker image
+- copy _package.json_ to the Docker image
+- do `npm install --production` inside the image.
 
 This is the final version of the _Dockerfile_ I have:
 
@@ -125,7 +121,7 @@ EXPOSE 3000
 CMD [ "npm", "run", "start" ]
 ```
 
-Again “Docker build” and in my case, the size of the image drops down to **79MB**
+Run `docker build` again and in my case, the size of the image drops down to **79MB**
 and this time it's **-91%** of the initial size!
 
 ## Conclusion
