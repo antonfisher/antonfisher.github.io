@@ -77,7 +77,8 @@ FROM node:8.10.0
 FROM node:8.10.0-alpine
 ```
 
-Run `docker build` and in my case, the size of the image drops down to **206MB**, it's **78% less** of the initial size!
+Run `docker build` and in my case, the size of the image drops down to **206MB**, it's **78% less** than
+the initial size!
 
 (Read more about pros/cons of _alpine_ image [here](https://github.com/nodejs/docker-node#nodealpine).)
 
@@ -121,7 +122,7 @@ CMD [ "npm", "run", "start" ]
 ```
 
 Run `docker build` again and in my case, the size of the image drops down to **79MB**
-and this time it's **91% less** then the initial size!
+and this time it's **91% less** than the initial size!
 
 ## Conclusion
 

@@ -122,7 +122,8 @@ Switching to <em>alpine</em>:</p>
 <span class="hljs-comment"># to:</span>
 <span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>-alpine
 </code></pre>
-<p>Run <code>docker build</code> and in my case, the size of the image drops down to <strong>206MB</strong>, it’s <strong>78% less</strong> of the initial size!</p>
+<p>Run <code>docker build</code> and in my case, the size of the image drops down to <strong>206MB</strong>, it’s <strong>78% less</strong> than
+the initial size!</p>
 <p>(Read more about pros/cons of <em>alpine</em> image <a href="https://github.com/nodejs/docker-node#nodealpine">here</a>.)</p>
 <h2>Step 2: Use NPM <code>--production</code> flag (206MB to 79MB)</h2>
 <p>By default, <code>npm install</code> installs all dependencies including <code>devDependencies</code>.
@@ -159,7 +160,7 @@ That means that the working process should contain following steps:</p>
 <span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]
 </span></code></pre>
 <p>Run <code>docker build</code> again and in my case, the size of the image drops down to <strong>79MB</strong>
-and this time it’s <strong>91% less</strong> then the initial size!</p>
+and this time it’s <strong>91% less</strong> than the initial size!</p>
 <h2>Conclusion</h2>
 <p>Two simple steps to get image size dropped from <strong>948MB</strong> to <strong>79MB</strong>.
 Now container deployment process takes much less time.
