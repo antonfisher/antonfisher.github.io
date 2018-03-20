@@ -66,10 +66,8 @@ Anton Fisher <a.fschr@gmail.com>
     <div class="clear"></div>
 
     <span itemprop="headline"><p>
-<p>Working on a project at work I noticed that pulling and deploying our <em>Node.js</em> application sometimes takes
-more time then I want it to.
-I started digging into the problem and here are two steps I’ve done to drop <em>Docker</em> image size
-down from <strong>948MB</strong> to 206MB and then to <strong>79MB</strong>!</p>
+<p>Working on a <em>Node.js</em> application I noticed that deploying its image sometimes takes more time then I want it to.
+I started digging into the problem and here are two steps to drop <em>Docker</em> image size down from <strong>948MB</strong> to <strong>79MB</strong>!</p>
 </p></span> <span itemprop="articleBody">
 <h2>This is the results of my attempts:</h2>
 <p><center>
@@ -81,7 +79,7 @@ down from <strong>948MB</strong> to 206MB and then to <strong>79MB</strong>!</p>
 The build process consists of these steps:</p>
 <pre><code class="language-bash">NPM build ---&gt; Run tests ---&gt; Build Docker image ---&gt; Publish to hub.docker.com
 </code></pre>
-<p>This is the simple <em>Dockerfile</em> I had before changes (located in the root of my applications directory):</p>
+<p>The application <em>Dockerfile</em> before changes (located in the root of application directory):</p>
 <pre><code class="language-docker"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>
 
 <span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p /usr/app/build
@@ -97,11 +95,11 @@ The build process consists of these steps:</p>
 </span></code></pre>
 <p>This <em>Dockerfile</em> does several things:</p>
 <ul>
-<li>uses <code>/usr/app</code> as application directory</li>
+<li>sets <code>/usr/app</code> as application directory</li>
 <li>copies build files to the application directory</li>
 <li>copies required <em>Node.js</em> modules to the application directory.</li>
 </ul>
-<h2>Step 1: <em>alpine</em> version of <em>Node.js</em> image (948MB to 206MB)</h2>
+<h2>Step 1: Replace base <em>Node.js</em> image with a smaller one (948MB to 206MB)</h2>
 <p><em>Node.js</em> images <a href="https://hub.docker.com/_/node/">repository</a> provides several image tags for each <em>Node.js</em> version.
 For example, version <em>8.10.0</em> has 6 different image tags:</p>
 <ul>
@@ -114,8 +112,9 @@ For example, version <em>8.10.0</em> has 6 different image tags:</p>
 </ul>
 <p>An interesting thing there is the <em>alpine</em> version.
 This is the smallest of available images because it based on <a href="https://alpinelinux.org/">Alpine Linux project</a>.
-<em>Alpine</em> uses <em>musl libc</em> instead of <em>glibc</em> inside, but <em>Node.js</em> usually uses the latter one on a typical developer system.
-Possibly, this may break some libraries you use but there were no issues with my <em>Express.js</em> based application.
+<em>Alpine</em> uses <em>musl libc</em> instead of <em>glibc</em> inside, but <em>Node.js</em> usually uses the latter
+on a typical developer system.
+It may break some libraries you use but there were no issues with my <em>Express.js</em> based application.
 Switching to <em>alpine</em>:</p>
 <pre><code class="language-docker"><span class="hljs-comment"># change the first line from:</span>
 <span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>
@@ -123,15 +122,15 @@ Switching to <em>alpine</em>:</p>
 <span class="hljs-comment"># to:</span>
 <span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>-alpine
 </code></pre>
-<p>Run <code>docker build</code> and in my case, the size of the image drops down to <strong>206MB</strong>, it’s <strong>-78%</strong> of the initial size!</p>
+<p>Run <code>docker build</code> and in my case, the size of the image drops down to <strong>206MB</strong>, it’s <strong>78% less</strong> of the initial size!</p>
 <p>(Read more about pros/cons of <em>alpine</em> image <a href="https://github.com/nodejs/docker-node#nodealpine">here</a>.)</p>
-<h2>Step 2: NPM <code>--production</code> flag (206MB to 79MB)</h2>
+<h2>Step 2: Use NPM <code>--production</code> flag (206MB to 79MB)</h2>
 <p>By default, <code>npm install</code> installs all dependencies including <code>devDependencies</code>.
 There is <code>--production</code> flag that makes it possible to install only the <code>dependencies</code> section from <em>package.json</em>.
 I keep build systems, testing utils, and other dev tools in the <code>devDependencies</code> section.
 I’m used to keeping my <em>React.js</em> libraries and other UI dependencies under the <code>dependencies</code>
-section in <em>package.json</em>.
-But it doesn’t look correct, because I use <em>webpack</em> to make a bundle of all my UI dependencies.
+section in <em>package.json</em>, but it doesn’t look correct,
+because I have <em>webpack</em> to make a bundle of all my UI dependencies.
 Hence, the right solution here is to move all dependencies, which are not going to be directly used
 on the production server, to the <code>devDependencies</code> section.</p>
 <p><strong>The rule is: if the dependency is only needed during the build, move it to the <code>devDependencies</code> section.</strong></p>
@@ -144,7 +143,7 @@ That means that the working process should contain following steps:</p>
 <li>copy <em>package.json</em> to the Docker image</li>
 <li>do <code>npm install --production</code> inside the image.</li>
 </ul>
-<p>This is the final version of the <em>Dockerfile</em> I have:</p>
+<p>The final version of the <em>Dockerfile</em> I have:</p>
 <pre><code class="language-docker"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>-alpine
 
 <span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p /usr/app/build
@@ -160,18 +159,18 @@ That means that the working process should contain following steps:</p>
 <span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]
 </span></code></pre>
 <p>Run <code>docker build</code> again and in my case, the size of the image drops down to <strong>79MB</strong>
-and this time it’s <strong>-91%</strong> of the initial size!</p>
+and this time it’s <strong>91% less</strong> then the initial size!</p>
 <h2>Conclusion</h2>
 <p>Two simple steps to get image size dropped from <strong>948MB</strong> to <strong>79MB</strong>.
-Now the process of container updating/re-running takes much less time.
-Compression sizes on <a href="https://hub.docker.com/r/nexenta/nedgeui/tags/">hud.docker.com</a> look even better:</p>
+Now container deployment process takes much less time.
+Compressed image sizes on <a href="https://hub.docker.com/r/nexenta/nedgeui/tags/">hub.docker.com</a> look even better:</p>
 <p><center>
 <img src="/images/posts/9-reducing-docker-image-size-of-a-node-js-application/docker-image-sizes-hub-table.png" alt="Docker image sizes compressed" />
 </center></p>
 <h2>Links</h2>
 <ul>
 <li><a href="https://github.com/nodejs/docker-node#nodealpine"><em>Node.js</em> <em>alpine</em> image</a></li>
-<li><a href="https://medium.com/@iamnayr/a-multi-part-analysis-of-node-docker-image-sizes-using-yarn-vs-traditional-npm-2c20f034c08f">Another one solution to the same problem</a></li>
+<li><a href="https://medium.com/@iamnayr/a-multi-part-analysis-of-node-docker-image-sizes-using-yarn-vs-traditional-npm-2c20f034c08f">Another one solution to the same problem</a>.</li>
 </ul>
 <p>Thanks for reading. I’d be glad to get any feedback!</p>
 </span>
