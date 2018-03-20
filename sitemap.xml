@@ -7,14 +7,19 @@
 
     <url>
         <loc>https://antonfisher.com</loc>
-        <lastmod>2017-06-21T06:59:35Z</lastmod>
+        <lastmod>2018-03-20T06:28:53Z</lastmod>
     </url>
 
     <url>
         <loc>https://antonfisher.com/about/</loc>
-        <lastmod>2017-06-21T06:59:35Z</lastmod>
+        <lastmod>2018-03-20T06:28:53Z</lastmod>
     </url>
 
+    
+    <url>
+        <loc>https://antonfisher.com/posts/2018/03/19/reducing-docker-image-size-of-a-node-js-application/</loc>
+        <lastmod>2018-03-19T00:00:00Z</lastmod>
+    </url>
     
     <url>
         <loc>https://antonfisher.com/posts/2017/01/16/run-jenkins-in-docker-container-with-persistent-configuration/</loc>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--
+ _____     _           _____ _     _
+|  _  |___| |_ ___ ___|   __|_|___| |_ ___ ___   ___ ___ _____
+|     |   |  _| . |   |   __| |_ -|   | -_|  _|_|  _| . |     |
+|__|__|_|_|_| |___|_|_|__|  |_|___|_|_|___|_| |_|___|___|_|_|_|
+
+Anton Fisher <a.fschr@gmail.com>
+
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title lang="en">Anton Fisher's notes / Reducing Docker image size of a Node.js application</title>
+    <meta name="description" content="nodejs, docker, docker image size">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="author" content="Anton Fisher">
+    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed">
+    <link href="/css/all.min.css" rel="stylesheet">
+    <link href="/favicon.ico" rel="icon">
+</head>
+<body>
+<div class="container">
+    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/" class="title" title="Home">
+            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
+        </a>
+
+        <nav>
+            <div class="link">
+                <a href="/about" title="About">about</a>
+            </div>
+            <div class="link">
+                <a href="/feed.xml" title="RSS feed link">rss</a>
+            </div>
+        </nav>
+
+        <a href="/about">
+            <img src="/images/anton-fisher-v2.jpg"
+                 title="Contact information"
+                 itemprop="image"
+                 alt="About">
+        </a>
+
+        <div class="clear"></div>
+    </header>
+
+    <div class="content">
+        
+<article itemscope itemtype="http://schema.org/Article">
+    <h1 itemprop="name">Reducing Docker image size of a Node.js application</h1>
+    <time itemprop="datePublished" content="2018-03-19" datetime="2018-03-19">2018-03-19</time>
+
+    
+    <span class="tags">
+        tags:
+        <a href="/tags/nodejs/">nodejs</a>
+        <a href="/tags/docker/">docker</a>
+        
+    </span>
+    
+
+    <div class="clear"></div>
+
+    <img itemprop="image" src="/images/posts/9-reducing-docker-image-size-of-a-node-js-application/docker-image-sizes-logo.png">
+    <div class="clear"></div>
+
+    <span itemprop="headline"><p>
+<p>Working on a project at work I noticed that pulling and deploying our <em>Node.js</em> application sometimes takes
+more then I want it to.
+I started to dig into the problem and here are 2 easy steps I’ve done to compress <em>Docker</em> image size
+down from <strong>948MB</strong>
+to 206MB and then to <strong>79MB</strong>!</p>
+</p></span> <span itemprop="articleBody">
+<h2>This is the results of my attempts:</h2>
+<p><center>
+<img src="/images/posts/9-reducing-docker-image-size-of-a-node-js-application/docker-image-sizes-console-table.png" alt="Docker image sizes uncompressed" />
+</center></p>
+<h2>Initial configuration</h2>
+<p>The application is a typical web application that has frontend part (<em>React.js</em>) and backend part
+(<em>Node.js</em> server on <em>Express.js</em>.)
+The build process consists of these steps:</p>
+<pre><code class="language-bash">NPM build ---&gt; Run tests ---&gt; Build Docker image ---&gt; Publish to hub.docker.com
+</code></pre>
+<p>This is the simple <em>Dockerfile</em> I had before changes (located in the root of my applications directory):</p>
+<pre><code class="language-docker"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>
+
+<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p /usr/app/build
+</span><span class="hljs-keyword">WORKDIR</span><span class="bash"> /usr/app
+</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> ./build /usr/app/build
+</span><span class="hljs-keyword">COPY</span><span class="bash"> ./node_modules /usr/app/node_modules
+</span><span class="hljs-keyword">COPY</span><span class="bash"> ./package.json /usr/app/package.json
+</span>
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
+
+<span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]
+</span></code></pre>
+<p>This <em>Dockerfile</em> does several things:</p>
+<ul>
+<li>using <code>/usr/app</code> as application directory</li>
+<li>copying build files into the designed application directory</li>
+<li>copying required <em>Node.js</em> modules to the application directory.</li>
+</ul>
+<h2>Step 1: Using <em>alpine</em> version of <em>Node.js</em> image (948MB to 206MB)</h2>
+<p><em>Node.js</em> images <a href="https://hub.docker.com/_/node/">repository</a> provides several image tags for each <em>Node.js</em> version.
+For example, version <em>8.10.0</em> has 6 different image tags:</p>
+<ul>
+<li><code>8.10.0</code> – 266MB compressed</li>
+<li><code>8.10.0-alpine</code> – <strong>23MB compressed</strong></li>
+<li><code>8.10.0-onbuild</code> – 266MB compressed</li>
+<li><code>8.10.0-slim</code> – 92MB compressed</li>
+<li><code>8.10.0-stretch</code> – 343MB compressed</li>
+<li><code>8.10.0-wheezy</code> – 202MB compressed.</li>
+</ul>
+<p>An interesting thing there is the <em>alpine</em> version.
+This is the smallest of available images because it based on <a href="https://alpinelinux.org/">Alpine Linux project</a>.
+<em>Alpine</em> uses <em>musl libc</em> instead of <em>glibc</em> inside, but <em>Node.js</em> usually uses the second one on a typical developer system.
+Possibly, this may break some libraries you use but there were no issues with my <em>Express.js</em> based application.
+Give it a try if it fits you:</p>
+<pre><code class="language-docker"><span class="hljs-comment"># change the first line from:</span>
+<span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>
+
+<span class="hljs-comment"># to:</span>
+<span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>-alpine
+</code></pre>
+<p>“Docker build” and in my case, the size of the image drops down to <strong>206MB</strong>, it’s <strong>-78%</strong> of the initial size!</p>
+<p>(Read more about pros/cons of <em>alpine</em> image <a href="https://github.com/nodejs/docker-node#nodealpine">here</a>.)</p>
+<h2>Step 2: Using NPM <code>--production</code> flag (206MB to 79MB)</h2>
+<p>By default, <code>npm install</code> installs all dependencies including <code>devDependencies</code>.
+There is <code>--production</code> flag that makes it possible to install only the <code>dependencies</code> section from <em>package.json</em>.
+I keep build systems, testing utils, and other dev stuff in the <code>devDependencies</code> section
+and I’m used to keeping my <em>React.js</em> libraries and other dependencies (that I actually use only on UI)
+under the <code>dependencies</code> section in <em>package.json</em>.
+But this doesn’t look like a correct way because I’ve got <em>webpack</em> to do bundle all my UI dependencies
+to the single file.
+Hence, the right solution here is to move all dependencies, which are not going to be directly used
+by the production server, to the <code>devDependencies</code> section.</p>
+<p><strong>The rule is: if the dependency is only needed during the build, move it to the <code>devDependencies</code> section.</strong></p>
+<p>I don’t do a bundle for server files, so I left all server dependencies in <code>dependencies</code> section as they were before.
+That means that the working process should contain following steps:</p>
+<pre><code class="language-bash">npm install;                    <span class="hljs-comment"># install dev + prod deps</span>
+<span class="hljs-comment"># do crazy coding here</span>
+npm run build;                  <span class="hljs-comment"># copy server files and the UI bundle to the `dist` folder</span>
+npm <span class="hljs-built_in">test</span>;                       <span class="hljs-comment"># test the build</span>
+docker build -t myapp:latest .  <span class="hljs-comment"># build a Docker image</span>
+</code></pre>
+<p>This is the final version of the <em>Dockerfile</em> I have:</p>
+<pre><code class="language-docker"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>-alpine
+
+<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p /usr/app/build
+</span><span class="hljs-keyword">WORKDIR</span><span class="bash"> /usr/app
+</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> ./build /usr/app/build
+</span><span class="hljs-keyword">COPY</span><span class="bash"> ./package.json /usr/app/package.json
+</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">cd</span> /usr/app &amp;&amp; npm install --production
+</span>
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
+
+<span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]
+</span></code></pre>
+<p>Again “Docker build” and in my case, the size of the image drops down to <strong>79MB</strong>
+and this time it’s <strong>-91%</strong> of the initial size!</p>
+<h2>Conclusion</h2>
+<p>Two simple steps to get image size dropped from <strong>948MB</strong> to <strong>79MB</strong>.
+Now the process of container updating/re-running takes much less time.
+Compression sizes on <a href="https://hub.docker.com/r/nexenta/nedgeui/tags/">hud.docker.com</a> look even better:</p>
+<p><center>
+<img src="/images/posts/9-reducing-docker-image-size-of-a-node-js-application/docker-image-sizes-hub-table.png" alt="Docker image sizes compressed" />
+</center></p>
+<h2>Links</h2>
+<ul>
+<li><a href="https://github.com/nodejs/docker-node#nodealpine"><em>Node.js</em> <em>alpine</em> image</a></li>
+<li><a href="https://medium.com/@iamnayr/a-multi-part-analysis-of-node-docker-image-sizes-using-yarn-vs-traditional-npm-2c20f034c08f">Another one solution to the same problem</a></li>
+</ul>
+<p>Thanks for reading. I’d be glad to get any feedback!</p>
+</span>
+</article>
+
+<div class="top-border-block share-buttons">
+    <b class="label">Share:</b>
+
+    <!-- twitter -->
+    <a href="https://twitter.com/share" class="twitter-share-button"
+       data-text="Reducing Docker image size of a Node.js application"
+       data-via="afschr">
+        Tweet
+    </a>
+    <script>
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+        if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+        fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+    </script>
+    <!-- /twitter -->
+</div>
+
+<div class="top-border-block comments">
+    <b class="label">Comments:</b>
+    <div id="disqus_thread"></div>
+    <script>
+        if (window.location.hostname !== 'localhost') {
+            var disqus_config = function () {
+                this.page.url = 'https://antonfisher.com/posts/2018/03/19/reducing-docker-image-size-of-a-node-js-application/';
+                this.page.identifier = '2018-03-19';
+            };
+            (function () {
+                var d = document, s = d.createElement('script');
+                s.src = '//antonfishercom.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        }
+    </script>
+</div>
+
+    </div>
+
+    <footer>
+        <nav>
+            <a href="/">home</a>
+            <span class="devider">&nbsp;</span>
+            <a href="/about">about</a>
+            <span class="devider">&nbsp;</span>
+            <a href="/feed.xml">rss</a>
+        </nav>
+        <div>
+            &copy;
+            <time><script>document.write(new Date().getFullYear())</script></time>
+            Anton Fisher
+        </div>
+    </footer>
+</div>
+</body>
+<script>
+    if (window.location.hostname !== 'localhost') {
+        (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-44250383-1', 'antonfisher.com');
+        ga('send', 'pageview');
+    }
+</script>
+</html>
