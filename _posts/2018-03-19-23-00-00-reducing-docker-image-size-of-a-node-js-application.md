@@ -10,10 +10,9 @@
 <!-- preview -->
 
 Working on a project at work I noticed that pulling and deploying our _Node.js_ application sometimes takes
-more then I want it to.
-I started to dig into the problem and here are 2 easy steps I've done to compress _Docker_ image size
-down from **948MB**
-to 206MB and then to **79MB**!
+more time then I want it to.
+I started digging into the problem and here are 2 easy steps I've done to compress _Docker_ image size
+down from **948MB** to 206MB and then to **79MB**!
 
 <!-- /preview -->
 
