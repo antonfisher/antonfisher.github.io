@@ -65,7 +65,7 @@ After some time I got the first prototype:
 ![first prototype](/images/posts/3-make-raspberry-pi-jenkins-traffic-light/check-prototype-1.jpg)
 
 It worked properly, but was not bright enough.
-After consultation with my brother I ordered new 3v3 brighter leds with clear white plastic lens: 
+After consultation with my brother I ordered new 3v3 brighter leds with clear white plastic lens:
 ![new brighter leds](/images/posts/3-make-raspberry-pi-jenkins-traffic-light/new-leds-pack.jpg)
 
 They does not look excellent but much better than colored.
@@ -83,7 +83,7 @@ After 2 evenings and fun experiments with a soldering iron I got this:
 And the final version under hood:
 ![Mounted board](/images/posts/3-make-raspberry-pi-jenkins-traffic-light/mounted-board.jpg)
 
-After testing I improved color depth by using colored films: 
+After testing I improved color depth by using colored films:
 ![](/images/posts/3-make-raspberry-pi-jenkins-traffic-light/add-films.jpg)
 
 Ok, it is fit:

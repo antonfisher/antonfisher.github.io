@@ -7,14 +7,19 @@
 
     <url>
         <loc>https://antonfisher.com</loc>
-        <lastmod>2018-03-20T20:02:41Z</lastmod>
+        <lastmod>2018-12-15T06:29:46Z</lastmod>
     </url>
 
     <url>
         <loc>https://antonfisher.com/about/</loc>
-        <lastmod>2018-03-20T20:02:41Z</lastmod>
+        <lastmod>2018-12-15T06:29:46Z</lastmod>
     </url>
 
+    
+    <url>
+        <loc>https://antonfisher.com/posts/2018/12/14/drive-distributed-storage-on-raspberry-pi/</loc>
+        <lastmod>2018-12-14T00:00:00Z</lastmod>
+    </url>
     
     <url>
         <loc>https://antonfisher.com/posts/2018/03/19/reducing-docker-image-size-of-a-node-js-application/</loc>

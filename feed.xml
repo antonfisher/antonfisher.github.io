@@ -7,9 +7,36 @@
     <link href="https://antonfisher.com/feed.xml" rel="self"/>
     <link href="https://antonfisher.com/"/>
     <id>urn:uuid:c346da00-980f-11e5-a33f-0002a5d5c51b</id>
-    <updated>2018-03-20T20:02:41Z</updated>
+    <updated>2018-12-15T06:29:46Z</updated>
 
 
+    
+    <entry>
+        <title>Drive distributed storage on Raspberry Pi</title>
+        <link href="https://antonfisher.com/posts/2018/12/14/drive-distributed-storage-on-raspberry-pi/"/>
+        <link rel="alternate" type="text/html" href="https://antonfisher.com/posts/2018/12/14/drive-distributed-storage-on-raspberry-pi/"/>
+        <id>urn:uuid:-posts-2018-12-14-drive-distributed-storage-on-raspberry-pi</id>
+        <updated>2018-12-14T00:00:00Z</updated>
+        <summary>
+<p>The idea was to build a storage device with an easy way to increase its capacity and with data replication.
+The device was built on top of Raspberry Pi with analog gauges, switches, and a display to indicate
+and control storage state.</p>
+</summary>
+        <content type="xhtml">
+            <div xmlns="http://www.w3.org/1999/xhtml">
+                <img src="https://antonfisher.com/images/posts/10-raspberry-pi-storage/sloth-storage-logo.png" />
+                
+<p>The idea was to build a storage device with an easy way to increase its capacity and with data replication.
+The device was built on top of Raspberry Pi with analog gauges, switches, and a display to indicate
+and control storage state.</p>
+...
+            </div>
+        </content>
+        <author>
+            <name>Anton Fisher</name>
+            <email>a.fschr@gmail.com</email>
+        </author>
+    </entry>
     
     <entry>
         <title>Reducing Docker image size of a Node.js application</title>
