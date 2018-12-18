@@ -76,24 +76,24 @@ and control storage state.</p>
 <h2>What is this?</h2>
 <p><img src="/images/posts/10-raspberry-pi-storage/sloth-storage-result.jpg" alt="sloth-storage result" /></p>
 <p>This is a stand-alone storage device, that can connect to WiFi and provides FTP interface to access files remotely.
-When the client copies a file to the storage, this file gets replicated to different USB drivers.
+When a client copies a file to the storage, this file gets replicated to different USB drivers.
 If the client removes some file, it gets removed from all the USB drives.</p>
 <p>There are two options when the storage is almost full:</p>
 <ul>
-<li>plug in a new USB drive (the storage will start utilizing the new drive)</li>
+<li>plug in a new USB drive (the storage will utilize the new drive)</li>
 <li>decrease replication count using &quot;<em>Replicas</em>&quot; selector and get more storage space but with losing reliability.</li>
 </ul>
 <p>Replication count selector (&quot;<em>Replicas</em>&quot;) has four positions (1-4) to choose the value.
-There are two analog gauges, the first one for storage utilization, and the second one for CPU usage.
-On/Off toggle switch in the final version is used to enable/disable FTP server.
-There is a yellow LED to indicate storage IO, and a red LED to indicate that an error occurred.</p>
+There are two analog gauges, the first one is for storage utilization, and the second one is for CPU usage.
+On/Off toggle switch in the final version enables and disables FTP server
+The yellow LED indicates storage IO, and the red LED indicates that an error occurred.</p>
 <p>Main display switch has eight positions:</p>
 <ul>
-<li><em>Total/free/used capacity</em> – storage capacity numbers</li>
-<li><em>Time</em> – current device time (if it’s frozen then you NodeJS event loop got blocked :)</li>
+<li><em>Total/free/used capacity</em> – storage capacity metrics</li>
+<li><em>Time</em> – current device time (if it’s frozen then your NodeJS event loop got blocked :)</li>
 <li><em>Error</em> – scrolls the last error message</li>
 <li><em>Sync Status</em> – shows replication queue length
-(how many files have to be replicated/removed to reach the desired state)</li>
+(the number of files to be replicated/removed to reach the desired state)</li>
 <li><em>Drives</em> – the count of detected drivers</li>
 <li><em>IP</em> – scrolls device IP address.</li>
 </ul>
@@ -113,16 +113,16 @@ There is a yellow LED to indicate storage IO, and a red LED to indicate that an 
 </ul>
 <p>Items in the list which have an <code>ID</code> were purchased on <a href="https://www.adafruit.com">adafruit.com</a>.</p>
 <h3>Box</h3>
-<p>I found bamboo as a cheap and very friendly looking material for DIY cases.
-Also wood is much easy to fix and adjust by cutting and sanding than metal.</p>
+<p>I found bamboo as a cheap and very nice looking material for DIY cases.
+Also wood is much easier to fix and adjust by cutting and sanding compare to metal.</p>
 <p>Work started with measurements and blueprint preparing:
 <img src="/images/posts/10-raspberry-pi-storage/sloth-storage-blueprints-pencil.png" alt="sloth-storage blueprints" /></p>
 <p>I prepared SVG files of the case and ordered laser cutting and engraving on <a href="https://www.ponoko.com/">ponoko.com</a>.
 After a while I got this:
 <img src="/images/posts/10-raspberry-pi-storage/sloth-storage-laser-cuts.jpg" alt="sloth-storage laser cuts arrived" />
-I got this by mail.
+Ponoko sent it by mail.
 All materials come covered with protection paper.</p>
-<p>Box panels are pulled out, corner connectors already glued together:
+<p>Box panels are pulled out, corner connectors are already glued together:
 <img src="/images/posts/10-raspberry-pi-storage/sloth-storage-laser-cuts-out.jpg" alt="sloth-storage laser cuts got out" /></p>
 <p>Panels adjustment and fitting:
 <img src="/images/posts/10-raspberry-pi-storage/sloth-storage-box-assembled.jpg" alt="sloth-storage case assembled" /></p>
@@ -130,7 +130,7 @@ All materials come covered with protection paper.</p>
 <a href="https://github.com/antonfisher/sloth-storage/blob/master/blueprints/box.svg">here</a>.</p>
 <h3>Analog gauges</h3>
 <p>First of all, I tried to print scale for analog gauges on a paper but was not satisfied by the result.
-And in the end, I decided to ordered engraving on thin styrene white sheets (0.02 inches)
+And in the end, I decided to order engraving on thin styrene white sheets (0.02 inches)
 on the same <a href="https://www.ponoko.com/">website</a> I used for the case.
 Crayons appear to be an excellent option to paint engraved traces.
 I made black and orange sections:
@@ -148,32 +148,33 @@ I made black and orange sections:
 The display consists of six segments, and each segment has 5x7 dots (not assembled yet):
 <img src="/images/posts/10-raspberry-pi-storage/sloth-storage-phat.jpg" alt="pimoroni phat display" />
 There is comprehensive <a href="https://github.com/pimoroni/microdot-phat">Python library</a>
-that makes Micro Dot pHAT even easier to use.
-The library supports following actions: single dot turning on/off, printing text, and scrolling.
-This is how it looks in action (I used RPi Zero to debug display’s code):
+that makes Micro Dot pHAT much easier to use.
+The library supports: single dot turning on/off, printing text, and scrolling.
+This is how it looks in-action (I used RPi Zero to debug display’s code):
 <center>
 <img src="/images/posts/10-raspberry-pi-storage/sloth-storage-phat-animation.gif" alt="pimoroni phat display animation" />
 </center></p>
 <h3>Assembling</h3>
 <p>Put the case and indicators together:
 <img src="/images/posts/10-raspberry-pi-storage/sloth-storage-box-and-controls-assembled.jpg" alt="sloth-storage case and controls assembled" /></p>
-<p>The case got packed with components, but still, the height could be decreased at least on 1cm (0.4 inches):
+<p>The case got packed with components, but still, the height could be decreased at least by 1cm (0.4 inches):
 <img src="/images/posts/10-raspberry-pi-storage/sloth-storage-inside-side.jpg" alt="sloth-storage inside side" /></p>
 <p>Raspberry Pi has 40-pins header, and the device uses almost all of them.
 Also, all 4 Raspberry Pi’s USB ports were used by USB HUBs to increase the total port count to 16:
 <img src="/images/posts/10-raspberry-pi-storage/sloth-storage-inside-back.jpg" alt="sloth-storage inside back" /></p>
-<p>There is an issue with USB HUBs, I had to be careful with power.
-It turned out that I can’t use 3A power supply to power 16 USB ports and RPi itself.
+<p>There is an issue with USB HUBs,
+it turned out that I could not use 3A power supply to power 16 USB ports and RPi itself.
 In my case, the maximum number of USB devices was 4-5, after this numbers they usually get unmounted randomly.
 When 10 USB drives are connected, Raspberry Pi seems to work fine, but only until any IO operation,
 then RPi completely cuts the power from all USB devices, and you have to re-mount them.</p>
 <h2>Application</h2>
-<p>The tech stack is JavaScript (Node.js) the core application and small Python driver for the display.
+<p>The tech stack is JavaScript (Node.js) core application and small Python driver for the display.
 JS is not the best choice for this kind of programs but given the experimental nature of this project,
 figuring out the limitations of Node.js was interesting.
-The main rule there – to use only asynchronous functions in the application, this doesn’t block JS event loop,
-and application reacts fine on user interactions (switches, buttons).
-Still impossible to get perfect execution timing required to manage some hardware components, but this wasn’t needed.</p>
+The main rule there is to use only asynchronous functions in the application.
+This doesn’t block JS event loop, and application reacts fine on user interactions (switches, buttons).
+Still it’s impossible to get perfect execution timing required to manage some hardware components,
+but this wasn’t needed.</p>
 <p>All USB drives connected for the first time:
 <center>
 <img src="/images/posts/10-raspberry-pi-storage/sloth-storage-flashlights.gif" alt="sloth-storage flashlights" />
@@ -200,7 +201,7 @@ the current value and the possible range of some metric.</p>
 <li>keep an eye on the power consumption of all hardware components</li>
 <li>Node.js fits well for hacking projects when you are not lazy to follow its async guides.</li>
 </ul>
-<p>As always, after finish a project I came up with two ideas of what to do next!</p>
+<p>As always, after finishing a project I came up with two ideas of what to do next!</p>
 <h2>Links</h2>
 <ul>
 <li><a href="https://github.com/antonfisher/sloth-storage">GitHub repository and documentation</a></li>

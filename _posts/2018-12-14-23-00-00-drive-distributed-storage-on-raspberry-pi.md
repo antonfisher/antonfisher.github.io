@@ -20,24 +20,24 @@ and control storage state.
 ![sloth-storage result](/images/posts/10-raspberry-pi-storage/sloth-storage-result.jpg)
 
 This is a stand-alone storage device, that can connect to WiFi and provides FTP interface to access files remotely.
-When the client copies a file to the storage, this file gets replicated to different USB drivers.
+When a client copies a file to the storage, this file gets replicated to different USB drivers.
 If the client removes some file, it gets removed from all the USB drives.
 
 There are two options when the storage is almost full:
-- plug in a new USB drive (the storage will start utilizing the new drive)
+- plug in a new USB drive (the storage will utilize the new drive)
 - decrease replication count using "*Replicas*" selector and get more storage space but with losing reliability.
 
 Replication count selector ("*Replicas*") has four positions (1-4) to choose the value.
-There are two analog gauges, the first one for storage utilization, and the second one for CPU usage.
-On/Off toggle switch in the final version is used to enable/disable FTP server.
-There is a yellow LED to indicate storage IO, and a red LED to indicate that an error occurred.
+There are two analog gauges, the first one is for storage utilization, and the second one is for CPU usage.
+On/Off toggle switch in the final version enables and disables FTP server
+The yellow LED indicates storage IO, and the red LED indicates that an error occurred.
 
 Main display switch has eight positions:
-- *Total/free/used capacity* -- storage capacity numbers
-- *Time* -- current device time (if it’s frozen then you NodeJS event loop got blocked :)
+- *Total/free/used capacity* -- storage capacity metrics
+- *Time* -- current device time (if it's frozen then your NodeJS event loop got blocked :)
 - *Error* -- scrolls the last error message
 - *Sync Status* -- shows replication queue length
-    (how many files have to be replicated/removed to reach the desired state)
+    (the number of files to be replicated/removed to reach the desired state)
 - *Drives* -- the count of detected drivers
 - *IP* -- scrolls device IP address.
 
@@ -59,8 +59,8 @@ Items in the list which have an `ID` were purchased on [adafruit.com](https://ww
 
 ### Box
 
-I found bamboo as a cheap and very friendly looking material for DIY cases.
-Also wood is much easy to fix and adjust by cutting and sanding than metal.
+I found bamboo as a cheap and very nice looking material for DIY cases.
+Also wood is much easier to fix and adjust by cutting and sanding compare to metal.
 
 Work started with measurements and blueprint preparing:
 ![sloth-storage blueprints](/images/posts/10-raspberry-pi-storage/sloth-storage-blueprints-pencil.png)
@@ -68,10 +68,10 @@ Work started with measurements and blueprint preparing:
 I prepared SVG files of the case and ordered laser cutting and engraving on [ponoko.com](https://www.ponoko.com/).
 After a while I got this:
 ![sloth-storage laser cuts arrived](/images/posts/10-raspberry-pi-storage/sloth-storage-laser-cuts.jpg)
-I got this by mail.
+Ponoko sent it by mail.
 All materials come covered with protection paper.
 
-Box panels are pulled out, corner connectors already glued together:
+Box panels are pulled out, corner connectors are already glued together:
 ![sloth-storage laser cuts got out](/images/posts/10-raspberry-pi-storage/sloth-storage-laser-cuts-out.jpg)
 
 Panels adjustment and fitting:
@@ -83,7 +83,7 @@ Case SVG blueprints can be found
 ### Analog gauges
 
 First of all, I tried to print scale for analog gauges on a paper but was not satisfied by the result.
-And in the end, I decided to ordered engraving on thin styrene white sheets (0.02 inches)
+And in the end, I decided to order engraving on thin styrene white sheets (0.02 inches)
 on the same [website](https://www.ponoko.com/) I used for the case.
 Crayons appear to be an excellent option to paint engraved traces.
 I made black and orange sections:
@@ -106,9 +106,9 @@ I used [Pimoroni Micro Dot pHAT](https://www.adafruit.com/product/3248) as the o
 The display consists of six segments, and each segment has 5x7 dots (not assembled yet):
 ![pimoroni phat display](/images/posts/10-raspberry-pi-storage/sloth-storage-phat.jpg)
 There is comprehensive [Python library](https://github.com/pimoroni/microdot-phat)
-that makes Micro Dot pHAT even easier to use.
-The library supports following actions: single dot turning on/off, printing text, and scrolling.
-This is how it looks in action (I used RPi Zero to debug display's code):
+that makes Micro Dot pHAT much easier to use.
+The library supports: single dot turning on/off, printing text, and scrolling.
+This is how it looks in-action (I used RPi Zero to debug display's code):
 <center>
 ![pimoroni phat display animation](/images/posts/10-raspberry-pi-storage/sloth-storage-phat-animation.gif)
 </center>
@@ -118,27 +118,28 @@ This is how it looks in action (I used RPi Zero to debug display's code):
 Put the case and indicators together:
 ![sloth-storage case and controls assembled](/images/posts/10-raspberry-pi-storage/sloth-storage-box-and-controls-assembled.jpg)
 
-The case got packed with components, but still, the height could be decreased at least on 1cm (0.4 inches):
+The case got packed with components, but still, the height could be decreased at least by 1cm (0.4 inches):
 ![sloth-storage inside side](/images/posts/10-raspberry-pi-storage/sloth-storage-inside-side.jpg)
 
 Raspberry Pi has 40-pins header, and the device uses almost all of them.
 Also, all 4 Raspberry Pi's USB ports were used by USB HUBs to increase the total port count to 16:
 ![sloth-storage inside back](/images/posts/10-raspberry-pi-storage/sloth-storage-inside-back.jpg)
 
-There is an issue with USB HUBs, I had to be careful with power.
-It turned out that I can't use 3A power supply to power 16 USB ports and RPi itself.
+There is an issue with USB HUBs,
+it turned out that I could not use 3A power supply to power 16 USB ports and RPi itself.
 In my case, the maximum number of USB devices was 4-5, after this numbers they usually get unmounted randomly.
 When 10 USB drives are connected, Raspberry Pi seems to work fine, but only until any IO operation,
 then RPi completely cuts the power from all USB devices, and you have to re-mount them.
 
 ## Application
 
-The tech stack is JavaScript (Node.js) the core application and small Python driver for the display.
+The tech stack is JavaScript (Node.js) core application and small Python driver for the display.
 JS is not the best choice for this kind of programs but given the experimental nature of this project,
 figuring out the limitations of Node.js was interesting.
-The main rule there -- to use only asynchronous functions in the application, this doesn't block JS event loop,
-and application reacts fine on user interactions (switches, buttons).
-Still impossible to get perfect execution timing required to manage some hardware components, but this wasn't needed.
+The main rule there is to use only asynchronous functions in the application.
+This doesn't block JS event loop, and application reacts fine on user interactions (switches, buttons).
+Still it's impossible to get perfect execution timing required to manage some hardware components,
+but this wasn't needed.
 
 All USB drives connected for the first time:
 <center>
@@ -171,7 +172,7 @@ The takeaways from the experiment are:
 - keep an eye on the power consumption of all hardware components
 - Node.js fits well for hacking projects when you are not lazy to follow its async guides.
 
-As always, after finish a project I came up with two ideas of what to do next!
+As always, after finishing a project I came up with two ideas of what to do next!
 
 ## Links
 - [GitHub repository and documentation](https://github.com/antonfisher/sloth-storage)
