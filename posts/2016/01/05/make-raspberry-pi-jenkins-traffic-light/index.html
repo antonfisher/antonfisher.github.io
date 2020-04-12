@@ -9,9 +9,10 @@ Anton Fisher <a.fschr@gmail.com>
 
 -->
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title lang="en">Anton Fisher's notes / Make Raspberry Pi Jenkins traffic light</title>
+    <title lang="en">Anton Fisher / Make Raspberry Pi Jenkins traffic light</title>
     <meta name="description" content="raspberry pi, traffic light, leds, nodejs">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="author" content="Anton Fisher">
@@ -19,34 +20,47 @@ Anton Fisher <a.fschr@gmail.com>
     <link href="/css/all.min.css" rel="stylesheet">
     <link href="/favicon.ico" rel="icon">
 </head>
+
 <body>
-<div class="container">
-    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <a href="/" class="title" title="Home">
-            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
-        </a>
+    <div class="container">
+        <header>
+            <div class="title-container" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <div class="title">
+                    <a href="/" class="name" itemprop="name" title="Home">
+                        Anton Fisher
+                    </a>
+                    <p class="about">
+                        software engineer [js, go]
+                    </p>
+                </div>
 
-        <nav>
-            <div class="link">
-                <a href="/about" title="About">about</a>
+                <img src="/images/anton-fisher-v3.jpg" class="photo" itemprop="image" title="Anton Fisher photo"
+                    alt="Anton Fisher photo">
             </div>
-            <div class="link">
-                <a href="/feed.xml" title="RSS feed link">rss</a>
+            <div class="links-container">
+                <a href="//github.com/antonfisher" target="_blank" rel="noreferrer" title="my code on github">
+                    <span class="icon icon-github"></span>&nbsp;<span class="link-title">github</span>
+                </a>
+                <a href="//instagram.com/afschr" target="_blank" rel="noreferrer" title="my art on instagram">
+                    <span class="icon icon-instagram"></span>&nbsp;<span class="link-title">instagram</span>
+                </a>
+                <a href="//twitter.com/afschr" target="_blank" rel="noreferrer" title="my random thoughts on twitter">
+                    <span class="icon icon-twitter"></span>&nbsp;<span class="link-title">twitter</span>
+                </a>
+                <a href="//linkedin.com/in/afschr/en" target="_blank" rel="noreferrer" title="my job list on linkedin">
+                    <span class="icon icon-linkedin"></span>&nbsp;<span class="link-title">linkedin</span>
+                </a>
+                <a href="/feed.xml" title="RSS feed link">
+                    <span class="icon icon-rss2"></span>&nbsp;<span class="link-title">rss</span>
+                </a>
+                <a href="mailto:a.fschr@gmail.com" target="_blank" rel="noreferrer">
+                    <span class="icon icon-mail"></span>&nbsp;<span class="link-title">a.fschr@gmail.com</span>
+                </a>
             </div>
-        </nav>
+        </header>
 
-        <a href="/about">
-            <img src="/images/anton-fisher-v2.jpg"
-                 title="Contact information"
-                 itemprop="image"
-                 alt="About">
-        </a>
-
-        <div class="clear"></div>
-    </header>
-
-    <div class="content">
-        
+        <div class="content">
+            
 <article itemscope itemtype="http://schema.org/Article">
     <h1 itemprop="name">Make Raspberry Pi Jenkins traffic light</h1>
     <time itemprop="datePublished" content="2016-01-05" datetime="2016-01-05">2016-01-05</time>
@@ -101,7 +115,7 @@ For more information see <a href="http://elinux.org/RPi_Low-level_peripherals">h
 </center></p>
 <p>But it not good idea to use pins voltage for turning on leds.
 Better solution should turn on leds with <em>0</em> level on pin, so connection should be like:</p>
-<pre><code><span class="hljs-string">GPIO</span> <span class="hljs-string">pin</span> <span class="hljs-string">(3v3</span> <span class="hljs-string">or</span> <span class="hljs-number">0</span><span class="hljs-string">v)</span> <span class="hljs-meta">---</span> <span class="hljs-string">resistor</span> <span class="hljs-meta">---</span> <span class="hljs-string">led</span> <span class="hljs-meta">---</span> <span class="hljs-number">3</span><span class="hljs-string">v3</span> <span class="hljs-string">pin</span>
+<pre><code>GPIO pin (<span class="hljs-number">3</span>v3 <span class="hljs-keyword">or</span> <span class="hljs-number">0</span>v) --- resistor --- led --- <span class="hljs-number">3</span>v3 pin
 </code></pre>
 <p>If you feel more power use this schema (thanks Nikolay!):
 <center>
@@ -157,24 +171,24 @@ But first of all <a href="/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-
 <p>Edit <code>$ vim configs/config.js</code> file:</p>
 <pre><code class="language-javascript"><span class="hljs-built_in">module</span>.exports = {
     <span class="hljs-attr">rpi</span>: {                          <span class="hljs-comment">// Raspberry Pi sub-config</span>
-        gpio: {                     <span class="hljs-comment">// GPIO [General Purpose Input Output] config</span>
-            color: {
+        <span class="hljs-attr">gpio</span>: {                     <span class="hljs-comment">// GPIO [General Purpose Input Output] config</span>
+            <span class="hljs-attr">color</span>: {
                 <span class="hljs-attr">red</span>: <span class="hljs-number">15</span>,            <span class="hljs-comment">// pin # for red color</span>
-                yellow: <span class="hljs-number">11</span>,         <span class="hljs-comment">// pin # for yellow color</span>
-                green: <span class="hljs-number">7</span>            <span class="hljs-comment">// pin # for green color</span>
+                <span class="hljs-attr">yellow</span>: <span class="hljs-number">11</span>,         <span class="hljs-comment">// pin # for yellow color</span>
+                <span class="hljs-attr">green</span>: <span class="hljs-number">7</span>            <span class="hljs-comment">// pin # for green color</span>
             },
             <span class="hljs-attr">outputLevel</span>: {
                 <span class="hljs-attr">on</span>: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// 3v3   // led turn on output level</span>
-                off: <span class="hljs-literal">false</span> <span class="hljs-comment">// 0v    // led turn off output level</span>
+                <span class="hljs-attr">off</span>: <span class="hljs-literal">false</span> <span class="hljs-comment">// 0v    // led turn off output level</span>
             }
         }
     },
     <span class="hljs-attr">jenkins</span>: {                      <span class="hljs-comment">// Jenkins sub-config</span>
-        interval: <span class="hljs-number">5</span> * <span class="hljs-number">1000</span>,         <span class="hljs-comment">// requests interval</span>
-        host: <span class="hljs-string">'10.0.0.1'</span>,
+        <span class="hljs-attr">interval</span>: <span class="hljs-number">5</span> * <span class="hljs-number">1000</span>,         <span class="hljs-comment">// requests interval</span>
+        <span class="hljs-attr">host</span>: <span class="hljs-string">'10.0.0.1'</span>,
         <span class="hljs-attr">port</span>: <span class="hljs-string">'8080'</span>,
         <span class="hljs-attr">view</span>: <span class="hljs-string">'JenkinsLight'</span>,       <span class="hljs-comment">// http://localhost:8080/view/%VIEW_NAME%/</span>
-        demoMode: <span class="hljs-literal">true</span>              <span class="hljs-comment">// demo turn on red-yellow-green lights</span>
+        <span class="hljs-attr">demoMode</span>: <span class="hljs-literal">true</span>              <span class="hljs-comment">// demo turn on red-yellow-green lights</span>
     }
 };
 </code></pre>
@@ -215,23 +229,6 @@ But first of all <a href="/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-
 </span>
 </article>
 
-<div class="top-border-block share-buttons">
-    <b class="label">Share:</b>
-
-    <!-- twitter -->
-    <a href="https://twitter.com/share" class="twitter-share-button"
-       data-text="Make Raspberry Pi Jenkins traffic light"
-       data-via="afschr">
-        Tweet
-    </a>
-    <script>
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-        if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
-        fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-    </script>
-    <!-- /twitter -->
-</div>
-
 <div class="top-border-block comments">
     <b class="label">Comments:</b>
     <div id="disqus_thread"></div>
@@ -251,23 +248,22 @@ But first of all <a href="/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-
     </script>
 </div>
 
-    </div>
-
-    <footer>
-        <nav>
-            <a href="/">home</a>
-            <span class="devider">&nbsp;</span>
-            <a href="/about">about</a>
-            <span class="devider">&nbsp;</span>
-            <a href="/feed.xml">rss</a>
-        </nav>
-        <div>
-            &copy;
-            <time><script>document.write(new Date().getFullYear())</script></time>
-            Anton Fisher
         </div>
-    </footer>
-</div>
+
+        <footer>
+            <nav>
+                <a href="/">home</a>
+                <span class="divider">&nbsp;</span>
+                <a href="/feed.xml">rss</a>
+            </nav>
+            <div>
+                &copy;
+                <time>
+                    <script>document.write(new Date().getFullYear())</script></time>
+                Anton Fisher
+            </div>
+        </footer>
+    </div>
 </body>
 <script>
     if (window.location.hostname !== 'localhost') {
@@ -279,4 +275,5 @@ But first of all <a href="/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-
         ga('send', 'pageview');
     }
 </script>
+
 </html>

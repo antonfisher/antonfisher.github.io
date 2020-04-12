@@ -9,9 +9,10 @@ Anton Fisher <a.fschr@gmail.com>
 
 -->
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title lang="en">Anton Fisher's notes / Reducing Docker image size of a Node.js application</title>
+    <title lang="en">Anton Fisher / Reducing Docker image size of a Node.js application</title>
     <meta name="description" content="nodejs, docker, docker image size">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="author" content="Anton Fisher">
@@ -19,34 +20,47 @@ Anton Fisher <a.fschr@gmail.com>
     <link href="/css/all.min.css" rel="stylesheet">
     <link href="/favicon.ico" rel="icon">
 </head>
+
 <body>
-<div class="container">
-    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <a href="/" class="title" title="Home">
-            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
-        </a>
+    <div class="container">
+        <header>
+            <div class="title-container" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <div class="title">
+                    <a href="/" class="name" itemprop="name" title="Home">
+                        Anton Fisher
+                    </a>
+                    <p class="about">
+                        software engineer [js, go]
+                    </p>
+                </div>
 
-        <nav>
-            <div class="link">
-                <a href="/about" title="About">about</a>
+                <img src="/images/anton-fisher-v3.jpg" class="photo" itemprop="image" title="Anton Fisher photo"
+                    alt="Anton Fisher photo">
             </div>
-            <div class="link">
-                <a href="/feed.xml" title="RSS feed link">rss</a>
+            <div class="links-container">
+                <a href="//github.com/antonfisher" target="_blank" rel="noreferrer" title="my code on github">
+                    <span class="icon icon-github"></span>&nbsp;<span class="link-title">github</span>
+                </a>
+                <a href="//instagram.com/afschr" target="_blank" rel="noreferrer" title="my art on instagram">
+                    <span class="icon icon-instagram"></span>&nbsp;<span class="link-title">instagram</span>
+                </a>
+                <a href="//twitter.com/afschr" target="_blank" rel="noreferrer" title="my random thoughts on twitter">
+                    <span class="icon icon-twitter"></span>&nbsp;<span class="link-title">twitter</span>
+                </a>
+                <a href="//linkedin.com/in/afschr/en" target="_blank" rel="noreferrer" title="my job list on linkedin">
+                    <span class="icon icon-linkedin"></span>&nbsp;<span class="link-title">linkedin</span>
+                </a>
+                <a href="/feed.xml" title="RSS feed link">
+                    <span class="icon icon-rss2"></span>&nbsp;<span class="link-title">rss</span>
+                </a>
+                <a href="mailto:a.fschr@gmail.com" target="_blank" rel="noreferrer">
+                    <span class="icon icon-mail"></span>&nbsp;<span class="link-title">a.fschr@gmail.com</span>
+                </a>
             </div>
-        </nav>
+        </header>
 
-        <a href="/about">
-            <img src="/images/anton-fisher-v2.jpg"
-                 title="Contact information"
-                 itemprop="image"
-                 alt="About">
-        </a>
-
-        <div class="clear"></div>
-    </header>
-
-    <div class="content">
-        
+        <div class="content">
+            
 <article itemscope itemtype="http://schema.org/Article">
     <h1 itemprop="name">Reducing Docker image size of a Node.js application</h1>
     <time itemprop="datePublished" content="2018-03-19" datetime="2018-03-19">2018-03-19</time>
@@ -82,17 +96,17 @@ The build process consists of these steps:</p>
 <p>The application <em>Dockerfile</em> before changes (located in the root of application directory):</p>
 <pre><code class="language-docker"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>
 
-<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p /usr/app/build
-</span><span class="hljs-keyword">WORKDIR</span><span class="bash"> /usr/app
-</span>
-<span class="hljs-keyword">COPY</span><span class="bash"> ./build /usr/app/build
-</span><span class="hljs-keyword">COPY</span><span class="bash"> ./node_modules /usr/app/node_modules
-</span><span class="hljs-keyword">COPY</span><span class="bash"> ./package.json /usr/app/package.json
-</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p /usr/app/build</span>
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /usr/app</span>
+
+<span class="hljs-keyword">COPY</span><span class="bash"> ./build /usr/app/build</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> ./node_modules /usr/app/node_modules</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> ./package.json /usr/app/package.json</span>
+
 <span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
 
-<span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]
-</span></code></pre>
+<span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]</span>
+</code></pre>
 <p>This <em>Dockerfile</em> does several things:</p>
 <ul>
 <li>sets <code>/usr/app</code> as application directory</li>
@@ -147,18 +161,18 @@ That means that the working process should contain following steps:</p>
 <p>The final version of the <em>Dockerfile</em> I have:</p>
 <pre><code class="language-docker"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">8.10</span>.<span class="hljs-number">0</span>-alpine
 
-<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p /usr/app/build
-</span><span class="hljs-keyword">WORKDIR</span><span class="bash"> /usr/app
-</span>
-<span class="hljs-keyword">COPY</span><span class="bash"> ./build /usr/app/build
-</span><span class="hljs-keyword">COPY</span><span class="bash"> ./package.json /usr/app/package.json
-</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">cd</span> /usr/app &amp;&amp; npm install --production
-</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p /usr/app/build</span>
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /usr/app</span>
+
+<span class="hljs-keyword">COPY</span><span class="bash"> ./build /usr/app/build</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> ./package.json /usr/app/package.json</span>
+
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">cd</span> /usr/app &amp;&amp; npm install --production</span>
+
 <span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
 
-<span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]
-</span></code></pre>
+<span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]</span>
+</code></pre>
 <p>Run <code>docker build</code> again and in my case, the size of the image drops down to <strong>79MB</strong>
 and this time it’s <strong>91% less</strong> than the initial size!</p>
 <h2>Conclusion</h2>
@@ -176,23 +190,6 @@ Compressed image sizes on <a href="https://hub.docker.com/r/nexenta/nedgeui/tags
 <p>Thanks for reading. I’d be glad to get any feedback!</p>
 </span>
 </article>
-
-<div class="top-border-block share-buttons">
-    <b class="label">Share:</b>
-
-    <!-- twitter -->
-    <a href="https://twitter.com/share" class="twitter-share-button"
-       data-text="Reducing Docker image size of a Node.js application"
-       data-via="afschr">
-        Tweet
-    </a>
-    <script>
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-        if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
-        fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-    </script>
-    <!-- /twitter -->
-</div>
 
 <div class="top-border-block comments">
     <b class="label">Comments:</b>
@@ -213,23 +210,22 @@ Compressed image sizes on <a href="https://hub.docker.com/r/nexenta/nedgeui/tags
     </script>
 </div>
 
-    </div>
-
-    <footer>
-        <nav>
-            <a href="/">home</a>
-            <span class="devider">&nbsp;</span>
-            <a href="/about">about</a>
-            <span class="devider">&nbsp;</span>
-            <a href="/feed.xml">rss</a>
-        </nav>
-        <div>
-            &copy;
-            <time><script>document.write(new Date().getFullYear())</script></time>
-            Anton Fisher
         </div>
-    </footer>
-</div>
+
+        <footer>
+            <nav>
+                <a href="/">home</a>
+                <span class="divider">&nbsp;</span>
+                <a href="/feed.xml">rss</a>
+            </nav>
+            <div>
+                &copy;
+                <time>
+                    <script>document.write(new Date().getFullYear())</script></time>
+                Anton Fisher
+            </div>
+        </footer>
+    </div>
 </body>
 <script>
     if (window.location.hostname !== 'localhost') {
@@ -241,4 +237,5 @@ Compressed image sizes on <a href="https://hub.docker.com/r/nexenta/nedgeui/tags
         ga('send', 'pageview');
     }
 </script>
+
 </html>

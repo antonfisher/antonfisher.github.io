@@ -9,9 +9,10 @@ Anton Fisher <a.fschr@gmail.com>
 
 -->
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title lang="en">Anton Fisher's notes / Run Jenkins in Docker container with persistent configuration</title>
+    <title lang="en">Anton Fisher / Run Jenkins in Docker container with persistent configuration</title>
     <meta name="description" content="jenkins, docker, jenkins in docker container">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="author" content="Anton Fisher">
@@ -19,34 +20,47 @@ Anton Fisher <a.fschr@gmail.com>
     <link href="/css/all.min.css" rel="stylesheet">
     <link href="/favicon.ico" rel="icon">
 </head>
+
 <body>
-<div class="container">
-    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <a href="/" class="title" title="Home">
-            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
-        </a>
+    <div class="container">
+        <header>
+            <div class="title-container" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <div class="title">
+                    <a href="/" class="name" itemprop="name" title="Home">
+                        Anton Fisher
+                    </a>
+                    <p class="about">
+                        software engineer [js, go]
+                    </p>
+                </div>
 
-        <nav>
-            <div class="link">
-                <a href="/about" title="About">about</a>
+                <img src="/images/anton-fisher-v3.jpg" class="photo" itemprop="image" title="Anton Fisher photo"
+                    alt="Anton Fisher photo">
             </div>
-            <div class="link">
-                <a href="/feed.xml" title="RSS feed link">rss</a>
+            <div class="links-container">
+                <a href="//github.com/antonfisher" target="_blank" rel="noreferrer" title="my code on github">
+                    <span class="icon icon-github"></span>&nbsp;<span class="link-title">github</span>
+                </a>
+                <a href="//instagram.com/afschr" target="_blank" rel="noreferrer" title="my art on instagram">
+                    <span class="icon icon-instagram"></span>&nbsp;<span class="link-title">instagram</span>
+                </a>
+                <a href="//twitter.com/afschr" target="_blank" rel="noreferrer" title="my random thoughts on twitter">
+                    <span class="icon icon-twitter"></span>&nbsp;<span class="link-title">twitter</span>
+                </a>
+                <a href="//linkedin.com/in/afschr/en" target="_blank" rel="noreferrer" title="my job list on linkedin">
+                    <span class="icon icon-linkedin"></span>&nbsp;<span class="link-title">linkedin</span>
+                </a>
+                <a href="/feed.xml" title="RSS feed link">
+                    <span class="icon icon-rss2"></span>&nbsp;<span class="link-title">rss</span>
+                </a>
+                <a href="mailto:a.fschr@gmail.com" target="_blank" rel="noreferrer">
+                    <span class="icon icon-mail"></span>&nbsp;<span class="link-title">a.fschr@gmail.com</span>
+                </a>
             </div>
-        </nav>
+        </header>
 
-        <a href="/about">
-            <img src="/images/anton-fisher-v2.jpg"
-                 title="Contact information"
-                 itemprop="image"
-                 alt="About">
-        </a>
-
-        <div class="clear"></div>
-    </header>
-
-    <div class="content">
-        
+        <div class="content">
+            
 <article itemscope itemtype="http://schema.org/Article">
     <h1 itemprop="name">Run Jenkins in Docker container with persistent configuration</h1>
     <time itemprop="datePublished" content="2017-01-16" datetime="2017-01-16">2017-01-16</time>
@@ -154,62 +168,62 @@ total 16
 <span class="hljs-keyword">ENV</span> GITHUB_CONFIG_REPOSITORY my-jenkins-config
 
 <span class="hljs-comment"># Make _Jenkins_ home directory</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p <span class="hljs-variable">$JENKINS_HOME</span>
-</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p <span class="hljs-variable">$JENKINS_HOME</span></span>
+
 <span class="hljs-comment"># Install _Jenkins_ plugins</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> /usr/<span class="hljs-built_in">local</span>/bin/install-plugins.sh \
     scm-sync-configuration:0.0.10 \
     workflow-aggregator:2.4 \
-    docker-workflow:1.8
-</span>
+    docker-workflow:1.8</span>
+
 <span class="hljs-comment"># Set timezone</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"America/Los_Angeles"</span> &gt; /etc/timezone &amp;&amp;\
     dpkg-reconfigure --frontend noninteractive tzdata &amp;&amp;\
-    date
-</span>
+    date</span>
+
 <span class="hljs-comment"># Copy RSA keys for _Jenkins_ config repository (default keys).</span>
 <span class="hljs-comment"># This public key should be added to:</span>
 <span class="hljs-comment"># https://github.com/%YOUR_JENKINS_CONFIG_REPOSITORY%/settings/keys</span>
-<span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.config.id_rsa     <span class="hljs-variable">$HOME</span>/.ssh/id_rsa
-</span><span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.config.id_rsa.pub <span class="hljs-variable">$HOME</span>/.ssh/id_rsa.pub
-</span><span class="hljs-keyword">RUN</span><span class="bash"> chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/id_rsa &amp;&amp;\
-    chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/id_rsa.pub
-</span><span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentityFile <span class="hljs-variable">$HOME</span>/.ssh/id_rsa"</span> &gt;&gt; /etc/ssh/ssh_config &amp;&amp;\
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    StrictHostKeyChecking no      "</span> &gt;&gt; /etc/ssh/ssh_config
-</span><span class="hljs-keyword">RUN</span><span class="bash"> /bin/bash -c <span class="hljs-string">"eval '<span class="hljs-variable">$(ssh-agent -s)</span>'; ssh-add <span class="hljs-variable">$HOME</span>/.ssh/id_rsa;"</span>
-</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.config.id_rsa     <span class="hljs-variable">$HOME</span>/.ssh/id_rsa</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.config.id_rsa.pub <span class="hljs-variable">$HOME</span>/.ssh/id_rsa.pub</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/id_rsa &amp;&amp;\
+    chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/id_rsa.pub</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentityFile <span class="hljs-variable">$HOME</span>/.ssh/id_rsa"</span> &gt;&gt; /etc/ssh/ssh_config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    StrictHostKeyChecking no      "</span> &gt;&gt; /etc/ssh/ssh_config</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> /bin/bash -c <span class="hljs-string">"eval '<span class="hljs-variable">$(ssh-agent -s)</span>'; ssh-add <span class="hljs-variable">$HOME</span>/.ssh/id_rsa;"</span></span>
+
 <span class="hljs-comment"># Copy RSA keys for your application repository and add</span>
 <span class="hljs-comment"># host 'github.com-application-jenkins' for application code pulls.</span>
 <span class="hljs-comment"># This public key should be added to</span>
 <span class="hljs-comment"># https://github.com/%YOUR_APPLICATION_REPOSITORY%/settings/keys</span>
-<span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.application.id_rsa     <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa
-</span><span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.application.id_rsa.pub <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa.pub
-</span><span class="hljs-keyword">RUN</span><span class="bash"> chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa &amp;&amp;\
-    chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa.pub
-</span><span class="hljs-keyword">RUN</span><span class="bash"> touch <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
+<span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.application.id_rsa     <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.application.id_rsa.pub <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa.pub</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa &amp;&amp;\
+    chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa.pub</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> touch <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
     <span class="hljs-built_in">echo</span> <span class="hljs-string">"Host github.com-application-jenkins                     "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
     <span class="hljs-built_in">echo</span> <span class="hljs-string">"    HostName       github.com                           "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
     <span class="hljs-built_in">echo</span> <span class="hljs-string">"    User           git                                  "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
     <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentityFile   <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa"</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentitiesOnly yes                                  "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config
-</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentitiesOnly yes                                  "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config</span>
+
 <span class="hljs-comment"># Configure git</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> git config --global user.email <span class="hljs-string">"jenkins@container"</span> &amp;&amp;\
-    git config --global user.name  <span class="hljs-string">"jenkins"</span>
-</span>
+    git config --global user.name  <span class="hljs-string">"jenkins"</span></span>
+
 <span class="hljs-comment"># Clone _Jenkins_ config</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">cd</span> /tmp &amp;&amp;\
     git <span class="hljs-built_in">clone</span> git@github.com:<span class="hljs-variable">$GITHUB_USERNAME</span>/<span class="hljs-variable">$GITHUB_CONFIG_REPOSITORY</span>.git &amp;&amp;\
     cp -r <span class="hljs-variable">$GITHUB_CONFIG_REPOSITORY</span>/. <span class="hljs-variable">$JENKINS_HOME</span> &amp;&amp;\
-    rm -r /tmp/<span class="hljs-variable">$GITHUB_CONFIG_REPOSITORY</span>
-</span>
+    rm -r /tmp/<span class="hljs-variable">$GITHUB_CONFIG_REPOSITORY</span></span>
+
 <span class="hljs-comment"># _Jenkins_ workspace for sharing between containers</span>
-<span class="hljs-keyword">VOLUME</span><span class="bash"> <span class="hljs-variable">$JENKINS_HOME</span>/workspace
-</span>
+<span class="hljs-keyword">VOLUME</span><span class="bash"> <span class="hljs-variable">$JENKINS_HOME</span>/workspace</span>
+
 <span class="hljs-comment"># Run init.sh script after container start</span>
-<span class="hljs-keyword">COPY</span><span class="bash"> src/init.sh /usr/<span class="hljs-built_in">local</span>/bin/init.sh
-</span><span class="hljs-keyword">ENTRYPOINT</span><span class="bash"> [<span class="hljs-string">"/bin/tini"</span>, <span class="hljs-string">"--"</span>, <span class="hljs-string">"/usr/local/bin/init.sh"</span>]
-</span></code></pre>
+<span class="hljs-keyword">COPY</span><span class="bash"> src/init.sh /usr/<span class="hljs-built_in">local</span>/bin/init.sh</span>
+<span class="hljs-keyword">ENTRYPOINT</span><span class="bash"> [<span class="hljs-string">"/bin/tini"</span>, <span class="hljs-string">"--"</span>, <span class="hljs-string">"/usr/local/bin/init.sh"</span>]</span>
+</code></pre>
 <p>Jenkins plugins are listed in the <code>Dockerfile</code>:</p>
 <ul>
 <li><code>scm-sync-configuration:0.0.10</code> – to store <em>Jenkins</em> configuration in any <em>SCM</em>
@@ -302,11 +316,11 @@ no installation required:
 <span class="hljs-comment"># Set timezone</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"America/Los_Angeles"</span> &gt; /etc/timezone &amp;&amp;\
     dpkg-reconfigure --frontend noninteractive tzdata &amp;&amp;\
-    date
-</span>
+    date</span>
+
 <span class="hljs-comment"># Set locale</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> locale-gen en_US.UTF-8
-</span><span class="hljs-keyword">ENV</span> LANG en_US.UTF-<span class="hljs-number">8</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> locale-gen en_US.UTF-8</span>
+<span class="hljs-keyword">ENV</span> LANG en_US.UTF-<span class="hljs-number">8</span>
 <span class="hljs-keyword">ENV</span> LANGUAGE en_US:en
 <span class="hljs-keyword">ENV</span> LC_ALL en_US.UTF-<span class="hljs-number">8</span>
 
@@ -314,27 +328,27 @@ no installation required:
 <span class="hljs-keyword">ENV</span> DEBIAN_FRONTEND <span class="hljs-string">"noninteractive"</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> apt-get -q update &amp;&amp;\
     apt-get -q install -y -o Dpkg::Options::=<span class="hljs-string">"--force-confnew"</span> apt-utils &amp;&amp;\
-    apt-get -q upgrade -y -o Dpkg::Options::=<span class="hljs-string">"--force-confnew"</span> --no-install-recommends
-</span>
+    apt-get -q upgrade -y -o Dpkg::Options::=<span class="hljs-string">"--force-confnew"</span> --no-install-recommends</span>
+
 <span class="hljs-comment"># Install dependencies</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> apt-get -q install -y -o Dpkg::Options::=<span class="hljs-string">"--force-confnew"</span> \
     libltdl-dev \
     libltdl7 \
     sshpass \
-    vim
-</span>
+    vim</span>
+
 <span class="hljs-comment"># Clean-up apt-get</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> apt-get -q autoremove &amp;&amp;\
     apt-get -q clean -y &amp;&amp;\
     rm -rf /var/lib/apt/lists/* &amp;&amp;\
-    rm -f /var/cache/apt/*.bin
-</span>
+    rm -f /var/cache/apt/*.bin</span>
+
 <span class="hljs-comment"># Disable StrictHostKeyChecking for ssh</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"    StrictHostKeyChecking no"</span> &gt;&gt; /etc/ssh/ssh_config
-</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"    StrictHostKeyChecking no"</span> &gt;&gt; /etc/ssh/ssh_config</span>
+
 <span class="hljs-comment"># staying online before force stop container</span>
-<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"tail"</span>, <span class="hljs-string">"-f"</span>, <span class="hljs-string">"/dev/null"</span>]
-</span></code></pre>
+<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"tail"</span>, <span class="hljs-string">"-f"</span>, <span class="hljs-string">"/dev/null"</span>]</span>
+</code></pre>
 <h2>Configure Jenkins tasks to use container-based agents</h2>
 <p>As I said above, I use <em>pipelines</em> to keep task configuration in the application code.
 You need to create a <code>Jenkinsfile</code> in your applications repository and then setup <em>Jenkins</em> to use it:</p>
@@ -402,23 +416,6 @@ You need to create a <code>Jenkinsfile</code> in your applications repository an
 </span>
 </article>
 
-<div class="top-border-block share-buttons">
-    <b class="label">Share:</b>
-
-    <!-- twitter -->
-    <a href="https://twitter.com/share" class="twitter-share-button"
-       data-text="Run Jenkins in Docker container with persistent configuration"
-       data-via="afschr">
-        Tweet
-    </a>
-    <script>
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-        if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
-        fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-    </script>
-    <!-- /twitter -->
-</div>
-
 <div class="top-border-block comments">
     <b class="label">Comments:</b>
     <div id="disqus_thread"></div>
@@ -438,23 +435,22 @@ You need to create a <code>Jenkinsfile</code> in your applications repository an
     </script>
 </div>
 
-    </div>
-
-    <footer>
-        <nav>
-            <a href="/">home</a>
-            <span class="devider">&nbsp;</span>
-            <a href="/about">about</a>
-            <span class="devider">&nbsp;</span>
-            <a href="/feed.xml">rss</a>
-        </nav>
-        <div>
-            &copy;
-            <time><script>document.write(new Date().getFullYear())</script></time>
-            Anton Fisher
         </div>
-    </footer>
-</div>
+
+        <footer>
+            <nav>
+                <a href="/">home</a>
+                <span class="divider">&nbsp;</span>
+                <a href="/feed.xml">rss</a>
+            </nav>
+            <div>
+                &copy;
+                <time>
+                    <script>document.write(new Date().getFullYear())</script></time>
+                Anton Fisher
+            </div>
+        </footer>
+    </div>
 </body>
 <script>
     if (window.location.hostname !== 'localhost') {
@@ -466,4 +462,5 @@ You need to create a <code>Jenkinsfile</code> in your applications repository an
         ga('send', 'pageview');
     }
 </script>
+
 </html>

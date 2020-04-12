@@ -9,9 +9,10 @@ Anton Fisher <a.fschr@gmail.com>
 
 -->
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title lang="en">Anton Fisher's notes / Using SVG icons in ExtJs</title>
+    <title lang="en">Anton Fisher / Using SVG icons in ExtJs</title>
     <meta name="description" content="extjs, svg, svg sprite, icons">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="author" content="Anton Fisher">
@@ -19,34 +20,47 @@ Anton Fisher <a.fschr@gmail.com>
     <link href="/css/all.min.css" rel="stylesheet">
     <link href="/favicon.ico" rel="icon">
 </head>
+
 <body>
-<div class="container">
-    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <a href="/" class="title" title="Home">
-            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
-        </a>
+    <div class="container">
+        <header>
+            <div class="title-container" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <div class="title">
+                    <a href="/" class="name" itemprop="name" title="Home">
+                        Anton Fisher
+                    </a>
+                    <p class="about">
+                        software engineer [js, go]
+                    </p>
+                </div>
 
-        <nav>
-            <div class="link">
-                <a href="/about" title="About">about</a>
+                <img src="/images/anton-fisher-v3.jpg" class="photo" itemprop="image" title="Anton Fisher photo"
+                    alt="Anton Fisher photo">
             </div>
-            <div class="link">
-                <a href="/feed.xml" title="RSS feed link">rss</a>
+            <div class="links-container">
+                <a href="//github.com/antonfisher" target="_blank" rel="noreferrer" title="my code on github">
+                    <span class="icon icon-github"></span>&nbsp;<span class="link-title">github</span>
+                </a>
+                <a href="//instagram.com/afschr" target="_blank" rel="noreferrer" title="my art on instagram">
+                    <span class="icon icon-instagram"></span>&nbsp;<span class="link-title">instagram</span>
+                </a>
+                <a href="//twitter.com/afschr" target="_blank" rel="noreferrer" title="my random thoughts on twitter">
+                    <span class="icon icon-twitter"></span>&nbsp;<span class="link-title">twitter</span>
+                </a>
+                <a href="//linkedin.com/in/afschr/en" target="_blank" rel="noreferrer" title="my job list on linkedin">
+                    <span class="icon icon-linkedin"></span>&nbsp;<span class="link-title">linkedin</span>
+                </a>
+                <a href="/feed.xml" title="RSS feed link">
+                    <span class="icon icon-rss2"></span>&nbsp;<span class="link-title">rss</span>
+                </a>
+                <a href="mailto:a.fschr@gmail.com" target="_blank" rel="noreferrer">
+                    <span class="icon icon-mail"></span>&nbsp;<span class="link-title">a.fschr@gmail.com</span>
+                </a>
             </div>
-        </nav>
+        </header>
 
-        <a href="/about">
-            <img src="/images/anton-fisher-v2.jpg"
-                 title="Contact information"
-                 itemprop="image"
-                 alt="About">
-        </a>
-
-        <div class="clear"></div>
-    </header>
-
-    <div class="content">
-        
+        <div class="content">
+            
 <article itemscope itemtype="http://schema.org/Article">
     <h1 itemprop="name">Using SVG icons in ExtJs</h1>
     <time itemprop="datePublished" content="2016-06-06" datetime="2016-06-06">2016-06-06</time>
@@ -138,7 +152,7 @@ Ext.define(<span class="hljs-string">'Override.button.Button'</span>, {
     <span class="hljs-attr">override</span>: <span class="hljs-string">'Ext.button.Button'</span>,
 
     <span class="hljs-comment">// inject svg to icon template</span>
-    iconTpl: [
+    <span class="hljs-attr">iconTpl</span>: [
         <span class="hljs-string">'&lt;span id="{id}-btnIconEl" data-ref="btnIconEl" role="presentation" unselectable="on" '</span>,
             <span class="hljs-string">'class="{baseIconCls} {baseIconCls}-{ui} {iconCls} {glyphCls}{childElCls}" '</span>,
             <span class="hljs-string">'style="'</span>,
@@ -155,7 +169,7 @@ Ext.define(<span class="hljs-string">'Override.button.Button'</span>, {
     ].join(<span class="hljs-string">''</span>),
 
     <span class="hljs-comment">// extend template values</span>
-    getTemplateArgs: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-attr">getTemplateArgs</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">var</span> args = <span class="hljs-keyword">this</span>.callParent();
         args.iconSvg = <span class="hljs-keyword">this</span>.iconSvg;
         <span class="hljs-keyword">return</span> args;
@@ -190,7 +204,7 @@ Ext.define(<span class="hljs-string">'Override.button.Button'</span>, {
 }
 </code></pre>
 <p>Import the new style file <code>svg-icons.scss</code> in <code>%APP_FOLDER%/sass/etc/all.scss</code>:</p>
-<pre><code class="language-scss">@<span class="hljs-keyword">import</span> <span class="hljs-string">"svg-icons"</span>;
+<pre><code class="language-scss"><span class="hljs-keyword">@import</span> <span class="hljs-string">"svg-icons"</span>;
 </code></pre>
 <p>If you use a theme package, it will be the best place for the new <code>svg-icons.scss</code> file.</p>
 <p>After all changes, do not forget to re-build the application.</p>
@@ -201,12 +215,12 @@ Just add the <code>iconSvg</code> property into button configuration:</p>
     <span class="hljs-attr">xtype</span>: <span class="hljs-string">'button'</span>,
     <span class="hljs-attr">text</span>: <span class="hljs-string">'Save'</span>,
     <span class="hljs-attr">iconSvg</span>: <span class="hljs-string">'save'</span>, <span class="hljs-comment">// &lt;--- here</span>
-    scale: <span class="hljs-string">'medium'</span>
+    <span class="hljs-attr">scale</span>: <span class="hljs-string">'medium'</span>
 }, {
     <span class="hljs-attr">xtype</span>: <span class="hljs-string">'button'</span>,
     <span class="hljs-attr">text</span>: <span class="hljs-string">'Delete'</span>,
     <span class="hljs-attr">iconSvg</span>: <span class="hljs-string">'delete'</span>, <span class="hljs-comment">// &lt;--- and here</span>
-    scale: <span class="hljs-string">'medium'</span>
+    <span class="hljs-attr">scale</span>: <span class="hljs-string">'medium'</span>
 }]
 </code></pre>
 <p>Update a page and get the icons on buttons:</p>
@@ -231,23 +245,6 @@ All depends on a project.</p>
 </span>
 </article>
 
-<div class="top-border-block share-buttons">
-    <b class="label">Share:</b>
-
-    <!-- twitter -->
-    <a href="https://twitter.com/share" class="twitter-share-button"
-       data-text="Using SVG icons in ExtJs"
-       data-via="afschr">
-        Tweet
-    </a>
-    <script>
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-        if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
-        fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-    </script>
-    <!-- /twitter -->
-</div>
-
 <div class="top-border-block comments">
     <b class="label">Comments:</b>
     <div id="disqus_thread"></div>
@@ -267,23 +264,22 @@ All depends on a project.</p>
     </script>
 </div>
 
-    </div>
-
-    <footer>
-        <nav>
-            <a href="/">home</a>
-            <span class="devider">&nbsp;</span>
-            <a href="/about">about</a>
-            <span class="devider">&nbsp;</span>
-            <a href="/feed.xml">rss</a>
-        </nav>
-        <div>
-            &copy;
-            <time><script>document.write(new Date().getFullYear())</script></time>
-            Anton Fisher
         </div>
-    </footer>
-</div>
+
+        <footer>
+            <nav>
+                <a href="/">home</a>
+                <span class="divider">&nbsp;</span>
+                <a href="/feed.xml">rss</a>
+            </nav>
+            <div>
+                &copy;
+                <time>
+                    <script>document.write(new Date().getFullYear())</script></time>
+                Anton Fisher
+            </div>
+        </footer>
+    </div>
 </body>
 <script>
     if (window.location.hostname !== 'localhost') {
@@ -295,4 +291,5 @@ All depends on a project.</p>
         ga('send', 'pageview');
     }
 </script>
+
 </html>

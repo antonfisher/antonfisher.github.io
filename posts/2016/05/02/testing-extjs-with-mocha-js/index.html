@@ -9,9 +9,10 @@ Anton Fisher <a.fschr@gmail.com>
 
 -->
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title lang="en">Anton Fisher's notes / Testing ExtJs with Mocha.js</title>
+    <title lang="en">Anton Fisher / Testing ExtJs with Mocha.js</title>
     <meta name="description" content="extjs, mochajs, testing">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="author" content="Anton Fisher">
@@ -19,34 +20,47 @@ Anton Fisher <a.fschr@gmail.com>
     <link href="/css/all.min.css" rel="stylesheet">
     <link href="/favicon.ico" rel="icon">
 </head>
+
 <body>
-<div class="container">
-    <header class="title" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <a href="/" class="title" title="Home">
-            <span itemprop="name">Anton Fisher</span><span class="notes">&#8217;s notes</span>
-        </a>
+    <div class="container">
+        <header>
+            <div class="title-container" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <div class="title">
+                    <a href="/" class="name" itemprop="name" title="Home">
+                        Anton Fisher
+                    </a>
+                    <p class="about">
+                        software engineer [js, go]
+                    </p>
+                </div>
 
-        <nav>
-            <div class="link">
-                <a href="/about" title="About">about</a>
+                <img src="/images/anton-fisher-v3.jpg" class="photo" itemprop="image" title="Anton Fisher photo"
+                    alt="Anton Fisher photo">
             </div>
-            <div class="link">
-                <a href="/feed.xml" title="RSS feed link">rss</a>
+            <div class="links-container">
+                <a href="//github.com/antonfisher" target="_blank" rel="noreferrer" title="my code on github">
+                    <span class="icon icon-github"></span>&nbsp;<span class="link-title">github</span>
+                </a>
+                <a href="//instagram.com/afschr" target="_blank" rel="noreferrer" title="my art on instagram">
+                    <span class="icon icon-instagram"></span>&nbsp;<span class="link-title">instagram</span>
+                </a>
+                <a href="//twitter.com/afschr" target="_blank" rel="noreferrer" title="my random thoughts on twitter">
+                    <span class="icon icon-twitter"></span>&nbsp;<span class="link-title">twitter</span>
+                </a>
+                <a href="//linkedin.com/in/afschr/en" target="_blank" rel="noreferrer" title="my job list on linkedin">
+                    <span class="icon icon-linkedin"></span>&nbsp;<span class="link-title">linkedin</span>
+                </a>
+                <a href="/feed.xml" title="RSS feed link">
+                    <span class="icon icon-rss2"></span>&nbsp;<span class="link-title">rss</span>
+                </a>
+                <a href="mailto:a.fschr@gmail.com" target="_blank" rel="noreferrer">
+                    <span class="icon icon-mail"></span>&nbsp;<span class="link-title">a.fschr@gmail.com</span>
+                </a>
             </div>
-        </nav>
+        </header>
 
-        <a href="/about">
-            <img src="/images/anton-fisher-v2.jpg"
-                 title="Contact information"
-                 itemprop="image"
-                 alt="About">
-        </a>
-
-        <div class="clear"></div>
-    </header>
-
-    <div class="content">
-        
+        <div class="content">
+            
 <article itemscope itemtype="http://schema.org/Article">
     <h1 itemprop="name">Testing ExtJs with Mocha.js</h1>
     <time itemprop="datePublished" content="2016-05-02" datetime="2016-05-02">2016-05-02</time>
@@ -142,9 +156,9 @@ it(<span class="hljs-string">'Select first item in "Country" combobox'</span>, <
     <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.css"</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span>/&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.css"</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span>/&gt;</span>
 
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
@@ -164,8 +178,8 @@ it(<span class="hljs-string">'Select first item in "Country" combobox'</span>, <
     </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
     
     <span class="hljs-comment">&lt;!-- first test suite --&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/test/suites/010-environment.js"</span>&gt;</span><span class="undefined">
-    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/test/suites/010-environment.js"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
     <span class="hljs-comment">&lt;!-- configure and run Mocha.js --&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
@@ -233,7 +247,7 @@ $ ./node_modules/.bin/mocha-phantomjs --timeout 15000 --path ./node_modules/.bin
 </ul>
 <p>or direct include to <code>index.html</code>:</p>
 <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.css"</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span>/&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
 <h2>Links</h2>
 <p>Library on <a href="https://github.com/antonfisher/mocha-extjs">GitHub</a>,
@@ -241,23 +255,6 @@ $ ./node_modules/.bin/mocha-phantomjs --timeout 15000 --path ./node_modules/.bin
 <p>Thanks for reading. I will glad to get any feedback!</p>
 </span>
 </article>
-
-<div class="top-border-block share-buttons">
-    <b class="label">Share:</b>
-
-    <!-- twitter -->
-    <a href="https://twitter.com/share" class="twitter-share-button"
-       data-text="Testing ExtJs with Mocha.js"
-       data-via="afschr">
-        Tweet
-    </a>
-    <script>
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-        if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
-        fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-    </script>
-    <!-- /twitter -->
-</div>
 
 <div class="top-border-block comments">
     <b class="label">Comments:</b>
@@ -278,23 +275,22 @@ $ ./node_modules/.bin/mocha-phantomjs --timeout 15000 --path ./node_modules/.bin
     </script>
 </div>
 
-    </div>
-
-    <footer>
-        <nav>
-            <a href="/">home</a>
-            <span class="devider">&nbsp;</span>
-            <a href="/about">about</a>
-            <span class="devider">&nbsp;</span>
-            <a href="/feed.xml">rss</a>
-        </nav>
-        <div>
-            &copy;
-            <time><script>document.write(new Date().getFullYear())</script></time>
-            Anton Fisher
         </div>
-    </footer>
-</div>
+
+        <footer>
+            <nav>
+                <a href="/">home</a>
+                <span class="divider">&nbsp;</span>
+                <a href="/feed.xml">rss</a>
+            </nav>
+            <div>
+                &copy;
+                <time>
+                    <script>document.write(new Date().getFullYear())</script></time>
+                Anton Fisher
+            </div>
+        </footer>
+    </div>
 </body>
 <script>
     if (window.location.hostname !== 'localhost') {
@@ -306,4 +302,5 @@ $ ./node_modules/.bin/mocha-phantomjs --timeout 15000 --path ./node_modules/.bin
         ga('send', 'pageview');
     }
 </script>
+
 </html>
