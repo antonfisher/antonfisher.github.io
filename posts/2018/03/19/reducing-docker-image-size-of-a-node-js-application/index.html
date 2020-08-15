@@ -105,7 +105,7 @@ The build process consists of these steps:</p>
 
 <span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
 
-<span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]</span>
+<span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">&quot;npm&quot;</span>, <span class="hljs-string">&quot;run&quot;</span>, <span class="hljs-string">&quot;start&quot;</span> ]</span>
 </code></pre>
 <p>This <em>Dockerfile</em> does several things:</p>
 <ul>
@@ -171,7 +171,7 @@ That means that the working process should contain following steps:</p>
 
 <span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
 
-<span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">"npm"</span>, <span class="hljs-string">"run"</span>, <span class="hljs-string">"start"</span> ]</span>
+<span class="hljs-keyword">CMD</span><span class="bash"> [ <span class="hljs-string">&quot;npm&quot;</span>, <span class="hljs-string">&quot;run&quot;</span>, <span class="hljs-string">&quot;start&quot;</span> ]</span>
 </code></pre>
 <p>Run <code>docker build</code> again and in my case, the size of the image drops down to <strong>79MB</strong>
 and this time it’s <strong>91% less</strong> than the initial size!</p>

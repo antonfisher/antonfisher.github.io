@@ -126,7 +126,7 @@ Go to <code>keys</code> folder:</p>
 <p>Now let’s generate <em>RSA</em> keys for <em>Jenkins</em> master image.
 The first file is <code>jenkins.config.id_rsa</code>,
 this one will be used to access to <em>Jenkins</em> configuration on <em>GitHub</em>:</p>
-<pre><code class="language-bash">$ ssh-keygen -t rsa -b 4096 -C <span class="hljs-string">"my@gmail.com"</span>
+<pre><code class="language-bash">$ ssh-keygen -t rsa -b 4096 -C <span class="hljs-string">&quot;my@gmail.com&quot;</span>
 Generating public/private rsa key pair.
 Enter file <span class="hljs-keyword">in</span> <span class="hljs-built_in">which</span> to save the key (/home/af/.ssh/id_rsa): jenkins.config.id_rsa
 </code></pre>
@@ -137,7 +137,7 @@ Add created key to <em>GitHub</em> (<em>repository → Settings → Keys</em>) w
 </center></p>
 <p>The second file is <code>jenkins.application.id_rsa</code>,
 this one will be used to pull your application code by <em>Jenkins</em> master container from <em>GitHub</em>:</p>
-<pre><code class="language-bash">$ ssh-keygen -t rsa -b 4096 -C <span class="hljs-string">"my@gmail.com"</span>
+<pre><code class="language-bash">$ ssh-keygen -t rsa -b 4096 -C <span class="hljs-string">&quot;my@gmail.com&quot;</span>
 Generating public/private rsa key pair.
 Enter file <span class="hljs-keyword">in</span> <span class="hljs-built_in">which</span> to save the key (/home/af/.ssh/id_rsa): jenkins.application.id_rsa
 </code></pre>
@@ -177,7 +177,7 @@ total 16
     docker-workflow:1.8</span>
 
 <span class="hljs-comment"># Set timezone</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"America/Los_Angeles"</span> &gt; /etc/timezone &amp;&amp;\
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;America/Los_Angeles&quot;</span> &gt; /etc/timezone &amp;&amp;\
     dpkg-reconfigure --frontend noninteractive tzdata &amp;&amp;\
     date</span>
 
@@ -188,12 +188,12 @@ total 16
 <span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.config.id_rsa.pub <span class="hljs-variable">$HOME</span>/.ssh/id_rsa.pub</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/id_rsa &amp;&amp;\
     chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/id_rsa.pub</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentityFile <span class="hljs-variable">$HOME</span>/.ssh/id_rsa"</span> &gt;&gt; /etc/ssh/ssh_config &amp;&amp;\
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    StrictHostKeyChecking no      "</span> &gt;&gt; /etc/ssh/ssh_config</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> /bin/bash -c <span class="hljs-string">"eval '<span class="hljs-variable">$(ssh-agent -s)</span>'; ssh-add <span class="hljs-variable">$HOME</span>/.ssh/id_rsa;"</span></span>
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;    IdentityFile <span class="hljs-variable">$HOME</span>/.ssh/id_rsa&quot;</span> &gt;&gt; /etc/ssh/ssh_config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;    StrictHostKeyChecking no      &quot;</span> &gt;&gt; /etc/ssh/ssh_config</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> /bin/bash -c <span class="hljs-string">&quot;eval &#x27;<span class="hljs-subst">$(ssh-agent -s)</span>&#x27;; ssh-add <span class="hljs-variable">$HOME</span>/.ssh/id_rsa;&quot;</span></span>
 
 <span class="hljs-comment"># Copy RSA keys for your application repository and add</span>
-<span class="hljs-comment"># host 'github.com-application-jenkins' for application code pulls.</span>
+<span class="hljs-comment"># host &#x27;github.com-application-jenkins&#x27; for application code pulls.</span>
 <span class="hljs-comment"># This public key should be added to</span>
 <span class="hljs-comment"># https://github.com/%YOUR_APPLICATION_REPOSITORY%/settings/keys</span>
 <span class="hljs-keyword">COPY</span><span class="bash"> keys/jenkins.application.id_rsa     <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa</span>
@@ -201,15 +201,15 @@ total 16
 <span class="hljs-keyword">RUN</span><span class="bash"> chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa &amp;&amp;\
     chmod 600 <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa.pub</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> touch <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Host github.com-application-jenkins                     "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    HostName       github.com                           "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    User           git                                  "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentityFile   <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa"</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
-    <span class="hljs-built_in">echo</span> <span class="hljs-string">"    IdentitiesOnly yes                                  "</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Host github.com-application-jenkins                     &quot;</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;    HostName       github.com                           &quot;</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;    User           git                                  &quot;</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;    IdentityFile   <span class="hljs-variable">$HOME</span>/.ssh/jenkins.application.id_rsa&quot;</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config &amp;&amp;\
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;    IdentitiesOnly yes                                  &quot;</span> &gt;&gt; <span class="hljs-variable">$HOME</span>/.ssh/config</span>
 
 <span class="hljs-comment"># Configure git</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> git config --global user.email <span class="hljs-string">"jenkins@container"</span> &amp;&amp;\
-    git config --global user.name  <span class="hljs-string">"jenkins"</span></span>
+<span class="hljs-keyword">RUN</span><span class="bash"> git config --global user.email <span class="hljs-string">&quot;jenkins@container&quot;</span> &amp;&amp;\
+    git config --global user.name  <span class="hljs-string">&quot;jenkins&quot;</span></span>
 
 <span class="hljs-comment"># Clone _Jenkins_ config</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">cd</span> /tmp &amp;&amp;\
@@ -222,7 +222,7 @@ total 16
 
 <span class="hljs-comment"># Run init.sh script after container start</span>
 <span class="hljs-keyword">COPY</span><span class="bash"> src/init.sh /usr/<span class="hljs-built_in">local</span>/bin/init.sh</span>
-<span class="hljs-keyword">ENTRYPOINT</span><span class="bash"> [<span class="hljs-string">"/bin/tini"</span>, <span class="hljs-string">"--"</span>, <span class="hljs-string">"/usr/local/bin/init.sh"</span>]</span>
+<span class="hljs-keyword">ENTRYPOINT</span><span class="bash"> [<span class="hljs-string">&quot;/bin/tini&quot;</span>, <span class="hljs-string">&quot;--&quot;</span>, <span class="hljs-string">&quot;/usr/local/bin/init.sh&quot;</span>]</span>
 </code></pre>
 <p>Jenkins plugins are listed in the <code>Dockerfile</code>:</p>
 <ul>
@@ -314,7 +314,7 @@ no installation required:
 <span class="hljs-keyword">USER</span> root
 
 <span class="hljs-comment"># Set timezone</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"America/Los_Angeles"</span> &gt; /etc/timezone &amp;&amp;\
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;America/Los_Angeles&quot;</span> &gt; /etc/timezone &amp;&amp;\
     dpkg-reconfigure --frontend noninteractive tzdata &amp;&amp;\
     date</span>
 
@@ -325,13 +325,13 @@ no installation required:
 <span class="hljs-keyword">ENV</span> LC_ALL en_US.UTF-<span class="hljs-number">8</span>
 
 <span class="hljs-comment"># Configure and update apt-get</span>
-<span class="hljs-keyword">ENV</span> DEBIAN_FRONTEND <span class="hljs-string">"noninteractive"</span>
+<span class="hljs-keyword">ENV</span> DEBIAN_FRONTEND <span class="hljs-string">&quot;noninteractive&quot;</span>
 <span class="hljs-keyword">RUN</span><span class="bash"> apt-get -q update &amp;&amp;\
-    apt-get -q install -y -o Dpkg::Options::=<span class="hljs-string">"--force-confnew"</span> apt-utils &amp;&amp;\
-    apt-get -q upgrade -y -o Dpkg::Options::=<span class="hljs-string">"--force-confnew"</span> --no-install-recommends</span>
+    apt-get -q install -y -o Dpkg::Options::=<span class="hljs-string">&quot;--force-confnew&quot;</span> apt-utils &amp;&amp;\
+    apt-get -q upgrade -y -o Dpkg::Options::=<span class="hljs-string">&quot;--force-confnew&quot;</span> --no-install-recommends</span>
 
 <span class="hljs-comment"># Install dependencies</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> apt-get -q install -y -o Dpkg::Options::=<span class="hljs-string">"--force-confnew"</span> \
+<span class="hljs-keyword">RUN</span><span class="bash"> apt-get -q install -y -o Dpkg::Options::=<span class="hljs-string">&quot;--force-confnew&quot;</span> \
     libltdl-dev \
     libltdl7 \
     sshpass \
@@ -344,10 +344,10 @@ no installation required:
     rm -f /var/cache/apt/*.bin</span>
 
 <span class="hljs-comment"># Disable StrictHostKeyChecking for ssh</span>
-<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">"    StrictHostKeyChecking no"</span> &gt;&gt; /etc/ssh/ssh_config</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;    StrictHostKeyChecking no&quot;</span> &gt;&gt; /etc/ssh/ssh_config</span>
 
 <span class="hljs-comment"># staying online before force stop container</span>
-<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"tail"</span>, <span class="hljs-string">"-f"</span>, <span class="hljs-string">"/dev/null"</span>]</span>
+<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">&quot;tail&quot;</span>, <span class="hljs-string">&quot;-f&quot;</span>, <span class="hljs-string">&quot;/dev/null&quot;</span>]</span>
 </code></pre>
 <h2>Configure Jenkins tasks to use container-based agents</h2>
 <p>As I said above, I use <em>pipelines</em> to keep task configuration in the application code.
@@ -356,37 +356,37 @@ You need to create a <code>Jenkinsfile</code> in your applications repository an
 <img src="/images/posts/8-run-jenkins-in-docker-container-with-persistent-configuration/jenkins-config-jenkinsfile.png" alt="Set Jenkinsfile in configuration" />
 </center></p>
 <p>Let’s see an example:</p>
-<pre><code class="language-groovy">node(<span class="hljs-string">'master'</span>) {
-    docker.withServer(<span class="hljs-string">'unix:///var/run/docker.sock'</span>) {
-        stage(<span class="hljs-string">'Git clone'</span>) {
-            git <span class="hljs-string">'git@github.com-application-jenkins:antonfisher/node-mocha-extjs.git'</span>
+<pre><code class="language-groovy">node(<span class="hljs-string">&#x27;master&#x27;</span>) {
+    docker.withServer(<span class="hljs-string">&#x27;unix:///var/run/docker.sock&#x27;</span>) {
+        stage(<span class="hljs-string">&#x27;Git clone&#x27;</span>) {
+            git <span class="hljs-string">&#x27;git@github.com-application-jenkins:antonfisher/node-mocha-extjs.git&#x27;</span>
         }
-        stage(<span class="hljs-string">'Build'</span>) {
+        stage(<span class="hljs-string">&#x27;Build&#x27;</span>) {
             docker
-                .image(<span class="hljs-string">'jenkins-agent-ubuntu'</span>)
-                .inside(<span class="hljs-string">'--volumes-from jenkins-master'</span>) {
-                    sh <span class="hljs-string">"bash ./build.sh;"</span>
+                .image(<span class="hljs-string">&#x27;jenkins-agent-ubuntu&#x27;</span>)
+                .inside(<span class="hljs-string">&#x27;--volumes-from jenkins-master&#x27;</span>) {
+                    sh <span class="hljs-string">&quot;bash ./build.sh;&quot;</span>
                 }
         }
-        stage(<span class="hljs-string">'Copy build results'</span>) {
+        stage(<span class="hljs-string">&#x27;Copy build results&#x27;</span>) {
             docker
-                .image(<span class="hljs-string">'jenkins-agent-ubuntu'</span>)
-                .inside(<span class="hljs-string">'--volumes-from jenkins-master'</span>) {
-                    sh <span class="hljs-string">"""
+                .image(<span class="hljs-string">&#x27;jenkins-agent-ubuntu&#x27;</span>)
+                .inside(<span class="hljs-string">&#x27;--volumes-from jenkins-master&#x27;</span>) {
+                    sh <span class="hljs-string">&quot;&quot;&quot;
                         sshpass -plol scp \
-                            "${WORKSPACE}/build/*.tar.gz" \
-                            "backup@1.1.1.1:/buils";
-                    """</span>
+                            &quot;${WORKSPACE}/build/*.tar.gz&quot; \
+                            &quot;backup@1.1.1.1:/buils&quot;;
+                    &quot;&quot;&quot;</span>
                 }
         }
-        stage(<span class="hljs-string">'UI unit tests'</span>) {
+        stage(<span class="hljs-string">&#x27;UI unit tests&#x27;</span>) {
             docker
-                .image(<span class="hljs-string">'jenkins-agent-ubuntu'</span>)
-                .inside(<span class="hljs-string">'--volumes-from jenkins-master'</span>) {
-                    sh <span class="hljs-string">"""
+                .image(<span class="hljs-string">&#x27;jenkins-agent-ubuntu&#x27;</span>)
+                .inside(<span class="hljs-string">&#x27;--volumes-from jenkins-master&#x27;</span>) {
+                    sh <span class="hljs-string">&quot;&quot;&quot;
                         cd ./tests;
                         bash ./run.sh;
-                    """</span>
+                    &quot;&quot;&quot;</span>
                 }
         }
     }

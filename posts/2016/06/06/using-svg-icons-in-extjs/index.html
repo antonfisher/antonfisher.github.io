@@ -102,23 +102,23 @@ I selected <em>Save</em> and <em>Delete</em> icons from the set:
 <img src="/images/posts/7-using-svg-icons-in-extjs/google-icons.png" alt="Google Icons" />
 </center></p>
 <p>Download <em>SVG</em> files of selected icons, e.g. <em>Save</em> icon will look like:</p>
-<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"#FFFFFF"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"24"</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"24"</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.w3.org/2000/svg"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"</span>/&gt;</span>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;#FFFFFF&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;24&quot;</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">&quot;0 0 24 24&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;24&quot;</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M0 0h24v24H0z&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;none&quot;</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z&quot;</span>/&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
 </code></pre>
 <p>Then combine icons into a single <em>SVG</em> sprite,
 all <code>paths</code> of each icon should be into a separate <code>symbol</code> tag and has unique <em>id:</em></p>
-<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.w3.org/2000/svg"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"position:absolute;height:0;width:0;"</span>&gt;</span>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;position:absolute;height:0;width:0;&quot;</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">defs</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"svg-icon-save"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">&quot;0 0 24 24&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;svg-icon-save&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M0 0h24v24H0z&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;none&quot;</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z&quot;</span>/&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">symbol</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"svg-icon-delete"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0V0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"</span>/&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">&quot;0 0 24 24&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;svg-icon-delete&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M0 0h24v24H0V0z&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;none&quot;</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z&quot;</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M0 0h24v24H0z&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;none&quot;</span>/&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">symbol</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">defs</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
@@ -128,16 +128,16 @@ all <code>paths</code> of each icon should be into a separate <code>symbol</code
 <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
     <span class="hljs-comment">&lt;!-- other stuff here--&gt;</span>
 
-    <span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.w3.org/2000/svg"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"position:absolute;height:0;width:0;"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;position:absolute;height:0;width:0;&quot;</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">defs</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"svg-icon-save"</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">&quot;0 0 24 24&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;svg-icon-save&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M0 0h24v24H0z&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;none&quot;</span>/&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z&quot;</span>/&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-name">symbol</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">"0 0 24 24"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"svg-icon-delete"</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0V0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"</span>/&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">"M0 0h24v24H0z"</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">"none"</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">symbol</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">&quot;0 0 24 24&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;svg-icon-delete&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M0 0h24v24H0V0z&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;none&quot;</span>/&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z&quot;</span>/&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M0 0h24v24H0z&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;none&quot;</span>/&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-name">symbol</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">defs</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
@@ -148,30 +148,30 @@ all <code>paths</code> of each icon should be into a separate <code>symbol</code
 <p>The next step is overriding <em>Button</em> class to support new button’s parameter <code>iconSvg</code>.
 Create a file <code>%APP_FOLDER%/overrides/button/Button.js</code> and copy this code into it:</p>
 <pre><code class="language-javascript"><span class="hljs-comment">// overrides/button/Button.js</span>
-Ext.define(<span class="hljs-string">'Override.button.Button'</span>, {
-    <span class="hljs-attr">override</span>: <span class="hljs-string">'Ext.button.Button'</span>,
+Ext.define(<span class="hljs-string">&#x27;Override.button.Button&#x27;</span>, {
+    <span class="hljs-attr">override</span>: <span class="hljs-string">&#x27;Ext.button.Button&#x27;</span>,
 
     <span class="hljs-comment">// inject svg to icon template</span>
     <span class="hljs-attr">iconTpl</span>: [
-        <span class="hljs-string">'&lt;span id="{id}-btnIconEl" data-ref="btnIconEl" role="presentation" unselectable="on" '</span>,
-            <span class="hljs-string">'class="{baseIconCls} {baseIconCls}-{ui} {iconCls} {glyphCls}{childElCls}" '</span>,
-            <span class="hljs-string">'style="'</span>,
-                <span class="hljs-string">'&lt;tpl if="iconUrl"&gt;background-image:url({iconUrl});&lt;/tpl&gt;'</span>,
-                <span class="hljs-string">'&lt;tpl if="glyph &amp;&amp; glyphFontFamily"&gt;font-family:{glyphFontFamily};&lt;/tpl&gt;'</span>,
-                <span class="hljs-string">'&lt;tpl if="iconSvg"&gt;display: inline-block;&lt;/tpl&gt;'</span>,
-            <span class="hljs-string">'"&gt;'</span>,
-            <span class="hljs-string">'&lt;tpl if="glyph"&gt;&amp;#{glyph};&lt;/tpl&gt;'</span>,
-            <span class="hljs-string">'&lt;tpl if="iconCls || iconUrl"&gt;&amp;#160;&lt;/tpl&gt;'</span>,
-            <span class="hljs-string">'&lt;tpl if="iconSvg"&gt;'</span>, <span class="hljs-comment">// new property</span>
-                <span class="hljs-string">'&lt;svg class="svg-icon svg-icon-{iconSvg}"&gt;&lt;use xlink:href="#svg-icon-{iconSvg}"&gt;&lt;/use&gt;&lt;/svg&gt;'</span>,
-            <span class="hljs-string">'&lt;/tpl&gt;'</span>,
-        <span class="hljs-string">'&lt;/span&gt;'</span>
-    ].join(<span class="hljs-string">''</span>),
+        <span class="hljs-string">&#x27;&lt;span id=&quot;{id}-btnIconEl&quot; data-ref=&quot;btnIconEl&quot; role=&quot;presentation&quot; unselectable=&quot;on&quot; &#x27;</span>,
+            <span class="hljs-string">&#x27;class=&quot;{baseIconCls} {baseIconCls}-{ui} {iconCls} {glyphCls}{childElCls}&quot; &#x27;</span>,
+            <span class="hljs-string">&#x27;style=&quot;&#x27;</span>,
+                <span class="hljs-string">&#x27;&lt;tpl if=&quot;iconUrl&quot;&gt;background-image:url({iconUrl});&lt;/tpl&gt;&#x27;</span>,
+                <span class="hljs-string">&#x27;&lt;tpl if=&quot;glyph &amp;&amp; glyphFontFamily&quot;&gt;font-family:{glyphFontFamily};&lt;/tpl&gt;&#x27;</span>,
+                <span class="hljs-string">&#x27;&lt;tpl if=&quot;iconSvg&quot;&gt;display: inline-block;&lt;/tpl&gt;&#x27;</span>,
+            <span class="hljs-string">&#x27;&quot;&gt;&#x27;</span>,
+            <span class="hljs-string">&#x27;&lt;tpl if=&quot;glyph&quot;&gt;&amp;#{glyph};&lt;/tpl&gt;&#x27;</span>,
+            <span class="hljs-string">&#x27;&lt;tpl if=&quot;iconCls || iconUrl&quot;&gt;&amp;#160;&lt;/tpl&gt;&#x27;</span>,
+            <span class="hljs-string">&#x27;&lt;tpl if=&quot;iconSvg&quot;&gt;&#x27;</span>, <span class="hljs-comment">// new property</span>
+                <span class="hljs-string">&#x27;&lt;svg class=&quot;svg-icon svg-icon-{iconSvg}&quot;&gt;&lt;use xlink:href=&quot;#svg-icon-{iconSvg}&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&#x27;</span>,
+            <span class="hljs-string">&#x27;&lt;/tpl&gt;&#x27;</span>,
+        <span class="hljs-string">&#x27;&lt;/span&gt;&#x27;</span>
+    ].join(<span class="hljs-string">&#x27;&#x27;</span>),
 
     <span class="hljs-comment">// extend template values</span>
     <span class="hljs-attr">getTemplateArgs</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        <span class="hljs-keyword">var</span> args = <span class="hljs-keyword">this</span>.callParent();
-        args.iconSvg = <span class="hljs-keyword">this</span>.iconSvg;
+        <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">this</span>.callParent();
+        args.iconSvg = <span class="hljs-built_in">this</span>.iconSvg;
         <span class="hljs-keyword">return</span> args;
     }
 });
@@ -180,9 +180,9 @@ Ext.define(<span class="hljs-string">'Override.button.Button'</span>, {
 <ul>
 <li>new property in template</li>
 </ul>
-<pre><code class="language-javascript"><span class="hljs-string">'&lt;tpl if="iconSvg"&gt;'</span>, <span class="hljs-comment">// new property</span>
-    <span class="hljs-string">'&lt;svg class="svg-icon svg-icon-{iconSvg}"&gt;&lt;use xlink:href="#svg-icon-{iconSvg}"&gt;&lt;/use&gt;&lt;/svg&gt;'</span>,
-<span class="hljs-string">'&lt;/tpl&gt;'</span>,
+<pre><code class="language-javascript"><span class="hljs-string">&#x27;&lt;tpl if=&quot;iconSvg&quot;&gt;&#x27;</span>, <span class="hljs-comment">// new property</span>
+    <span class="hljs-string">&#x27;&lt;svg class=&quot;svg-icon svg-icon-{iconSvg}&quot;&gt;&lt;use xlink:href=&quot;#svg-icon-{iconSvg}&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&#x27;</span>,
+<span class="hljs-string">&#x27;&lt;/tpl&gt;&#x27;</span>,
 </code></pre>
 <ul>
 <li>overrided <code>getTemplateArgs</code> function to add <code>iconSvg</code> parameter into template’s values object.</li>
@@ -204,7 +204,7 @@ Ext.define(<span class="hljs-string">'Override.button.Button'</span>, {
 }
 </code></pre>
 <p>Import the new style file <code>svg-icons.scss</code> in <code>%APP_FOLDER%/sass/etc/all.scss</code>:</p>
-<pre><code class="language-scss"><span class="hljs-keyword">@import</span> <span class="hljs-string">"svg-icons"</span>;
+<pre><code class="language-scss"><span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;svg-icons&quot;</span>;
 </code></pre>
 <p>If you use a theme package, it will be the best place for the new <code>svg-icons.scss</code> file.</p>
 <p>After all changes, do not forget to re-build the application.</p>
@@ -212,15 +212,15 @@ Ext.define(<span class="hljs-string">'Override.button.Button'</span>, {
 <p>Now we are ready to use our new icons.
 Just add the <code>iconSvg</code> property into button configuration:</p>
 <pre><code class="language-javascript">items: [{
-    <span class="hljs-attr">xtype</span>: <span class="hljs-string">'button'</span>,
-    <span class="hljs-attr">text</span>: <span class="hljs-string">'Save'</span>,
-    <span class="hljs-attr">iconSvg</span>: <span class="hljs-string">'save'</span>, <span class="hljs-comment">// &lt;--- here</span>
-    <span class="hljs-attr">scale</span>: <span class="hljs-string">'medium'</span>
+    <span class="hljs-attr">xtype</span>: <span class="hljs-string">&#x27;button&#x27;</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;Save&#x27;</span>,
+    <span class="hljs-attr">iconSvg</span>: <span class="hljs-string">&#x27;save&#x27;</span>, <span class="hljs-comment">// &lt;--- here</span>
+    <span class="hljs-attr">scale</span>: <span class="hljs-string">&#x27;medium&#x27;</span>
 }, {
-    <span class="hljs-attr">xtype</span>: <span class="hljs-string">'button'</span>,
-    <span class="hljs-attr">text</span>: <span class="hljs-string">'Delete'</span>,
-    <span class="hljs-attr">iconSvg</span>: <span class="hljs-string">'delete'</span>, <span class="hljs-comment">// &lt;--- and here</span>
-    <span class="hljs-attr">scale</span>: <span class="hljs-string">'medium'</span>
+    <span class="hljs-attr">xtype</span>: <span class="hljs-string">&#x27;button&#x27;</span>,
+    <span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;Delete&#x27;</span>,
+    <span class="hljs-attr">iconSvg</span>: <span class="hljs-string">&#x27;delete&#x27;</span>, <span class="hljs-comment">// &lt;--- and here</span>
+    <span class="hljs-attr">scale</span>: <span class="hljs-string">&#x27;medium&#x27;</span>
 }]
 </code></pre>
 <p>Update a page and get the icons on buttons:</p>

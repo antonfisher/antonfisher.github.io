@@ -102,7 +102,7 @@ In common case they will be <em>192.168.1.[0-255]</em> or <em>10.0.0.[0-255]</em
 Using <em>ifconfig</em> give me laptop IP address: <em>10.0.0.172</em> on wlan0 interface.
 It means my router uses <em>10.0.0.[0-255]</em> range (<em>10.0.0.0/24</em>).</p>
 <p>My first solution was simple <em>ping</em> all addresses in this subnetwork (one-liner in bash):</p>
-<pre><code class="language-bash">$ <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {1..254}; <span class="hljs-keyword">do</span> ping -w 1 10.0.0.<span class="hljs-string">"<span class="hljs-variable">${i}</span>"</span>&gt;/dev/null; <span class="hljs-keyword">if</span> [[ <span class="hljs-string">"<span class="hljs-variable">${?}</span>"</span> == 0 ]] ; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> <span class="hljs-string">"10.0.0.<span class="hljs-variable">${i}</span>"</span>; <span class="hljs-keyword">fi</span>; <span class="hljs-keyword">done</span>; <span class="hljs-built_in">echo</span> <span class="hljs-string">"end"</span>;
+<pre><code class="language-bash">$ <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {1..254}; <span class="hljs-keyword">do</span> ping -w 1 10.0.0.<span class="hljs-string">&quot;<span class="hljs-variable">${i}</span>&quot;</span>&gt;/dev/null; <span class="hljs-keyword">if</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">${?}</span>&quot;</span> == 0 ]] ; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;10.0.0.<span class="hljs-variable">${i}</span>&quot;</span>; <span class="hljs-keyword">fi</span>; <span class="hljs-keyword">done</span>; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;end&quot;</span>;
 </code></pre>
 <p>It works, but you need to try <em>ssh</em> connect to all results to identify Raspberry Pi
 (by the way, default user/password will be: <em>pi / raspberry</em>).
@@ -129,7 +129,7 @@ PORT   STATE SERVICE VERSION
 22/tcp open  ssh     (protocol 2.0)
 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at http://www.insecure.org/cgi-bin/servicefp-submit.cgi :
 SF-Port22-TCP:V=6.40%I=7%D=12/13%Time=566E0957%P=x86_64-pc-linux-gnu%r(NUL
-SF:L,22,<span class="hljs-string">"SSH-2\.0-OpenSSH_6\.7p1\x20Raspbian-5\r\n"</span>); &lt;--- PI!
+SF:L,22,<span class="hljs-string">&quot;SSH-2\.0-OpenSSH_6\.7p1\x20Raspbian-5\r\n&quot;</span>); &lt;--- PI!
 
 ...
 
@@ -138,7 +138,7 @@ Nmap <span class="hljs-keyword">done</span>: 256 IP addresses (4 hosts up) scann
 </code></pre>
 <p>Result presents only available IP addresses without OS type, but it takes only <strong>9.58</strong> seconds!</p>
 <pre><code class="language-bash">$ ssh -Ct pi@10.0.0.151
-pi@10.0.0.151<span class="hljs-string">'s password:
+pi@10.0.0.151<span class="hljs-string">&#x27;s password:
 
 The programs included with the Debian GNU/Linux system are free software;
 the exact distribution terms for each program are described in the

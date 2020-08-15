@@ -87,53 +87,53 @@ In some cases you get old version from browser cache, even after new build.</p>
 <p>In my case the build sets <code>_dc</code> cache key after each run:</p>
 <pre><code class="language-javascript"><span class="hljs-comment">// ./app.json</span>
 
-<span class="hljs-string">"loader"</span>: {
-    <span class="hljs-string">"cache"</span>: <span class="hljs-string">"${build.timestamp}"</span>,
-    <span class="hljs-string">"cacheParam"</span>: <span class="hljs-string">"_dc"</span>
+<span class="hljs-string">&quot;loader&quot;</span>: {
+    <span class="hljs-string">&quot;cache&quot;</span>: <span class="hljs-string">&quot;${build.timestamp}&quot;</span>,
+    <span class="hljs-string">&quot;cacheParam&quot;</span>: <span class="hljs-string">&quot;_dc&quot;</span>
 }
 </code></pre>
 <p>But anyways browser could cache <code>app.json</code> file.
 To prevent this, let’s generate cache key for <code>app.json</code> request.</p>
 <p>Sample code implements this:</p>
-<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span>&gt;</span><span class="javascript">
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript">
     <span class="hljs-keyword">var</span> Ext= (Ext || {});
-    Ext.manifest = (<span class="hljs-string">"app.json?_dc="</span> + +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>());
+    Ext.manifest = (<span class="hljs-string">&quot;app.json?_dc=&quot;</span> + +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>());
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
 <p>Just put this code to your <code>index.html</code> file before this line:</p>
 <pre><code class="language-html"><span class="hljs-comment">&lt;!-- The line below must be kept intact for Sencha Cmd to build your application --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"microloader"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"bootstrap.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;microloader&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;bootstrap.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
 <p>If you use a workspace, it is easier to create a macros in <code>../workspace/.sencha/workspace/sencha.cfg</code>:</p>
-<pre><code><span class="xml">workspace.disableAppJsonCacheScript=\
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span>&gt;</span><span class="actionscript">\
-        <span class="hljs-keyword">var</span> Ext= (Ext || </span></span><span class="hljs-template-variable">{}</span><span class="xml"><span class="javascript">);\
-        Ext.manifest = (<span class="hljs-string">"app.json?_dc="</span> + +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>());\
-    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>\
-</span></code></pre>
+<pre><code>workspace.disableAppJsonCacheScript=<span class="hljs-string">\</span>
+    &lt;script type=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;<span class="hljs-string">\</span>
+        <span class="hljs-keyword">var</span> Ext= (Ext || {});<span class="hljs-string">\</span>
+        Ext.manifest = (<span class="hljs-string">&quot;app.json?_dc=&quot;</span> + +<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>());<span class="hljs-string">\</span>
+    &lt;/script&gt;<span class="hljs-string">\</span>
+</code></pre>
 <p>And then update <code>index.html</code> files for each application in the workspace:</p>
 <pre><code class="language-html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">HTML</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">manifest</span>=<span class="hljs-string">""</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">manifest</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">"X-UA-Compatible"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"IE=edge"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"UTF-8"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span>
 
     <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>My App Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
 
     #disableAppJsonCacheScript
 
     <span class="hljs-comment">&lt;!-- The line below must be kept intact for Sencha Cmd to build your application --&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"microloader"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"bootstrap.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;microloader&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;bootstrap.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
 <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
 </code></pre>
 <p>Macros must replace <code>#disableAppJsonCacheScript</code> placeholder after build, update <code>./build.xml</code> file for this:</p>
-<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"-after-build"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">replace</span> <span class="hljs-attr">file</span>=<span class="hljs-string">"${build.out.page.path}"</span>
-             <span class="hljs-attr">token</span>=<span class="hljs-string">"#disableAppJsonCacheScript"</span>
-             <span class="hljs-attr">value</span>=<span class="hljs-string">"${workspace.disableAppJsonCacheScript}"</span>/&gt;</span>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">target</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;-after-build&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">replace</span> <span class="hljs-attr">file</span>=<span class="hljs-string">&quot;${build.out.page.path}&quot;</span>
+             <span class="hljs-attr">token</span>=<span class="hljs-string">&quot;#disableAppJsonCacheScript&quot;</span>
+             <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;${workspace.disableAppJsonCacheScript}&quot;</span>/&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">target</span>&gt;</span>
 </code></pre>
 <p>Cache is defeated!</p>

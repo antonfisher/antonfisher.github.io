@@ -115,7 +115,7 @@ For more information see <a href="http://elinux.org/RPi_Low-level_peripherals">h
 </center></p>
 <p>But it not good idea to use pins voltage for turning on leds.
 Better solution should turn on leds with <em>0</em> level on pin, so connection should be like:</p>
-<pre><code>GPIO pin (<span class="hljs-number">3</span>v3 <span class="hljs-keyword">or</span> <span class="hljs-number">0</span>v) --- resistor --- led --- <span class="hljs-number">3</span>v3 pin
+<pre><code><span class="hljs-attribute">GPIO</span> pin (<span class="hljs-number">3</span>v<span class="hljs-number">3</span> or <span class="hljs-number">0</span>v) --- resistor --- led --- <span class="hljs-number">3</span>v<span class="hljs-number">3</span> pin
 </code></pre>
 <p>If you feel more power use this schema (thanks Nikolay!):
 <center>
@@ -185,9 +185,9 @@ But first of all <a href="/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-
     },
     <span class="hljs-attr">jenkins</span>: {                      <span class="hljs-comment">// Jenkins sub-config</span>
         <span class="hljs-attr">interval</span>: <span class="hljs-number">5</span> * <span class="hljs-number">1000</span>,         <span class="hljs-comment">// requests interval</span>
-        <span class="hljs-attr">host</span>: <span class="hljs-string">'10.0.0.1'</span>,
-        <span class="hljs-attr">port</span>: <span class="hljs-string">'8080'</span>,
-        <span class="hljs-attr">view</span>: <span class="hljs-string">'JenkinsLight'</span>,       <span class="hljs-comment">// http://localhost:8080/view/%VIEW_NAME%/</span>
+        <span class="hljs-attr">host</span>: <span class="hljs-string">&#x27;10.0.0.1&#x27;</span>,
+        <span class="hljs-attr">port</span>: <span class="hljs-string">&#x27;8080&#x27;</span>,
+        <span class="hljs-attr">view</span>: <span class="hljs-string">&#x27;JenkinsLight&#x27;</span>,       <span class="hljs-comment">// http://localhost:8080/view/%VIEW_NAME%/</span>
         <span class="hljs-attr">demoMode</span>: <span class="hljs-literal">true</span>              <span class="hljs-comment">// demo turn on red-yellow-green lights</span>
     }
 };

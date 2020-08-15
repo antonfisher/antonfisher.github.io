@@ -108,24 +108,24 @@ Common test cases can be:</p>
 <li>run action by clicking on button, wait for loading mask, check components’ states.</li>
 </ul>
 <p>Library uses chain-based syntax, where <code>eTT()</code> is a function that creates new chain:</p>
-<pre><code class="language-javascript">it(<span class="hljs-string">'Click on button "Save"'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">done</span>) </span>{
-    eTT().button(<span class="hljs-string">'Save'</span>).click(done);
+<pre><code class="language-javascript">it(<span class="hljs-string">&#x27;Click on button &quot;Save&quot;&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">done</span>) </span>{
+    eTT().button(<span class="hljs-string">&#x27;Save&#x27;</span>).click(done);
 });
 
-it(<span class="hljs-string">'Select first item in "Country" combobox'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">done</span>) </span>{
-    eTT().combobox(<span class="hljs-string">'Country'</span>).select(<span class="hljs-number">1</span>, done);
+it(<span class="hljs-string">&#x27;Select first item in &quot;Country&quot; combobox&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">done</span>) </span>{
+    eTT().combobox(<span class="hljs-string">&#x27;Country&#x27;</span>).select(<span class="hljs-number">1</span>, done);
 });
 </code></pre>
 <p>Search of components on a page will do search by properties:
 <em>title</em>, <em>fieldLabel</em>, <em>reference</em>, <em>boxLabel</em>, <em>xtype</em>, <em>text</em>.</p>
 <h2>The map of supported components and methods:</h2>
 <p>First initialize library in the <em>index.html</em> file: <code>var eTT = new MochaExtJs();</code>.</p>
-<pre><code>eTT() --&gt;---&gt;|<span class="hljs-string">-------&gt;---&gt;</span>|<span class="hljs-string">- button ---&gt; (</span>|<span class="hljs-string">- '%title%'     )----.
-        </span>|<span class="hljs-string">    </span>|<span class="hljs-string">       </span>|<span class="hljs-string">    </span>|<span class="hljs-string">- window       </span>|<span class="hljs-string">- '%fieldLabel%'     </span>|
-        |<span class="hljs-string">    </span>|<span class="hljs-string">- no --'    </span>|<span class="hljs-string">- numberfield  </span>|<span class="hljs-string">- '%reference%'      </span>|
-        |<span class="hljs-string">    </span>|<span class="hljs-string">            </span>|<span class="hljs-string">- textfield    </span>|<span class="hljs-string">- '%boxLabel%'       </span>|
-        |<span class="hljs-string">    </span>|<span class="hljs-string">            </span>|<span class="hljs-string">- checkbox     </span>|<span class="hljs-string">- '%xtype%'          </span>|
-        |<span class="hljs-string">    </span>|<span class="hljs-string">            </span>|<span class="hljs-string">- combobox     `- '%text%'           </span>|
+<pre><code>eTT() --&gt;---&gt;|<span class="hljs-string">-------&gt;---&gt;</span>|<span class="hljs-string">- button ---&gt; (</span>|<span class="hljs-string">- &#x27;%title%&#x27;     )----.
+        </span>|<span class="hljs-string">    </span>|<span class="hljs-string">       </span>|<span class="hljs-string">    </span>|<span class="hljs-string">- window       </span>|<span class="hljs-string">- &#x27;%fieldLabel%&#x27;     </span>|
+        |<span class="hljs-string">    </span>|<span class="hljs-string">- no --&#x27;    </span>|<span class="hljs-string">- numberfield  </span>|<span class="hljs-string">- &#x27;%reference%&#x27;      </span>|
+        |<span class="hljs-string">    </span>|<span class="hljs-string">            </span>|<span class="hljs-string">- textfield    </span>|<span class="hljs-string">- &#x27;%boxLabel%&#x27;       </span>|
+        |<span class="hljs-string">    </span>|<span class="hljs-string">            </span>|<span class="hljs-string">- checkbox     </span>|<span class="hljs-string">- &#x27;%xtype%&#x27;          </span>|
+        |<span class="hljs-string">    </span>|<span class="hljs-string">            </span>|<span class="hljs-string">- combobox     `- &#x27;%text%&#x27;           </span>|
         |<span class="hljs-string">    </span>|<span class="hljs-string">            </span>|<span class="hljs-string">- radio                              </span>|
         |<span class="hljs-string">    </span>|<span class="hljs-string">            </span>|<span class="hljs-string">- grid        .----------------------x----------------------.
         </span>|<span class="hljs-string">    </span>|<span class="hljs-string">            `- tab         </span>|<span class="hljs-string">                                             </span>|
@@ -133,7 +133,7 @@ it(<span class="hljs-string">'Select first item in "Country" combobox'</span>, <
         </span>|<span class="hljs-string">    </span>|<span class="hljs-string">                           </span>|<span class="hljs-string">   </span>|<span class="hljs-string">- isEnabled                              </span>|
         |<span class="hljs-string">    </span>|<span class="hljs-string">- waitLoadMask() ------.   </span>|<span class="hljs-string">   </span>|<span class="hljs-string">- isDisabled                             </span>|
         |<span class="hljs-string">    </span>|<span class="hljs-string">                       </span>|<span class="hljs-string">   </span>|<span class="hljs-string">   </span>|<span class="hljs-string">- isHidden                               </span>|
-        |<span class="hljs-string">    `- waitText('%text%')---v   </span>|<span class="hljs-string">   </span>|<span class="hljs-string">- isVisible                              </span>|
+        |<span class="hljs-string">    `- waitText(&#x27;%text%&#x27;)---v   </span>|<span class="hljs-string">   </span>|<span class="hljs-string">- isVisible                              </span>|
         |<span class="hljs-string">                            </span>|<span class="hljs-string">   </span>|<span class="hljs-string">   </span>|<span class="hljs-string">- select                                 </span>|
         |<span class="hljs-string">                            </span>|<span class="hljs-string">   </span>|<span class="hljs-string">   </span>|<span class="hljs-string">- checkRowsCount                         </span>|
         |<span class="hljs-string">                            </span>|<span class="hljs-string">   </span>|<span class="hljs-string">   </span>|<span class="hljs-string">- edit                                   </span>|
@@ -143,7 +143,7 @@ it(<span class="hljs-string">'Select first item in "Country" combobox'</span>, <
         </span>|<span class="hljs-string">                            </span>|<span class="hljs-string">                         </span>|<span class="hljs-string">- click                </span>|
         |<span class="hljs-string">                            </span>|<span class="hljs-string">                         `- fill                 </span>|
         |<span class="hljs-string">                            </span>|<span class="hljs-string">                                                 </span>|
-        x----------------------------<span class="hljs-variable">&lt;-------------------------------------------------'
+        x----------------------------<span class="hljs-variable">&lt;-------------------------------------------------&#x27;
         |
         |
         `--&gt;</span> done.
@@ -153,43 +153,43 @@ it(<span class="hljs-string">'Select first item in "Country" combobox'</span>, <
 <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
     ...
 
-    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.css"</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span>/&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.css"</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span>/&gt;</span>
 
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://cdn.rawgit.com/mochajs/mocha/2.3.0/mocha.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
     ...
 
     <span class="hljs-comment">&lt;!-- mocha ui --&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"mocha"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;mocha&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 
     <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
         <span class="hljs-comment">// necessary of mocha-phantomjs</span>
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">window</span>.initMochaPhantomJS === <span class="hljs-string">'function'</span>) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">window</span>.initMochaPhantomJS === <span class="hljs-string">&#x27;function&#x27;</span>) {
             <span class="hljs-built_in">window</span>.initMochaPhantomJS();
         }
         
         <span class="hljs-comment">// setup mocha before first test-suite!</span>
-        mocha.setup(<span class="hljs-string">'bdd'</span>);
+        mocha.setup(<span class="hljs-string">&#x27;bdd&#x27;</span>);
     </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
     
     <span class="hljs-comment">&lt;!-- first test suite --&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/test/suites/010-environment.js"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/test/suites/010-environment.js&quot;</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 
     <span class="hljs-comment">&lt;!-- configure and run Mocha.js --&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
         mocha.checkLeaks();
-        mocha.globals([<span class="hljs-string">'Ext'</span>, <span class="hljs-string">'Sandbox'</span>]);
+        mocha.globals([<span class="hljs-string">&#x27;Ext&#x27;</span>, <span class="hljs-string">&#x27;Sandbox&#x27;</span>]);
     
         <span class="hljs-keyword">var</span> eTT = <span class="hljs-keyword">new</span> MochaExtJs();
     
         <span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-            setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
                 mocha.run();
             }, <span class="hljs-number">1000</span>);
         };
@@ -205,16 +205,16 @@ Pass a <em>Mocha.js</em> <code>done</code> callback to the last method in <code>
 <pre><code class="language-javascript"><span class="hljs-comment">// tests/suites/020-buttons.js</span>
 <span class="hljs-comment">// Variable eTT was defined globaly in index.html (var eTT = new MochaExtJs())</span>
 
-describe(<span class="hljs-string">'Buttons'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">this</span>.bail(<span class="hljs-literal">true</span>);         <span class="hljs-comment">// exit when first test fails</span>
-    <span class="hljs-keyword">this</span>.timeout(<span class="hljs-number">20</span> * <span class="hljs-number">1000</span>); <span class="hljs-comment">// necessary timeout for ui operations</span>
+describe(<span class="hljs-string">&#x27;Buttons&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">this</span>.bail(<span class="hljs-literal">true</span>);         <span class="hljs-comment">// exit when first test fails</span>
+    <span class="hljs-built_in">this</span>.timeout(<span class="hljs-number">20</span> * <span class="hljs-number">1000</span>); <span class="hljs-comment">// necessary timeout for ui operations</span>
 
-    it(<span class="hljs-string">'Switch to "Buttons" tab'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">done</span>) </span>{ <span class="hljs-comment">// done - async tests callback</span>
-        eTT().tab(<span class="hljs-string">'Buttons'</span>).click(done);
+    it(<span class="hljs-string">&#x27;Switch to &quot;Buttons&quot; tab&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">done</span>) </span>{ <span class="hljs-comment">// done - async tests callback</span>
+        eTT().tab(<span class="hljs-string">&#x27;Buttons&#x27;</span>).click(done);
     });
 
-    it(<span class="hljs-string">'Click "Simple button" button'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">done</span>) </span>{
-        eTT().button(<span class="hljs-string">'Simple button'</span>).isEnabled().click(done);
+    it(<span class="hljs-string">&#x27;Click &quot;Simple button&quot; button&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">done</span>) </span>{
+        eTT().button(<span class="hljs-string">&#x27;Simple button&#x27;</span>).isEnabled().click(done);
     });
 });
 </code></pre>
@@ -246,8 +246,8 @@ $ ./node_modules/.bin/mocha-phantomjs --timeout 15000 --path ./node_modules/.bin
 <li><code>git clone https://github.com/antonfisher/node-mocha-extjs.git</code></li>
 </ul>
 <p>or direct include to <code>index.html</code>:</p>
-<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.css"</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span>/&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://cdn.rawgit.com/antonfisher/node-mocha-extjs/master/dist/mocha-extjs.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
 <h2>Links</h2>
 <p>Library on <a href="https://github.com/antonfisher/mocha-extjs">GitHub</a>,
