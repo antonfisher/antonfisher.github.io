@@ -1,0 +1,3 @@
+[submodule "static-site-generator"]
+	path = static-site-generator
+	url = git@github.com:antonfisher/static-site-generator.git
