@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<!--
+ _____     _           _____ _     _
+|  _  |___| |_ ___ ___|   __|_|___| |_ ___ ___   ___ ___ _____
+|     |   |  _| . |   |   __| |_ -|   | -_|  _|_|  _| . |     |
+|__|__|_|_|_| |___|_|_|__|  |_|___|_|_|___|_| |_|___|___|_|_|_|
+
+Anton Fisher <a.fschr@gmail.com>
+
+-->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title lang="en">Anton Fisher / How to animate native Electron window</title>
+    <meta name="description" content="electron,nodejs,n-api,js,nswindow,macos,objective-c++">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="author" content="Anton Fisher">
+    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed">
+    <link href="/css/all.min.css" rel="stylesheet">
+    <link href="/favicon.ico" rel="icon">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="title-container" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <div class="title">
+                    <a href="/" class="name" itemprop="name" title="Home">
+                        Anton Fisher
+                    </a>
+                    <p class="about">
+                        software engineer [js, go]
+                    </p>
+                </div>
+
+                <img src="/images/anton-fisher-v3.jpg" class="photo" itemprop="image" title="Anton Fisher photo"
+                    alt="Anton Fisher photo">
+            </div>
+            <div class="links-container">
+                <a href="//github.com/antonfisher" target="_blank" rel="noreferrer" title="my code on github">
+                    <span class="icon icon-github"></span>&nbsp;<span class="link-title">github</span>
+                </a>
+                <a href="//instagram.com/afschr" target="_blank" rel="noreferrer" title="my art on instagram">
+                    <span class="icon icon-instagram"></span>&nbsp;<span class="link-title">instagram</span>
+                </a>
+                <a href="//twitter.com/afschr" target="_blank" rel="noreferrer" title="my random thoughts on twitter">
+                    <span class="icon icon-twitter"></span>&nbsp;<span class="link-title">twitter</span>
+                </a>
+                <a href="//linkedin.com/in/afschr/en" target="_blank" rel="noreferrer" title="my job list on linkedin">
+                    <span class="icon icon-linkedin"></span>&nbsp;<span class="link-title">linkedin</span>
+                </a>
+                <a href="/feed.xml" title="RSS feed link">
+                    <span class="icon icon-rss2"></span>&nbsp;<span class="link-title">rss</span>
+                </a>
+                <a href="mailto:a.fschr@gmail.com" target="_blank" rel="noreferrer">
+                    <span class="icon icon-mail"></span>&nbsp;<span class="link-title">a.fschr@gmail.com</span>
+                </a>
+            </div>
+        </header>
+
+        <div class="content">
+            
+<article itemscope itemtype="http://schema.org/Article">
+    <h1 itemprop="name">How to animate native Electron window</h1>
+    <time itemprop="datePublished" content="2020-12-27" datetime="2020-12-27">2020-12-27</time>
+
+    
+    <span class="tags">
+        tags:
+        <a href="/tags/electron/">electron</a>
+        <a href="/tags/nodejs/">nodejs</a>
+        <a href="/tags/n-api/">n-api</a>
+        <a href="/tags/js/">js</a>
+        <a href="/tags/nswindow/">nswindow</a>
+        <a href="/tags/macos/">macos</a>
+        <a href="/tags/objective-c/">objective-c++</a>
+        
+    </span>
+    
+
+    <div class="clear"></div>
+
+    <img itemprop="image" src="/images/posts/2020-12-27-15-00-00-how-to-animate-native-electron-window/rotate-native-window-demo.gif">
+    <div class="clear"></div>
+
+    <span itemprop="headline"><p>
+<p>This post demonstrates how to animate Electron’s native application window using native macOS API.</p>
+</p></span> <span itemprop="articleBody">
+<h2>TL;DR</h2>
+<p>Call native system animation API on the native window handle provided by Electron.
+The complete source code can be found on <a href="https://github.com/antonfisher/electron-window-rotator">GitHub</a>,
+it is also published as <a href="https://www.npmjs.com/package/electron-window-rotator">NPM package</a>:</p>
+<pre><code class="language-shell">npm install electron-window-rotator
+</code></pre>
+<h2>Idea</h2>
+<p>Electron provides sufficient but minimal API to the native window where it renders content.
+For more sophisticated UI, there is <code>win.getNativeWindowHandle()</code>
+<a href="https://github.com/electron/electron/blob/11-x-y/docs/api/browser-window.md#wingetnativewindowhandle">API</a>
+that returns a <a href="https://nodejs.org/api/buffer.html">Buffer</a>.
+That Buffer is a platform-specific handle of the window: <code>NSView*</code> for macOS,
+<code>Window</code>(unsigned long) on Linux, and <code>HWND</code> for Windows.</p>
+<p>The idea is to use this native handle conveniently provided by Electron to manipulate the native window.</p>
+<h2>Code</h2>
+<p>All animation code in the post was written for macOS.
+Linux and Windows require their own system-specific animation implementations.</p>
+<p>High level implementation steps:</p>
+<ul>
+<li>take a webview screenshot using Electron API (captures window content)</li>
+<li>take a native window screenshot using macOS API (captures window frame)</li>
+<li>combine Electron’s and native screenshots</li>
+<li>create a separate native window big enough to play rotation animation in it</li>
+<li>replace the original window with its screenshot and play animation</li>
+<li>show the original window back.</li>
+</ul>
+<p><img src="/images/posts/2020-12-27-15-00-00-how-to-animate-native-electron-window/rotate-native-window-logo.png" alt="high level implementation diagram" /></p>
+<h3>Taking a webview screenshot using Electron API</h3>
+<p>I haven’t found a working solution to do this in the native code.
+The API I used returns a native window screenshot including all native elements,
+but Electron’s renderer view was missed.</p>
+<p>In Electron, <code>webContents</code> has capture
+<a href="https://github.com/electron/electron/blob/11-x-y/docs/api/web-contents.md#contentscapturepagerect">API</a>
+for taking webview screenshots, and it can be accessed from <code>BrowserWindow</code> itself:</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> screenshot = <span class="hljs-keyword">await</span> win.webContents.capturePage();
+screenshot.toPNG() <span class="hljs-comment">// to convert it to PNG</span>
+</code></pre>
+<h3>Native Nodejs extension</h3>
+<p>All following steps require to create native Nodejs module to access macOS native API.
+That can be done using Nodejs <a href="https://nodejs.org/docs/latest-v14.x/api/n-api.html">N-API</a>.</p>
+<p>A simple native extension consists of:</p>
+<ul>
+<li><a href="https://github.com/antonfisher/electron-window-rotator/blob/main/rotator.mm">rotator.mm</a>
+/<a href="https://github.com/antonfisher/electron-window-rotator/blob/main/rotator.h">rotator.h</a>
+– Objective-C++ files with all business logic</li>
+<li><a href="https://github.com/antonfisher/electron-window-rotator/blob/main/binding.gyp">binding.gyp</a>
+– build config for node-gyp that specifies entry point and files to include into Objective-C++ build</li>
+<li><a href="https://github.com/antonfisher/electron-window-rotator/blob/main/NativeExtension.cc">NativeExtension.cc</a>
+– extension entry point, defines the object that gets exported from the native to JS side</li>
+<li><a href="https://github.com/antonfisher/electron-window-rotator/blob/main/index.js">index.js</a> – extension index file that exports native part and provides external API to JS.</li>
+</ul>
+<p>There is <code>bindings</code> module to “glue” Objective-C++ and JS code together:</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> NativeExtension = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;bindings&#x27;</span>)(<span class="hljs-string">&#x27;NativeExtension&#x27;</span>);
+</code></pre>
+<p>When all files are there, the extension can be built with:</p>
+<pre><code class="language-shell">node-gyp rebuild --debug
+</code></pre>
+<p>External NPM module API for <code>Rotator.rotate()</code> function will look like:</p>
+<pre><code class="language-typescript"><span class="hljs-built_in">enum</span> Direction {
+  Left = <span class="hljs-number">0</span>,
+  Right,
+}
+
+<span class="hljs-keyword">declare</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rotate</span>(<span class="hljs-params">
+    electronWindow: Electron$BrowserWindow,
+    duration?: <span class="hljs-built_in">number</span>,
+    direction?: Direction
+</span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">void</span>&gt;
+</span></code></pre>
+<p>Internal native extension API for <code>NativeExtension.rotate()</code> function will be:</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">declare</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rotate</span>(<span class="hljs-params">
+    electronNativeWindowHandle: Buffer, <span class="hljs-comment">// pointer to NSView on macOS</span>
+    screenshot: Buffer,                 <span class="hljs-comment">// raw Electron screenshot data</span>
+    duration: <span class="hljs-built_in">number</span>,                   <span class="hljs-comment">// default: 1000ms</span>
+    direction: Direction                <span class="hljs-comment">// default: 0 - left</span>
+</span>): <span class="hljs-title">void</span></span>;
+</code></pre>
+<p>To parse arguments on the Objective-C++ side, <code>napi_get_buffer_info</code> can be used for window handler
+and raw Electron screenshot data, <code>napi_get_value_int32</code> to parse duration and direction argument values.
+See full arguments parsing code
+<a href="https://github.com/antonfisher/electron-window-rotator/blob/8968f691d8a22e043ff77d3c1c3275f1c20a9d7c/rotator.mm#L13-L70">here</a>.</p>
+<h3>Taking a native window screenshot</h3>
+<p>After passing window handle from JS code to native code as a Buffer
+(using <code>win.getNativeWindowHandle()</code>), that handle needs to be cast to
+<a href="https://developer.apple.com/documentation/appkit/nsview?language=objc">*NSView</a>:</p>
+<pre><code class="language-objective-c"><span class="hljs-comment">// `windowBuffer` - a Buffer that contains pointer to the window view,</span>
+<span class="hljs-comment">// on macOS Electron returns it from `win.getNativeWindowHandle()` call:</span>
+NSView *mainWindowView = *<span class="hljs-keyword">static_cast</span>&lt;NSView **&gt;(windowBuffer);
+</code></pre>
+<p>Now we have the main window view. The window itself can be found here:</p>
+<pre><code class="language-objective-c">NSWindow *<span class="hljs-built_in">window</span> = mainWindowView.<span class="hljs-built_in">window</span>;
+</code></pre>
+<p>NSWindow has an extensive
+<a href="https://developer.apple.com/documentation/appkit/nswindow?language=objc">API</a>.
+To take its screenshot, we need:</p>
+<ul>
+<li>get NSWindow’s superview that includes a window frame</li>
+<li>create an NSBitmapImageRep representation for that superview</li>
+<li>create an NSImage and add the representation into it.</li>
+</ul>
+<p>All these steps in code:</p>
+<pre><code class="language-objective-c"><span class="hljs-built_in">NSView</span> *windowView = [window.contentView superview];
+<span class="hljs-built_in">NSBitmapImageRep</span> *windowScreenshotRep =
+    [windowView bitmapImageRepForCachingDisplayInRect:windowView.bounds];
+[windowView cacheDisplayInRect:windowView.bounds toBitmapImageRep:windowScreenshotRep];
+<span class="hljs-built_in">NSSize</span> windowScreenshotSize = <span class="hljs-built_in">NSMakeSize</span>(<span class="hljs-built_in">CGImageGetWidth</span>([windowScreenshotRep <span class="hljs-built_in">CGImage</span>]),
+                                         <span class="hljs-built_in">CGImageGetHeight</span>([windowScreenshotRep <span class="hljs-built_in">CGImage</span>]));
+<span class="hljs-built_in">NSImage</span> *windowScreenshot = [[<span class="hljs-built_in">NSImage</span> alloc] initWithSize:windowScreenshotSize];
+[windowScreenshot addRepresentation:windowScreenshotRep];
+</code></pre>
+<p>Now we have NSImage that can be put in an NSLayer of any other window.</p>
+<h3>Combining Electron’s and native screenshots</h3>
+<p>First, we need to convert raw Electron screenshot PNG data into NSImage,
+that as well can be done using NSBitmapImageRep:</p>
+<pre><code class="language-objective-c"><span class="hljs-built_in">NSData</span> *data = [<span class="hljs-built_in">NSData</span> dataWithBytes:electronScreenshotBuffer
+                              length:electronScreenshotBufferLength];
+<span class="hljs-built_in">NSBitmapImageRep</span> *electronScreenshotRep = [<span class="hljs-built_in">NSBitmapImageRep</span> imageRepWithData:data];
+<span class="hljs-built_in">NSSize</span> electronScreenshotSize = <span class="hljs-built_in">NSMakeSize</span>(<span class="hljs-built_in">CGImageGetWidth</span>([electronScreenshotRep <span class="hljs-built_in">CGImage</span>]),
+                                           <span class="hljs-built_in">CGImageGetHeight</span>([electronScreenshotRep <span class="hljs-built_in">CGImage</span>]));
+<span class="hljs-built_in">NSImage</span> *electronScreenshot = [[<span class="hljs-built_in">NSImage</span> alloc] initWithSize:electronScreenshotSize];
+[electronScreenshot addRepresentation:electronScreenshotRep];
+</code></pre>
+<p>To combine two NSImages, we can render the Electron’s screenshot into the native window screenshot.
+The start point for render is the bottom-left corner, so there is no need for offset.</p>
+<pre><code class="language-objective-c">[<span class="hljs-meta">windowScreenshot lockFocus</span>];
+CGRect electronScreenshotRect = CGRectMake(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, electronScreenshotSize.width,
+                                                 electronScreenshotSize.height);
+[<span class="hljs-meta">electronScreenshot drawInRect:electronScreenshotRect</span>];
+[<span class="hljs-meta">windowScreenshot unlockFocus</span>];
+</code></pre>
+<h3>Creating a new native window to play rotation animation</h3>
+<p>Once the full screenshot is ready, let’s create an NSLayer to render the screenshot
+and apply styles like rounded corners:</p>
+<pre><code class="language-objective-c">CALayer *imageLayer = <span class="hljs-comment">[CALayer layer]</span>;
+<span class="hljs-comment">[imageLayer setContents:image]</span>;
+<span class="hljs-comment">[imageLayer setCornerRadius:10.0f]</span>;
+<span class="hljs-comment">[imageLayer setMasksToBounds:YES]</span>;
+</code></pre>
+<p>To play rotation animation, let’s create a new transparent frameless native
+window that is big enough to render rotated original window screenshot and its shadow:</p>
+<pre><code class="language-objective-c"><span class="hljs-built_in">NSRect</span> animationWindowContentRect = <span class="hljs-built_in">NSMakeRect</span>(<span class="hljs-comment">/*...*/</span>);
+<span class="hljs-built_in">NSWindow</span> *animationWindow =
+    [[<span class="hljs-built_in">NSWindow</span> alloc] initWithContentRect:animationWindowContentRect
+                                styleMask:<span class="hljs-built_in">NSWindowStyleMaskBorderless</span>
+                                  backing:<span class="hljs-built_in">NSBackingStoreBuffered</span>
+                                    defer:<span class="hljs-literal">NO</span>];
+[animationWindow setOpaque:<span class="hljs-literal">NO</span>];
+[animationWindow setHasShadow:<span class="hljs-literal">NO</span>];
+[animationWindow setBackgroundColor:[<span class="hljs-built_in">NSColor</span> clearColor]];
+[animationWindow.contentView setWantsLayer:<span class="hljs-literal">YES</span>];
+</code></pre>
+<p>Put the original window screenshot into the animation window and add shadows
+which were cut by rounded corners:</p>
+<pre><code class="language-objective-c">CALayer *animationWindowLayer = <span class="hljs-comment">[animationWindow.contentView layer]</span>;
+<span class="hljs-comment">[animationWindowLayer addSublayer:imageLayer]</span>;
+<span class="hljs-comment">[animationWindowLayer setShadowRadius:20.0f]</span>;
+<span class="hljs-comment">[animationWindowLayer setShadowOpacity:0.7f]</span>;
+<span class="hljs-comment">[animationWindowLayer setShadowOffset:CGSizeMake(0, -20)]</span>;
+</code></pre>
+<h3>Replacing the original window with its screenshot and playing animation</h3>
+<p>First, we need to hide the original window and show the animation window with the screenshot:</p>
+<pre><code class="language-shell">[window setAlphaValue:0.0];
+[animationWindow setAlphaValue:1.0];
+</code></pre>
+<p>The macOS animation API provides a basic <code>transform.rotation</code> animation to rotate an NSLayer.</p>
+<pre><code class="language-objective-c">[<span class="hljs-symbol">CATransaction</span> begin];
+<span class="hljs-symbol">CABasicAnimation</span> *animation = [<span class="hljs-symbol">CABasicAnimation</span> animationWithKeyPath:@<span class="hljs-string">&quot;transform.rotation&quot;</span>];
+[animation setFromValue:[<span class="hljs-symbol">NSNumber</span> numberWithDouble:<span class="hljs-number">0.0</span>]];
+<span class="hljs-symbol">CGFloat</span> endAngle = (direction == <span class="hljs-symbol">DIRECTION_LEFT</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>) * <span class="hljs-number">2.0</span> * <span class="hljs-symbol">M_PI</span>;
+[animation setToValue:[<span class="hljs-symbol">NSNumber</span> numberWithDouble:endAngle]];
+[animation setDuration:duration / <span class="hljs-number">1000.0</span>];
+[<span class="hljs-symbol">CATransaction</span> setCompletionBlock:^{
+    [window setAlphaValue:<span class="hljs-number">1.0</span>];
+    [animationWindow close];
+}];
+[imageLayer addAnimation:animation forKey:@<span class="hljs-string">&quot;rotation&quot;</span>];
+[<span class="hljs-symbol">CATransaction</span> commit];
+</code></pre>
+<p>There is <code>setCompletionBlock</code> callback that gets called after the animation completes,
+where we close the animation window and bring the original window back.</p>
+<h2>Result and possible improvements</h2>
+<p>Some improvements can be made here, such as:</p>
+<ul>
+<li>return a <code>Promise</code> from <code>Rotator.rotate()</code> that resolves only after the animation completes</li>
+<li>replace <code>img.toPNG()</code> with <code>img.getNativeHandle()</code>
+<a href="https://github.com/electron/electron/blob/11-x-y/docs/api/native-image.md#imagegetnativehandle-macos">API</a>
+to pass just an NSImage pointer to the native code instead of PNG data</li>
+<li>OR take the whole application screenshot from the native code and get rid of
+the need to pass Electron’s screenshot around.</li>
+</ul>
+<p>The complete source code can be found on <a href="https://github.com/antonfisher/electron-window-rotator">GitHub</a>,
+it is also published as <a href="https://www.npmjs.com/package/electron-window-rotator">NPM package</a>.</p>
+</span>
+</article>
+
+<div class="top-border-block comments">
+    <b class="label">Comments:</b>
+    <div id="disqus_thread"></div>
+    <script>
+        if (window.location.hostname !== 'localhost') {
+            setTimeout(function () {
+                var disqus_config = function () {
+                    this.page.url = 'https://antonfisher.com/posts/2020/12/27/how-to-animate-native-electron-window/';
+                    this.page.identifier = '2020-12-27';
+                };
+                (function () {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//antonfishercom.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            }, 2500);
+        }
+    </script>
+</div>
+
+        </div>
+
+        <footer>
+            <nav>
+                <a href="/">home</a>
+                <span class="divider">&nbsp;</span>
+                <a href="/feed.xml">rss</a>
+            </nav>
+            <div>
+                &copy;
+                <time>
+                    <script>document.write(new Date().getFullYear())</script></time>
+                Anton Fisher
+            </div>
+        </footer>
+    </div>
+</body>
+<script>
+    if (window.location.hostname !== 'localhost') {
+        (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-44250383-1', 'antonfisher.com');
+        ga('send', 'pageview');
+    }
+</script>
+
+</html>

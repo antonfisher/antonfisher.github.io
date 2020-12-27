@@ -7,9 +7,14 @@
 
     <url>
         <loc>https://antonfisher.com</loc>
-        <lastmod>2020-04-12T21:37:28Z</lastmod>
+        <lastmod>2020-12-27T23:05:45Z</lastmod>
     </url>
 
+    
+    <url>
+        <loc>https://antonfisher.com/posts/2020/12/27/how-to-animate-native-electron-window/</loc>
+        <lastmod>2020-12-27T00:00:00Z</lastmod>
+    </url>
     
     <url>
         <loc>https://antonfisher.com/posts/2018/12/14/drive-distributed-storage-on-raspberry-pi/</loc>
