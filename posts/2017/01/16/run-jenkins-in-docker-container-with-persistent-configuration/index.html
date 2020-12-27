@@ -421,16 +421,18 @@ You need to create a <code>Jenkinsfile</code> in your applications repository an
     <div id="disqus_thread"></div>
     <script>
         if (window.location.hostname !== 'localhost') {
-            var disqus_config = function () {
-                this.page.url = 'https://antonfisher.com/posts/2017/01/16/run-jenkins-in-docker-container-with-persistent-configuration/';
-                this.page.identifier = '2017-01-16';
-            };
-            (function () {
-                var d = document, s = d.createElement('script');
-                s.src = '//antonfishercom.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
+            setTimeout(function () {
+                var disqus_config = function () {
+                    this.page.url = 'https://antonfisher.com/posts/2017/01/16/run-jenkins-in-docker-container-with-persistent-configuration/';
+                    this.page.identifier = '2017-01-16';
+                };
+                (function () {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//antonfishercom.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            }, 2500);
         }
     </script>
 </div>

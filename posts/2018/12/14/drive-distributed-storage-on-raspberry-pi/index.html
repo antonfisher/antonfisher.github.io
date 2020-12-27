@@ -229,16 +229,18 @@ the current value and the possible range of some metric.</p>
     <div id="disqus_thread"></div>
     <script>
         if (window.location.hostname !== 'localhost') {
-            var disqus_config = function () {
-                this.page.url = 'https://antonfisher.com/posts/2018/12/14/drive-distributed-storage-on-raspberry-pi/';
-                this.page.identifier = '2018-12-14';
-            };
-            (function () {
-                var d = document, s = d.createElement('script');
-                s.src = '//antonfishercom.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
+            setTimeout(function () {
+                var disqus_config = function () {
+                    this.page.url = 'https://antonfisher.com/posts/2018/12/14/drive-distributed-storage-on-raspberry-pi/';
+                    this.page.identifier = '2018-12-14';
+                };
+                (function () {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//antonfishercom.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            }, 2500);
         }
     </script>
 </div>

@@ -234,16 +234,18 @@ But first of all <a href="/posts/2015/12/04/how-to-find-raspberry-pi-ip-address-
     <div id="disqus_thread"></div>
     <script>
         if (window.location.hostname !== 'localhost') {
-            var disqus_config = function () {
-                this.page.url = 'https://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light/';
-                this.page.identifier = '2016-01-05';
-            };
-            (function () {
-                var d = document, s = d.createElement('script');
-                s.src = '//antonfishercom.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
+            setTimeout(function () {
+                var disqus_config = function () {
+                    this.page.url = 'https://antonfisher.com/posts/2016/01/05/make-raspberry-pi-jenkins-traffic-light/';
+                    this.page.identifier = '2016-01-05';
+                };
+                (function () {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//antonfishercom.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            }, 2500);
         }
     </script>
 </div>

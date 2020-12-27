@@ -251,16 +251,18 @@ It is not bad.</p>
     <div id="disqus_thread"></div>
     <script>
         if (window.location.hostname !== 'localhost') {
-            var disqus_config = function () {
-                this.page.url = 'https://antonfisher.com/posts/2016/03/25/build-distribution-tool-for-senchacmd/';
-                this.page.identifier = '2016-03-25';
-            };
-            (function () {
-                var d = document, s = d.createElement('script');
-                s.src = '//antonfishercom.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
+            setTimeout(function () {
+                var disqus_config = function () {
+                    this.page.url = 'https://antonfisher.com/posts/2016/03/25/build-distribution-tool-for-senchacmd/';
+                    this.page.identifier = '2016-03-25';
+                };
+                (function () {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//antonfishercom.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            }, 2500);
         }
     </script>
 </div>

@@ -122,16 +122,18 @@ full_path=$(get_full_path <span class="hljs-string">&quot;<span class="hljs-vari
     <div id="disqus_thread"></div>
     <script>
         if (window.location.hostname !== 'localhost') {
-            var disqus_config = function () {
-                this.page.url = 'https://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute/';
-                this.page.identifier = '2015-12-23';
-            };
-            (function () {
-                var d = document, s = d.createElement('script');
-                s.src = '//antonfishercom.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
+            setTimeout(function () {
+                var disqus_config = function () {
+                    this.page.url = 'https://antonfisher.com/posts/2015/12/23/bash-function-converts-relative-file-path-to-absolute/';
+                    this.page.identifier = '2015-12-23';
+                };
+                (function () {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//antonfishercom.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            }, 2500);
         }
     </script>
 </div>
