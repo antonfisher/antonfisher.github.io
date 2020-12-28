@@ -66,7 +66,7 @@ screenshot.toPNG() // to convert it to PNG
 
 ### Native Nodejs extension
 
-All following steps require to create native Nodejs module to access macOS native API.
+All following steps require creating a native Nodejs module to access macOS native API.
 That can be done using Nodejs [N-API](https://nodejs.org/docs/latest-v14.x/api/n-api.html).
 
 A simple native extension consists of:
