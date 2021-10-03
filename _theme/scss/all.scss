@@ -8,7 +8,7 @@ $colorLinkHover: #6677bb;
 // --- layout ---
 
 body {
-    font-family: 'Ubuntu', '-apple-system', 'sans-serif';
+    font-family: 'Space Mono', monospace, 'Courier New', system-ui;
     font-size: 1em;
     font-weight: normal;
     color: $colorText;
@@ -21,6 +21,9 @@ body {
 }
 
 // --- common ---
+code {
+    font-family: 'Space Mono', monospace, 'Courier New', system-ui;
+}
 
 a {
     text-decoration: none;
@@ -68,6 +71,18 @@ h3 {
     }
 }
 
+h1,
+h2,
+h3 {
+    text-shadow: 0 0 0.5px $colorText, 0 0 1px $colorText;
+
+    h1,
+    h2,
+    h3 {
+        text-shadow: 0 0 0.5px $colorLink, 0 0 1px $colorLink;
+    }
+}
+
 pre {
     background-color: #fafafa;
     border: 1px dotted #dddddd;
@@ -111,6 +126,7 @@ header {
                 color: $colorText;
                 text-decoration: none;
                 margin-left: 3px;
+                text-shadow: 0 0 0.75px $colorText, 0 0 1.5px $colorText;
 
                 &:hover {
                     color: #555;
@@ -143,7 +159,7 @@ header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 0.9em;
+        font-size: 0.75em;
 
         a {
             padding: 13px 0;
@@ -374,27 +390,4 @@ footer {
 }
 .icon-linkedin:before {
     content: '\eac9';
-}
-
-// --- fonts ---
-/* latin-ext */
-@font-face {
-    font-family: 'Ubuntu';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Ubuntu'),
-        url(https://fonts.gstatic.com/s/ubuntu/v8/Wu5Iuha-XnKDBvqRwQzAG_esZW2xOQ-xsNqO47m55DA.woff2)
-            format('woff2');
-    unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Ubuntu';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Ubuntu'),
-        url(https://fonts.gstatic.com/s/ubuntu/v8/sDGTilo5QRsfWu6Yc11AXg.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074,
-        U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
