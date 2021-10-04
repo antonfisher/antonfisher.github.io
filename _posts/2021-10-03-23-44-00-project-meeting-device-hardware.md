@@ -2,7 +2,7 @@
     "title": "Meeting device: hardware",
     "image": "/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-3d.png",
     "imagePreview": "/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-front-on.png",
-    "metaDescription": "electron,nodejs,n-api,js,nswindow,macos,objective-c++",
+    "metaDescription": "hardware,bluetooth,enclosure,sketch,meeting device",
     "tags": "hardware, bluetooth",
     "date": "2021-10-03"
 }
