@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!--
+ _____     _           _____ _     _
+|  _  |___| |_ ___ ___|   __|_|___| |_ ___ ___   ___ ___ _____
+|     |   |  _| . |   |   __| |_ -|   | -_|  _|_|  _| . |     |
+|__|__|_|_|_| |___|_|_|__|  |_|___|_|_|___|_| |_|___|___|_|_|_|
+
+Anton Fisher <a.fschr@gmail.com>
+
+-->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title lang="en">Anton Fisher / Meeting device: hardware</title>
+    <meta name="description" content="electron,nodejs,n-api,js,nswindow,macos,objective-c++">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="author" content="Anton Fisher">
+    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed">
+    <link href="/css/all.min.css" rel="stylesheet">
+    <link href="/favicon.ico" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="title-container" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <div class="title">
+                    <a href="/" class="name" itemprop="name" title="Home">
+                        Anton Fisher
+                    </a>
+                    <p class="about">
+                        software engineer
+                    </p>
+                </div>
+
+                <img src="/images/anton-fisher-v3.jpg" class="photo" itemprop="image" title="Anton Fisher photo"
+                    alt="Anton Fisher photo">
+            </div>
+            <div class="links-container">
+                <a href="//github.com/antonfisher" target="_blank" rel="noreferrer" title="my code on github">
+                    <span class="icon icon-github"></span>&nbsp;<span class="link-title">github</span>
+                </a>
+                <a href="//instagram.com/afschr" target="_blank" rel="noreferrer" title="my art on instagram">
+                    <span class="icon icon-instagram"></span>&nbsp;<span class="link-title">instagram</span>
+                </a>
+                <a href="//twitter.com/afschr" target="_blank" rel="noreferrer" title="my random thoughts on twitter">
+                    <span class="icon icon-twitter"></span>&nbsp;<span class="link-title">twitter</span>
+                </a>
+                <a href="//linkedin.com/in/afschr/en" target="_blank" rel="noreferrer" title="my job list on linkedin">
+                    <span class="icon icon-linkedin"></span>&nbsp;<span class="link-title">linkedin</span>
+                </a>
+                <a href="/feed.xml" title="RSS feed link">
+                    <span class="icon icon-rss2"></span>&nbsp;<span class="link-title">rss</span>
+                </a>
+                <a href="mailto:a.fschr@gmail.com" target="_blank" rel="noreferrer">
+                    <span class="icon icon-mail"></span>&nbsp;<span class="link-title">a.fschr@gmail.com</span>
+                </a>
+            </div>
+        </header>
+
+        <div class="content">
+            
+<article itemscope itemtype="http://schema.org/Article">
+    <h1 itemprop="name">Meeting device: hardware</h1>
+    <time itemprop="datePublished" content="2021-10-03" datetime="2021-10-03">2021-10-03</time>
+
+    
+    <span class="tags">
+        tags:
+        <a href="/tags/hardware/">hardware</a>
+        <a href="/tags/bluetooth/"> bluetooth</a>
+        
+    </span>
+    
+
+    <div class="clear"></div>
+
+    <img itemprop="image" src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-3d.png">
+    <div class="clear"></div>
+
+    <span itemprop="headline"><p>
+<p>This post goes through the hardware part of my “meeting device.”
+The device is similar to the “ON AIR” light panels at radio studios, and the idea is to light it up when the computer has a camera or microphone active.</p>
+</p></span> <span itemprop="articleBody">
+<p>I’ve been working remotely for more than a year now (thanks to the virus :D), which quite changed our family’s everyday life.
+Bedrooms became offices, and family members, often without their will,  made occasional presents at meetings.
+The idea was simple – make a device that indicates the risk of being an unintentional guest on somebody’s meeting.</p>
+<p>The “ON AIR” light panels have been helping with the same problem at recording studios.
+They inspired that project.</p>
+<p>In general, I tried to keep things simple as much as I could, not only because of KISS but also because hardware projects are already complicated by themselves (the price of design mistakes, production cost, time-consuming, etc…).</p>
+<h2>Goals</h2>
+<p>I set these goals before starting sketching the device:</p>
+<ul>
+<li>clean and simple design
+— Why? Easy to produce, looks professional</li>
+<li>fixed text and only two states: light on/off
+— Why? Colors, displays add complexity to the device configuration and program UI</li>
+<li>bluetooth connection to the laptop
+— Why? No need to come up with a way to share a wi-fi point password</li>
+<li>autonomous, work on a single change for a reasonable period of time
+— Why? While it contradicts simplicity, I also like devices to be independent and wire-free. (Though now being charging it for a while, I’m re-thinking this decision).</li>
+</ul>
+<h2>Electronics</h2>
+<p>After getting some sketches done (the first image), it was time to decide on internal components and figure out what parts I could get and how large / small / wide / narrow my device could be.</p>
+<p>A sketch of the internals and how they are supposed to be packed in the device:</p>
+<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-internals.png" alt="sketch of the internals electronics" /></p>
+<p>I decided to use Adafruit Feather nRF52840 Express board with an nRF52840 microcontroller from Nordic Semiconductor, bluetooth, and USB battery charging peripherals.
+Also, it is supported by
+<a href="https://tinygo.org/docs/reference/microcontrollers/feather-nrf52840/">TinyGo</a>
+project – so I can program it with Go!</p>
+<p>I am glad I found out about the existence of LED backlights.
+My first idea was to make a custom PCB with a bunch of LEDs on it in some kind of matrix, but scrolling through the website, I found backlights.
+These backlights solve several problems: light distribution under the text is even, and PBC design/production is no longer needed.</p>
+<p>I ordered everything: controller, battery, and LED backlights from
+<a href="https://www.adafruit.com/">Adafruit</a> website.</p>
+<p><strong>BOM:</strong></p>
+<ul>
+<li>1 x Adafruit Feather nRF52840 Express <a href="http://adafru.it/4062">ID:4062</a> – $24.95</li>
+<li>1 x Lithium Ion Battery - 3.7v 2000mAh <a href="http://adafru.it/2011">ID:2011</a> – $12.50</li>
+<li>2 x White LED Backlight Module - Medium 23mm x 75mm <a href="http://adafru.it/1622">ID:1622</a> – $5.00.</li>
+</ul>
+<h2>Enclosure</h2>
+<p>I had
+<a href="/posts/2018/12/14/drive-distributed-storage-on-raspberry-pi/">positive experience</a>
+using Ponoko service (enclosure
+<a href="https://www.ponoko.com/blog/digital-manufacturing/deciphering-shades-of-white/">example</a>.)
+They provide a service to cut down various materials based on the uploaded SVG and then mail it to you.</p>
+<p>I have build two versions of the device; one is white, another one is black.
+For the white one, I used acrylic with different transparency and colors:</p>
+<ul>
+<li>two opal acrylic layers (42% translucent) for the front and the back panels (blurs the light but hides internals)</li>
+<li>several opaque white acrylic layers (9% translucent) for the internal layers and text pattern</li>
+<li>single orange translucent acrylic for coloring the light.</li>
+</ul>
+<p>For the black one:</p>
+<ul>
+<li>black matte acrylic (all center panels)</li>
+<li>clear matte acrylic (for the front and back panels)</li>
+<li>single orange translucent acrylic for coloring the light.</li>
+</ul>
+<p>Sneak-pick from the next part of the series:</p>
+<div style="display: flex; flex-direction: row; column-gap: 20px;">
+<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-white.jpg" alt="photo of the white version" /></p>
+<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-black.jpg" alt="photo of the black version" /></p>
+</div>
+<p>To keep device’s layers together, I used binding bolts for books and albums – they turned out to be a good fit for a job.</p>
+<p>This sketch represents almost the final design of the device enclosure.
+I ended up cutting text from a non-translucent white (and black) acrylic sheet and coloring it with another layer, but still, the idea is similar:</p>
+<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-layers.png" alt="sketch of all internal layers of the device" /></p>
+<h2>Result</h2>
+<p>The device turned out to be looking good; I’m definitely keeping it on my desk, at least while working on firmware :D
+Also, I haven’t decided yet on what label I want to display. It can be either “meeting” or classic “on-air,” so I’ve cut both and will experiment with it.</p>
+<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-front.gif" alt="blinking on-air animation of the device" /></p>
+</span>
+</article>
+
+<div class="top-border-block comments">
+    <b class="label">Comments:</b>
+    <div id="disqus_thread"></div>
+    <script>
+        if (window.location.hostname !== 'localhost') {
+            setTimeout(function () {
+                var disqus_config = function () {
+                    this.page.url = 'https://antonfisher.com/posts/2021/10/03/meeting-device-hardware/';
+                    this.page.identifier = '2021-10-03';
+                };
+                (function () {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//antonfishercom.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            }, 2500);
+        }
+    </script>
+</div>
+
+        </div>
+
+        <footer>
+            <nav>
+                <a href="/">home</a>
+                <span class="divider">&nbsp;</span>
+                <a href="/feed.xml">rss</a>
+            </nav>
+            <div>
+                &copy;
+                <time>
+                    <script>document.write(new Date().getFullYear())</script></time>
+                Anton Fisher
+            </div>
+        </footer>
+    </div>
+</body>
+<script>
+    if (window.location.hostname !== 'localhost') {
+        (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r;i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date();a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-44250383-1', 'antonfisher.com');
+        ga('send', 'pageview');
+    }
+</script>
+
+</html>
