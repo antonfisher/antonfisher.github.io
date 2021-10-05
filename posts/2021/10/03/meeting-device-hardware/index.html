@@ -79,7 +79,7 @@ Anton Fisher <a.fschr@gmail.com>
 
     <div class="clear"></div>
 
-    <img itemprop="image" src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-3d.png">
+    <img itemprop="image" src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-3d-ir.png">
     <div class="clear"></div>
 
     <span itemprop="headline"><p>
@@ -107,7 +107,7 @@ They inspired that project.</p>
 <h2>Electronics</h2>
 <p>After getting some sketches done (the first image), it was time to decide on internal components and figure out what parts I could get and how large / small / wide / narrow my device could be.</p>
 <p>A sketch of the internals and how they are supposed to be packed in the device:</p>
-<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-internals.png" alt="sketch of the internals electronics" /></p>
+<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-internals-ir.png" alt="sketch of the internals electronics" /></p>
 <p>I decided to use Adafruit Feather nRF52840 Express board with an nRF52840 microcontroller from Nordic Semiconductor, bluetooth, and USB battery charging peripherals.
 Also, it is supported by
 <a href="https://tinygo.org/docs/reference/microcontrollers/feather-nrf52840/">TinyGo</a>
@@ -123,13 +123,17 @@ These backlights solve several problems: light distribution under the text is ev
 <li>1 x Lithium Ion Battery - 3.7v 2000mAh <a href="http://adafru.it/2011">ID:2011</a> – $12.50</li>
 <li>2 x White LED Backlight Module - Medium 23mm x 75mm <a href="http://adafru.it/1622">ID:1622</a> – $5.00.</li>
 </ul>
+<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-hardware.jpg" alt="internals electronics photo" /></p>
 <h2>Enclosure</h2>
 <p>I had
 <a href="/posts/2018/12/14/drive-distributed-storage-on-raspberry-pi/">positive experience</a>
 using Ponoko service (enclosure
 <a href="https://www.ponoko.com/blog/digital-manufacturing/deciphering-shades-of-white/">example</a>.)
 They provide a service to cut down various materials based on the uploaded SVG and then mail it to you.</p>
-<p>I have build two versions of the device; one is white, another one is black.
+<p>This sketch represents almost the final design of the device enclosure.
+I ended up cutting text from a non-translucent white (and black) acrylic sheet and coloring it with another layer, but still, the idea is similar:</p>
+<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-layers-ir.png" alt="sketch of all internal layers of the device" /></p>
+<p>I’ve build two versions of the device; one is white, another one is black.
 For the white one, I used acrylic with different transparency and colors:</p>
 <ul>
 <li>two opal acrylic layers (42% translucent) for the front and the back panels (blurs the light but hides internals)</li>
@@ -142,16 +146,15 @@ For the white one, I used acrylic with different transparency and colors:</p>
 <li>clear matte acrylic (for the front and back panels)</li>
 <li>single orange translucent acrylic for coloring the light.</li>
 </ul>
+<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-enclosure.jpg" alt="device enclosure photo" /></p>
+<p>To keep device’s layers together, I used binding bolts for books and albums – they turned out to be a good fit for a job.</p>
+<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-bolts.jpg" alt="device enclosure photo" /></p>
+<h2>Result</h2>
 <p>Sneak-pick from the next part of the series:</p>
 <div style="display: flex; flex-direction: row; column-gap: 20px;">
 <p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-white.jpg" alt="photo of the white version" /></p>
 <p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-black.jpg" alt="photo of the black version" /></p>
 </div>
-<p>To keep device’s layers together, I used binding bolts for books and albums – they turned out to be a good fit for a job.</p>
-<p>This sketch represents almost the final design of the device enclosure.
-I ended up cutting text from a non-translucent white (and black) acrylic sheet and coloring it with another layer, but still, the idea is similar:</p>
-<p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-layers.png" alt="sketch of all internal layers of the device" /></p>
-<h2>Result</h2>
 <p>The device turned out to be looking good; I’m definitely keeping it on my desk, at least while working on firmware :D
 Also, I haven’t decided yet on what label I want to display. It can be either “meeting” or classic “on-air,” so I’ve cut both and will experiment with it.</p>
 <p><img src="/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-front.gif" alt="blinking on-air animation of the device" /></p>

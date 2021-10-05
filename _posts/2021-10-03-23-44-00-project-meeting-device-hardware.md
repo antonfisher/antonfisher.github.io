@@ -1,7 +1,7 @@
 {
     "title": "Meeting device: hardware",
-    "image": "/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-3d.png",
-    "imagePreview": "/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-front-on.png",
+    "image": "/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-3d-ir.png",
+    "imagePreview": "/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-front-on-500-ir.png",
     "metaDescription": "hardware,bluetooth,enclosure,sketch,meeting device",
     "tags": "hardware, bluetooth",
     "date": "2021-10-03"
@@ -41,7 +41,7 @@ After getting some sketches done (the first image), it was time to decide on int
 
 A sketch of the internals and how they are supposed to be packed in the device:
 
-![sketch of the internals electronics](/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-internals.png)
+![sketch of the internals electronics](/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-internals-ir.png)
 
 I decided to use Adafruit Feather nRF52840 Express board with an nRF52840 microcontroller from Nordic Semiconductor, bluetooth, and USB battery charging peripherals.
 Also, it is supported by
@@ -60,6 +60,8 @@ I ordered everything: controller, battery, and LED backlights from
 - 1 x Lithium Ion Battery - 3.7v 2000mAh [ID:2011](http://adafru.it/2011) -- $12.50
 - 2 x White LED Backlight Module - Medium 23mm x 75mm [ID:1622](http://adafru.it/1622) -- $5.00.
 
+![internals electronics photo](/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-hardware.jpg)
+
 ## Enclosure
 
 I had
@@ -68,7 +70,12 @@ using Ponoko service (enclosure
 [example](https://www.ponoko.com/blog/digital-manufacturing/deciphering-shades-of-white/).)
 They provide a service to cut down various materials based on the uploaded SVG and then mail it to you.
 
-I have build two versions of the device; one is white, another one is black.
+This sketch represents almost the final design of the device enclosure.
+I ended up cutting text from a non-translucent white (and black) acrylic sheet and coloring it with another layer, but still, the idea is similar:
+
+![sketch of all internal layers of the device](/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-layers-ir.png)
+
+I've build two versions of the device; one is white, another one is black.
 For the white one, I used acrylic with different transparency and colors:
 - two opal acrylic layers (42% translucent) for the front and the back panels (blurs the light but hides internals)
 - several opaque white acrylic layers (9% translucent) for the internal layers and text pattern
@@ -79,6 +86,14 @@ For the black one:
 - clear matte acrylic (for the front and back panels)
 - single orange translucent acrylic for coloring the light.
 
+![device enclosure photo](/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-enclosure.jpg)
+
+To keep device's layers together, I used binding bolts for books and albums -- they turned out to be a good fit for a job.
+
+![device enclosure photo](/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-bolts.jpg)
+
+## Result
+
 Sneak-pick from the next part of the series:
 
 <div style="display: flex; flex-direction: row; column-gap: 20px;">
@@ -88,15 +103,6 @@ Sneak-pick from the next part of the series:
 ![photo of the black version](/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/on-air-prototype-black.jpg)
 
 </div>
-
-To keep device's layers together, I used binding bolts for books and albums -- they turned out to be a good fit for a job.
-
-This sketch represents almost the final design of the device enclosure.
-I ended up cutting text from a non-translucent white (and black) acrylic sheet and coloring it with another layer, but still, the idea is similar:
-
-![sketch of all internal layers of the device](/images/posts/2021-10-03-23-44-00-project-meeting-device-hardware/sketch-meeting-device-layers.png)
-
-## Result
 
 The device turned out to be looking good; I'm definitely keeping it on my desk, at least while working on firmware :D
 Also, I haven't decided yet on what label I want to display. It can be either "meeting" or classic "on-air," so I've cut both and will experiment with it.
