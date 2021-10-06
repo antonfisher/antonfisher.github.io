@@ -249,10 +249,18 @@ All depends on a project.</p>
 </article>
 
 <div class="top-border-block comments">
-    <b class="label">Comments:</b>
+    <div class="comments-button-container">
+        <button id="comments-button" onclick="showComments()">
+            show comments
+        </button>
+    </div>
+
+    <b id="comments-label" class="label hidden">Comments:</b>
     <div id="disqus_thread"></div>
     <script>
-        if (window.location.hostname !== 'localhost') {
+        function showComments() {
+            document.getElementById('comments-button').classList.add('hidden');
+            document.getElementById('comments-label').classList.remove('hidden');
             setTimeout(function () {
                 var disqus_config = function () {
                     this.page.url = 'https://antonfisher.com/posts/2016/06/06/using-svg-icons-in-extjs/';
@@ -264,7 +272,7 @@ All depends on a project.</p>
                     s.setAttribute('data-timestamp', +new Date());
                     (d.head || d.body).appendChild(s);
                 })();
-            }, 2500);
+            }, 100);
         }
     </script>
 </div>

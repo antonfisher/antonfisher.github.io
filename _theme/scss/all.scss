@@ -325,6 +325,21 @@ article {
         margin: 0;
         padding: 0 20px;
     }
+
+    .hidden {
+        display: none;
+    }
+
+
+    .comments-button-container {
+        display: flex;
+        justify-content: center;
+
+        #comments-button {
+            margin-top: 60px;
+            padding: 3px 6px;
+        }
+    }
 }
 
 footer {
